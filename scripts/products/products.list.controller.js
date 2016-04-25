@@ -24,7 +24,8 @@ angular.module('tfApp').controller('productsListController', function (productsF
                     var products = answer.data.value;
                     $scope.basket = products.map(function (product) {
                         product["orderLine"] = mockOrderLine(product.Id);
-                        product["controlEnabled"] = true;
+                        product["incControlEnabled"] = true;
+                        product["decControlEnabled"] = true;
                         return product;
                     });
                     $scope.basket["pickedCount"] = 0;
@@ -35,12 +36,14 @@ angular.module('tfApp').controller('productsListController', function (productsF
         function incPosition(product) {
             $scope.basket.pickedCount++;
             product.orderLine.Amount++;
+            product.incControlEnabled = false;
             updateOrderLine(product);
         }
 
         function decPosition(product) {
             $scope.basket.pickedCount--;
             product.orderLine.Amount--;
+            product.decControlEnabled = false;
             updateOrderLine(product);
         }
 
@@ -49,7 +52,8 @@ angular.module('tfApp').controller('productsListController', function (productsF
             if (product.orderLine.Amount == 0) {
                 ordersFactory.deleteOrderLine(product.orderLine.Id).then(function (answer) {
                     product.orderLine = mockOrderLine(product.Id);
-                    product.controlEnabled = true;
+                    product.incControlEnabled = true;
+                    product.decControlEnabled = true;
                 }, onError);
             }
             else {
@@ -58,14 +62,16 @@ angular.module('tfApp').controller('productsListController', function (productsF
                     {
                         product.orderLine = answer.data;
                     };
-                    product.controlEnabled = true;
+                    product.incControlEnabled = true;
+                    product.decControlEnabled = true;
                 }, onError);
             }
         };
 
         function onError(answer) {
             alert("Error. Status: " + answer.status + "; StatusText: " + answer.statusText);
-            $scope.showOrderControls = true;
+            product.incControlEnabled = true;
+            product.decControlEnabled = true;
         };
 
         function mockOrderLine(productId) {
