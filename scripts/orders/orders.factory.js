@@ -8,7 +8,7 @@
     };
 
     function getById(id) {
-        return $http.get(ordersCollectionUrl + '(' + id + ')');
+        return $http.get(ordersCollectionUrl + '(' + id + ')?$expand=Lines($expand=Item)');
     };
 
     function save(order) {
@@ -18,14 +18,6 @@
         else {
             return $http.post(ordersCollectionUrl, order);
         }
-    };
-
-    function getOrderLines(orderId) {
-        return $http.get(ordersCollectionUrl + '(' + orderId + ')/Lines');
-    };
-
-    function getItem(orderLineId) {
-        return $http.get(orderLinesCollectionUrl + '(' + orderLineId + ')/Item');
     };
 
     function saveOrderLine(orderLine) {
@@ -46,8 +38,6 @@
         getById: getById,
         save: save,
         saveOrderLine: saveOrderLine,
-        deleteOrderLine: deleteOrderLine,
-        getOrderLines: getOrderLines,
-        getItem: getItem
+        deleteOrderLine: deleteOrderLine
     };
 });
