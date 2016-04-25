@@ -4,14 +4,14 @@
             {{product.Name}}
             <div class="pull-right">
                 <a
-                   ng-class="{'disabled-control':!product.controlEnabled, 'control':product.controlEnabled}"
+                   ng-class="{'disabled-control':!product.decControlEnabled, 'control':product.decControlEnabled}"
                    ng-click="decPosition(product)"
                    ng-show="product.orderLine.Amount">
                     <i class="fa fa-minus"></i>
                 </a>
                 <span style="margin: 20px">{{product.orderLine.Amount}}</span>
                 <a
-                   ng-class="{'disabled-control':!product.controlEnabled, 'control':product.controlEnabled}"
+                   ng-class="{'disabled-control':!product.incControlEnabled, 'control':product.incControlEnabled}"
                    ng-click="incPosition(product)">
                     <i class="fa fa-plus"></i>
                 </a>
