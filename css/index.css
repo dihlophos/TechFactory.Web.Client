@@ -1,0 +1,12 @@
+body {
+    background-color:#ffffff;
+}
+
+.disabled-control{
+    pointer-events: none;
+    color: #ddd;
+}
+
+.control {
+    color: #555;
+}
