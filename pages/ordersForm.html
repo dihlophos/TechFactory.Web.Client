@@ -1,7 +1,7 @@
 ﻿<div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
     <div class="list-group">
-        <span ng-repeat="orderLine in orderLines" class="list-group-item ng-binding ng-scope">
-            {{orderLine.productName}} <span class="pull-right">Count: {{orderLine.Amount}}</span>
+        <span ng-repeat="orderLine in order.Lines" class="list-group-item ng-binding ng-scope">
+            {{orderLine.Item.Name}} <span class="pull-right">Count: {{orderLine.Amount}}</span>
         </span>
     </div>
     <a class="btn btn-block btn-lg btn-primary scrollable-footer" href="#products">
