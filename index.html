@@ -2,43 +2,74 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1251"/>
-            <!--
-                Настройте политику безопасности содержимого в метатеге ниже. Добавьте "unsafe-inline" к default-src, чтобы включить встроенный код JavaScript.
-                Дополнительные сведения см. по ссылке http://go.microsoft.com/fwlink/?LinkID=617521
-            -->
+         <!--
+           Настройте политику безопасности содержимого в метатеге ниже. Добавьте "unsafe-inline" к default-src, чтобы включить встроенный код JavaScript.
+           Дополнительные сведения см. по ссылке http://go.microsoft.com/fwlink/?LinkID=617521
+          -->
         <!--TODO: настроить фильтрацию-->
-        
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        
+        <link rel="stylesheet" href="lib/mobile-angular-ui/dist/css/mobile-angular-ui-hover.min.css" type="text/css">
         <link rel="stylesheet" href="lib/mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css" type="text/css">
-        <title>TF.Client.Cordova</title>
+        <link rel="stylesheet" href="lib/mobile-angular-ui/dist/css/mobile-angular-ui-desktop.min.css" type="text/css">
+
+        <!-- Angular JS -->
+        <script src="lib/angular/angular.min.js"></script>
+        <script src="lib/angular/angular-route.min.js"></script>
+         <script src="tdApp.js"></script> 
+    
+    <title>TF.Client.Cordova</title>
     </head>
-    <body ng-app="tfApp">
+        <body ng-app="tfApp">
+    
+      <!-- Sidebars -->
+    <div ng-include="'sidebar.html'" 
+            ui-track-as-search-param='true'
+            class="sidebar sidebar-left"></div>
 
-        <div class="navbar navbar-app navbar-absolute-top">
-            <div class="btn-group pull-left">
-                <a ui-turn-on='mainmenu' class='btn' style='color:#555'>
-                    <i class="fa fa-bars" aria-hidden="true"></i>
-                </a>
+    <div class="app" 
+         ui-swipe-right='Ui.turnOn("uiSidebarLeft")'
+         ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
 
-                <ul 
-                class="dropdown-menu"
-                ui-outer-click="Ui.turnOff('mainmenu')"
-                ui-outer-click-if="Ui.active('mainmenu')"
-                role="menu"
-                ui-show="mainmenu" 
-                ui-state="mainmenu"
-                ui-turn-off="mainmenu">
+      <!-- Navbars -->
 
-                    <li><a href="#orders">My orders</a></li>
-                    <li><a>Another action</a></li>
-                    <li class="divider"></li>
-                    <li><a>Settings</a></li>
-                </ul>
-            </div>
+      <div class="navbar navbar-app navbar-absolute-top">
+        <div class="navbar-brand navbar-brand-center" ui-yield-to="title">
+          Noodles
         </div>
+        <div class="btn-group pull-left">
+          <div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
+            <i class="fa fa-bars"></i> Menu
+          </div>
+        </div>
+        <div class="btn-group pull-right" ui-yield-to="navbarAction">
+          <div ui-toggle="uiSidebarRight" class="btn">
+            <i class="fa fa-comment"></i> 
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar navbar-app navbar-absolute-bottom">
+        <div class="btn-group justified">
+          <a href="#" class="btn btn-navbar"><i class="fa fa-navbar"></i> XXX</a>
+          <a href="#" class="btn btn-navbar"><i class="fa fa-navbar"></i> XXX</a>
+          <a href="#" class="btn btn-navbar"><i class="fa fa-navbar"></i> XXX</a>
+        </div>
+      </div>
+
+      <!-- App Body -->
+      <div class="app-body" ng-class="{loading: loading}">
+        <div ng-show="loading" class="app-content-loading">
+          <i class="fa fa-spinner fa-spin loading-spinner"></i>
+        </div>
+        <div class="app-content">
+          <ng-view></ng-view>
+        </div>
+      </div>
+
+    </div><!-- ~ .app -->
 
         <div class="app">
             <div class='app-body'>
@@ -50,10 +81,6 @@
 
         <!-- JQuery JS -->
         <script src="lib/jquery/dist/jquery.min.js"></script>
-
-        <!-- Angular JS -->
-        <script src="lib/angular/angular.min.js"></script>
-        <script src="lib/angular/angular-route.min.js"></script>
 
 
         <!-- Mobile-Angular-UI JS -->
@@ -72,4 +99,5 @@
 
         <script type="text/javascript" src="cordova.js"></script>
     </body>
+
 </html>

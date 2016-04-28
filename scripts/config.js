@@ -1,22 +1,7 @@
 angular.module('tfApp').config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.
-        when('/', {
-            templateUrl: 'pages/productsList.html',
-            controller: 'productsListController'
-        }).
-        when('/products', {
-            templateUrl: 'pages/productsList.html',
-            controller: 'productsListController'
-        }).
-        when('/orders', {
-            templateUrl: 'pages/ordersList.html',
-            controller: 'ordersListController'
-        }).
-        when('/order/:id', {
-            templateUrl: 'pages/ordersForm.html',
-            controller: 'ordersFormController'
-        }).
-        otherwise({
-            redirectTo: '/'
-        });
+  $routeProvider.when('/', {   templateUrl: 'pages/productsList.html', controller: 'productsListController', reloadOnSearch: false});
+  $routeProvider.when('/products', {   templateUrl: 'pages/productsList.html', controller: 'productsListController', reloadOnSearch: false});
+  $routeProvider.when('/orders', {   templateUrl: 'pages/ordersList.html', controller: 'ordersListController', reloadOnSearch: false});
+  $routeProvider.when('/order/:id', {   templateUrl: 'pages/ordersForm.html', controller: 'ordersFormController', reloadOnSearch: false});
+  $routeProvider.otherwise('/');
 }]);

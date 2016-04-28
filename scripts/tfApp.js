@@ -1,1 +1,4 @@
-angular.module('tfApp', ['ngRoute', 'mobile-angular-ui']);
+angular.module('tfApp', [
+    'ngRoute', 
+    'mobile-angular-ui',
+  'mobile-angular-ui.gestures']);
