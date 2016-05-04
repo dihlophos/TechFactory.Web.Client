@@ -1,14 +1,20 @@
-﻿<div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
+﻿<style type="text/css">
+ .my-col-xc{
+  padding-left: 5px;   
+  padding-right: 5px;   
+ }
+</style>
+<div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
     <div class="list-group">
         <div class="list-group-item" ng-repeat="product in basket track by $index">
          <div class="row">
-           <div style="padding-top: 5px" class="col-xs-2">
+           <div style="padding-top: 5px" class="col-xs-2 my-col-xc">
           <img  width="40" height="40" src="http://icons.iconarchive.com/icons/iloveicons.ru/so-sweet/128/tart-icon.png" class="img-circle"> 
           </div>
-          <div class="col-xs-6">
+          <div class="col-xs-6 my-col-xc">
             {{product.Name}} </p>  Price: {{product.Price.Price}}
               </div>
-               <div class="col-xs-4">
+               <div class="col-xs-4 my-col-xc">
             <div style="padding-top: 15px" class="pull-right">
                 <a
                    ng-class="{'disabled-control':!product.decControlEnabled, 'control':product.decControlEnabled}"
