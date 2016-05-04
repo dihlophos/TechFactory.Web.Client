@@ -3,12 +3,21 @@
   padding-left: 5px;   
   padding-right: 5px;   
  }
+ 
+  @media only screen  and (min-height: 950px) {
+  .col-xs-2 {
+     width: 60px;
+   } 
+  .col-xs-6 {
+     width: 55%;
+   }
+           
 </style>
 <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
     <div class="list-group">
         <div class="list-group-item" ng-repeat="product in basket track by $index">
          <div class="row">
-           <div style="padding-top: 5px" class="col-xs-2 my-col-xc">
+           <div id="col1" style="padding-top: 5px" class="col-xs-2 my-col-xc">
           <img  width="40" height="40" src="http://icons.iconarchive.com/icons/iloveicons.ru/so-sweet/128/tart-icon.png" class="img-circle"> 
           </div>
           <div class="col-xs-6 my-col-xc">
@@ -26,7 +35,7 @@
                 <a
                    ng-class="{'disabled-control':!product.incControlEnabled, 'control':product.incControlEnabled}"
                    ng-click="incPosition(product)">
-                    <i class="fa fa-plus"></i>
+                   <i class="fa fa-plus"></i>
                 </a>
             </div>
         </div>   

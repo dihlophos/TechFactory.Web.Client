@@ -1,3 +1,4 @@
+
 <style type="text/css">
 .list-group-itemA {
     position: relative;
@@ -13,13 +14,22 @@
 }
 .sidebar-left{
   background:URL(https://studiothirstycrow.files.wordpress.com/2011/10/wok-cutaway.jpg?w=819&h=1024);
-  background-size: 180%;
   background-position: 50%;
+  background-size: 180%;
 }
 .scrollable{
   background-color: rgba(0, 0, 0, 0.23);
 }
-    </style>
+
+ @media only screen  and (min-height: 950px) {
+.sidebar-left{
+   background-size: 300%;
+    }
+.scrollable-header {
+   padding-bottom: 110%;
+    }
+ }
+</style>
 <div class="scrollable">
   
   <h1 class="scrollable-header app-name">
