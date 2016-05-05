@@ -35,21 +35,21 @@ angular.module('tfApp').controller('productsListController', function (productsF
         
         function incPosition(product) {
             $scope.basket.pickedCount++;
-            product.orderLine.Amount++;
+            product.orderLine.Qty++;
             product.incControlEnabled = false;
             updateOrderLine(product);
         }
 
         function decPosition(product) {
             $scope.basket.pickedCount--;
-            product.orderLine.Amount--;
+            product.orderLine.Qty--;
             product.decControlEnabled = false;
             updateOrderLine(product);
         }
 
         function updateOrderLine(product) {
             product.controlEnabled = false;
-            if (product.orderLine.Amount == 0) {
+            if (product.orderLine.Qty == 0) {
                 ordersFactory.deleteOrderLine(product.orderLine.Id).then(function (answer) {
                     product.orderLine = mockOrderLine(product.Id);
                     product.incControlEnabled = true;
@@ -78,7 +78,7 @@ angular.module('tfApp').controller('productsListController', function (productsF
             return {
                 Amount: 0,
                 BaseQty: 1,
-                Qty: 1,
+                Qty: 0,
                 ItemId: productId,
                 OrderId: $scope.order.Id,
                 Priority: 1,
