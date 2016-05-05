@@ -7,5 +7,8 @@ angular.module('tfApp').config(['$routeProvider', function ($routeProvider) {
 }])
 
 .constant('backendProperties', {
-    baseUrl: "http://partner-dev-srv.cloudapp.net/v1/odata/"
+    baseUrl: "http://partner-dev-srv.cloudapp.net/v1/odata/",
+    productsCollection: baseUrl + "Products/?$expand=Price",
+    orderLinesCollectionUrl: baseUrl + "/OrderLines",
+    ordersCollectionUrl: baseUrl + "/Orders"
 });
