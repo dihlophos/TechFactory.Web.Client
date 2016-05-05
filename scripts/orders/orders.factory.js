@@ -1,7 +1,7 @@
 ﻿angular.module('tfApp').factory('ordersFactory', function ($http, backendProperties) {
 
-    var orderLinesCollectionUrl = backendProperties.baseUrl + "/OrderLines";
-    var ordersCollectionUrl = backendProperties.baseUrl + "Orders";
+    var orderLinesCollectionUrl = backendProperties.orderLinesCollectionUrl;
+    var ordersCollectionUrl = backendProperties.ordersCollectionUrl;
 
     function get() {
         return $http.get(ordersCollectionUrl);
