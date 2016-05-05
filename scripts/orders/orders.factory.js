@@ -1,4 +1,4 @@
-﻿angular.module('tfApp').factory('ordersFactory', function ($http) {
+﻿angular.module('tfApp').factory('ordersFactory', function ($http, backendProperties) {
 
     var orderLinesCollectionUrl = backendProperties.baseUrl + "/OrderLines";
     var ordersCollectionUrl = backendProperties.baseUrl + "Orders";
