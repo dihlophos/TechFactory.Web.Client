@@ -1,6 +1,6 @@
 ﻿angular.module('tfApp').factory('productsFactory', function ($http, backendProperties) {
 
-     var productsCollectionUrl = backendProperties.baseUrl + "Products/?$expand=Price";
+     var productsCollectionUrl = backendProperties.productsCollectionUrl;
 
     function get() {
         return $http.get(productsCollectionUrl);
