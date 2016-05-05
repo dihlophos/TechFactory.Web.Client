@@ -3,22 +3,18 @@ angular.module('tfApp').controller('categoriesListController', function ($scope,
     updateScope();
 
     function updateScope() {
-        console.log($routeParams.id);
         if ($routeParams.id) {
             categoriesFactory.getChildren($routeParams.id)
                 .then(function (answer) {
                     $scope.categories = answer.data.value;
                     if (!$scope.categories.length) {
-                        location.href = "#/products/" + $routeParams.id;
+                        location.href = "#/products/" + $routeParams.id + "/"; //TODO: сделаем нормально, когда обработаем продукты и категории в одной куче
                     };
                 }, onError);
         } else {
             categoriesFactory.get()
                 .then(function (answer) {
                     $scope.categories = answer.data.value;
-                    if (!$scope.categories.length) {
-                        location.href = "#/products/" + $routeParams.id;
-                    };
                 }, onError);
         }
     };

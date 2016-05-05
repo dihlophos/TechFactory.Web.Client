@@ -2,11 +2,6 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1251"/>
-         <!--
-           Íàñòðîéòå ïîëèòèêó áåçîïàñíîñòè ñîäåðæèìîãî â ìåòàòåãå íèæå. Äîáàâüòå "unsafe-inline" ê default-src, ÷òîáû âêëþ÷èòü âñòðîåííûé êîä JavaScript.
-           Äîïîëíèòåëüíûå ñâåäåíèÿ ñì. ïî ññûëêå http://go.microsoft.com/fwlink/?LinkID=617521
-          -->
-        <!--TODO: íàñòðîèòü ôèëüòðàöèþ-->
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -15,103 +10,83 @@
         <link rel="stylesheet" href="lib/mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css" type="text/css">
         <link rel="stylesheet" href="lib/mobile-angular-ui/dist/css/mobile-angular-ui-desktop.min.css" type="text/css">
         <link rel="stylesheet" href="css/index.css" type="text/css">
-
-        <!-- Angular JS -->
-        <script src="lib/angular/angular.min.js"></script>
-        <script src="lib/angular/angular-route.min.js"></script>
-         <script src="tdApp.js"></script> 
     
     <title>TF.Client.Cordova</title>
     </head>
         <body ng-app="tfApp">
     
-      <!-- Sidebars -->
-    <div ng-include="'sidebar.html'" 
-            ui-track-as-search-param='true'
-            class="sidebar sidebar-left"></div>
+        <!-- Sidebars -->
+        
+        <div ng-include="'sidebar.html'" 
+                ui-track-as-search-param='true'
+                class="sidebar sidebar-left"></div>
 
-    <div class="app" 
-         ui-swipe-right='Ui.turnOn("uiSidebarLeft")'
-         ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
+        <div class="app" 
+             ui-swipe-right='Ui.turnOn("uiSidebarLeft")'
+             ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
 
-      <!-- Navbars -->
+          <!-- Navbars -->
 
-      <div class="navbar navbar-app navbar-absolute-top">
-        <div class="navbar-brand navbar-brand-center" ui-yield-to="title">
-          Noodles  <i class="fa fa-child"></i>  
-        </div>
-        <div class="btn-group pull-left">
-          <div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
-            <i class="fa fa-reorder"></i> 
-          </div>
-        </div>
-       <!-- <div class="btn-group pull-right" ui-yield-to="navbarAction">
-          <div ui-toggle="uiSidebarRight" class="btn">
-            <i class="fa fa-user"></i> 
-          </div>
-        </div>-->
-      </div>
-
-      <div class="navbar navbar-app navbar-absolute-bottom">
-        <div class="btn-group justified">
-          <a href="#categories" class="btn btn-navbar"><i class="fa fa-cutlery fa-navbar"></i> menu</a>
-          <a href="#orders" class="btn btn-navbar"><i class="fa fa-shopping-cart fa-navbar"></i> basket</a>
-         <!-- <a href="#" class="btn btn-navbar"><i class="fa fa-phone fa-navbar"></i> phone</a>  -->
-        </div>
-      </div>
-
-      <!-- App Body -->
-      <div class="app-body" ng-class="{loading: loading}">
-        <div ng-show="loading" class="app-content-loading">
-          <i class="fa fa-spinner fa-spin loading-spinner"></i>
-        </div>
-        <div class="app-content">
-          <ng-view></ng-view>
-        </div>
-      </div>
-
-    </div><!-- ~ .app -->
-
-        <div class="app">
-            <div class='app-body'>
-                <div class='app-content'>
-                    <ng-view></ng-view>
-                </div>
+          <div class="navbar navbar-app navbar-absolute-top">
+            <div class="navbar-brand navbar-brand-center" ui-yield-to="title">
+              Noodles  <i class="fa fa-child"></i>  
             </div>
-        </div>
+            <div class="btn-group pull-left">
+              <div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
+                <i class="fa fa-reorder"></i> 
+              </div>
+            </div>
+           <!-- <div class="btn-group pull-right" ui-yield-to="navbarAction">
+              <div ui-toggle="uiSidebarRight" class="btn">
+                <i class="fa fa-user"></i> 
+              </div>
+            </div>-->
+          </div>
+
+          <div class="navbar navbar-app navbar-absolute-bottom">
+            <div class="btn-group justified">
+              <a href="#categories" class="btn btn-navbar"><i class="fa fa-cutlery fa-navbar"></i> menu</a>
+              <a href="#orders" class="btn btn-navbar"><i class="fa fa-shopping-cart fa-navbar"></i> basket</a>
+             <!-- <a href="#" class="btn btn-navbar"><i class="fa fa-phone fa-navbar"></i> phone</a>  -->
+            </div>
+          </div>
+
+          <!-- App Body -->
+          <div class="app-body" ng-class="{loading: loading}">
+            <div ng-show="loading" class="app-content-loading">
+              <i class="fa fa-spinner fa-spin loading-spinner"></i>
+            </div>
+            <div class="app-content">
+              <ng-view></ng-view>
+            </div>
+          </div>
+
+        </div><!-- ~ .app -->
 
         <!-- JQuery JS -->
         <script src="lib/jquery/dist/jquery.min.js"></script>
 
+        <!-- Angular JS -->
+        <script src="lib/angular/angular.min.js"></script>
+        <script src="lib/angular/angular-route.min.js"></script>
 
         <!-- Mobile-Angular-UI JS -->
         <script src="lib/mobile-angular-ui/dist/js/mobile-angular-ui.min.js" type="text/javascript"></script>
         <script src="lib/mobile-angular-ui/dist/js/mobile-angular-ui.gestures.min.js" type="text/javascript"></script>
 
+        <!-- APP JS -->
         <script type="text/javascript" src="scripts/mobileAppInit.js"></script>
         <script type="text/javascript" src="scripts/platformOverrides.js"></script>
         <script type="text/javascript" src="scripts/tfApp.js"></script>
         <script type="text/javascript" src="scripts/products/products.factory.js"></script>
         <script type="text/javascript" src="scripts/orders/orders.factory.js"></script>
+        <script type="text/javascript" src="scripts/categories/categories.factory.js"></script>
         <script type="text/javascript" src="scripts/products/products.list.controller.js"></script>
         <script type="text/javascript" src="scripts/orders/orders.list.controller.js"></script>
         <script type="text/javascript" src="scripts/orders/orders.form.controller.js"></script>
+        <script type="text/javascript" src="scripts/categories/categories.list.controller.js"></script>
         <script type="text/javascript" src="scripts/config.js"></script>
 
-        <script type="text/javascript" src="cordova.js"></script>
     </body>
- <style type="text/css">
-  .navbar-app .btn-navbar, .navbar-app .btn{
-  color: #FFFFFF;
-  }
-  .navbar-app {
-    color: #FFFFFF;
-    border-color: #ccc;
-    background: #A00505;
-  }
-  .app-content {
-    background: #FFFFFF;
-  }
-  </style>
 
 </html>

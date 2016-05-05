@@ -1,5 +1,4 @@
-angular.module('tfApp').controller('productsListController', function (productsFactory, ordersFactory, $filter, $scope) {
-
+angular.module('tfApp').controller('productsListController', function (productsFactory, ordersFactory, $filter, $scope, $routeParams) {
         $scope.updateOrderLine = updateOrderLine;
         $scope.incPosition = incPosition;
         $scope.decPosition = decPosition;
@@ -7,29 +6,36 @@ angular.module('tfApp').controller('productsListController', function (productsF
 
         function updateScope() {
             ordersFactory.save({
-                //Amount: '10',
-                //BaseAmount: '10',
                 Date: new Date().toISOString(),
                 DueDate: new Date().toISOString(),
-                //SourceId: "8ddcf8e9-7c89-4253-879a-16b52e598f65",
-                //DestinationId: "8ddcf8e9-7c89-4253-879a-16b52e598f65",
-                //CurrencyId: '8ddcf8e9-7c89-4253-879a-16b52e598f65',
-                //CustomerId: '8ddcf8e9-7c89-4253-879a-16b52e598f65',
-                //LinesCount: '5',
                 Number: "SO001",
                 Type: "SO"
             }).then(function (answer) {
                 $scope.order = answer.data;
-                productsFactory.get().then(function (answer) {
-                    var products = answer.data.value;
-                    $scope.basket = products.map(function (product) {
-                        product["orderLine"] = mockOrderLine(product.Id);
-                        product["incControlEnabled"] = true;
-                        product["decControlEnabled"] = true;
-                        return product;
-                    });
-                    $scope.basket["pickedCount"] = 0;
-                }, onError);
+                if ($routeParams.catid) {
+                    productsFactory.getByCategoryId($routeParams.catid).then(function (answer) {
+                        var products = answer.data.value;
+                        $scope.basket = products.map(function (product) {
+                            product["orderLine"] = mockOrderLine(product.Id);
+                            product["incControlEnabled"] = true;
+                            product["decControlEnabled"] = true;
+                            return product;
+                        });
+                        $scope.basket["pickedCount"] = 0;
+                    }, onError);
+                }
+                else {
+                    productsFactory.get().then(function (answer) {
+                        var products = answer.data.value;
+                        $scope.basket = products.map(function (product) {
+                            product["orderLine"] = mockOrderLine(product.Id);
+                            product["incControlEnabled"] = true;
+                            product["decControlEnabled"] = true;
+                            return product;
+                        });
+                        $scope.basket["pickedCount"] = 0;
+                    }, onError);
+                }
             }, onError);
         };
         
@@ -76,13 +82,9 @@ angular.module('tfApp').controller('productsListController', function (productsF
 
         function mockOrderLine(productId) {
             return {
-                //Amount: 0,
-                //BaseQty: 1,
                 Qty: 0,
                 ItemId: productId,
                 OrderId: $scope.order.Id,
-                //Priority: 1,
-                //UomId: "8ddcf8e9-7c89-4253-879a-16b52e598f65"
             };
         }
 });

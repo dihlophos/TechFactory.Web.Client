@@ -10,3 +10,17 @@ body {
 .control {
     color: #555;
 }
+
+.navbar-app .btn-navbar, .navbar-app .btn {
+	color: #FFFFFF;
+}
+
+.navbar-app {
+	color: #FFFFFF;
+	border-color: #ccc;
+	background: #A00505;
+}
+
+.app-content {
+	background: #FFFFFF;
+}
