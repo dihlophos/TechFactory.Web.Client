@@ -8,9 +8,9 @@ angular.module('tfApp').config(['$routeProvider', function ($routeProvider) {
 }])
 
 .constant('backendProperties', {
-    productsCollectionUrl: "http://partner-dev-srv.cloudapp.net/v1/odata/Products",
-    orderLinesCollectionUrl: "http://partner-dev-srv.cloudapp.net/v1/odata/OrderLines",
-    ordersCollectionUrl: "http://partner-dev-srv.cloudapp.net/v1/odata/Orders",
-    categoriesCollectionUrl: "http://partner-dev-srv.cloudapp.net/v1/odata/Categories",
+    productsCollectionUrl: "http://partner-web-api-v1.azurewebsites.net/odata/Products",
+    orderLinesCollectionUrl: "http://partner-web-api-v1.azurewebsites.net/odata/OrderLines",
+    ordersCollectionUrl: "http://partner-web-api-v1.azurewebsites.net/odata/Orders",
+    categoriesCollectionUrl: "http://partner-web-api-v1.azurewebsites.net/odata/Categories",
     rootCategory: "MENU"
 });
