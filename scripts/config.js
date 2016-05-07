@@ -1,4 +1,4 @@
-angular.module('tfApp').config(['$routeProvider', function ($routeProvider) {
+﻿angular.module('tfApp').config(['$routeProvider', function ($routeProvider) {
   $routeProvider.when('/', { templateUrl: 'pages/categories/categoriesList.html', controller: 'categoriesListController', reloadOnSearch: false });
   $routeProvider.when('/categories/:id/', { templateUrl: 'pages/categories/categoriesList.html', controller: 'categoriesListController', reloadOnSearch: false });
   $routeProvider.when('/products/:catid/', { templateUrl: 'pages/products/productsList.html', controller: 'productsListController', reloadOnSearch: false });
@@ -13,4 +13,28 @@ angular.module('tfApp').config(['$routeProvider', function ($routeProvider) {
     ordersCollectionUrl: "http://partner-web-api-v1.azurewebsites.net/odata/Orders",
     categoriesCollectionUrl: "http://partner-web-api-v1.azurewebsites.net/odata/Categories",
     rootCategory: "MENU"
+})
+
+.filter('currency', function () {
+    return function (number, currencyCode) {
+        var currency = {
+            USD: "$",
+            GBP: "£", //"<i class='fa fa-gbp' aria-hidden='true'></i>"
+            AUD: "$",
+            EUR: "€",
+            CAD: "$",
+            MIXED: "~"
+        },
+        thousand, decimal, format;
+        if ($.inArray(currencyCode, ["USD", "AUD", "CAD", "MIXED"]) >= 0) {
+            thousand = ",";
+            decimal = ".";
+            format = "%s%v";
+        } else {
+            thousand = ".";
+            decimal = ",";
+            format = "%s%v";
+        };
+        return accounting.formatMoney(number, currency[currencyCode], 2, thousand, decimal, format);
+    };
 });
