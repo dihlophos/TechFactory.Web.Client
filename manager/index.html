@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+    
+    <title>TF.Client.Manager</title>
+    </head>
+        <body ng-app="tfManagerApp">
+
+          <!-- App Body -->
+          <div class="app-body" ng-class="{loading: loading}">
+            <div ng-show="loading" class="app-content-loading">
+              <i class="fa fa-spinner fa-spin loading-spinner"></i>
+            </div>
+            <div class="app-content">
+              <ng-view></ng-view>
+            </div>
+          </div>
+
+        </div><!-- ~ .app -->
+
+        <!-- JQuery JS -->
+        <script src="../lib/jquery/dist/jquery.min.js"></script>
+
+        <!-- Angular JS -->
+        <script src="../lib/angular/angular.min.js"></script>
+        <script src="../lib/angular/angular-route.min.js"></script>
+
+        <!-- Materialize JS -->
+        <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+        <script type="text/javascript" src="materialize/js/angular-materialize.js"></script>
+
+        <!-- Open Exchange Rates accounting.js v0.4.2 -->
+        <script src="../lib/accounting.min.js" type="text/javascript"></script>
+
+        <!-- APP JS -->
+        <script type="text/javascript" src="tfManagerApp.js"></script>
+        <script type="text/javascript" src="config.js"></script>
+        <script type="text/javascript" src="mainController.js"></script>
+        <script type="text/javascript" src="products.factory.js"></script>
+        <script type="text/javascript" src="categories.factory.js"></script>     
+    </body>
+
+</html>

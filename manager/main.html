@@ -1,0 +1,71 @@
+<ul class="collapsible popout" data-collapsible="accordion">
+	<li>
+		<div class="collapsible-header">Categories</div>
+		<div class="collapsible-body collection">
+			<a ng-click='pickCategory(category)' ng-href='#categoryEdit' modal ng-repeat="category in categories" class="collection-item waves-effect waves-light">{{category.Name}}</a>
+			<a ng-click='addCategory()' ng-href='#categoryEdit' modal class="collection-item waves-effect waves-light btn"><i class="material-icons left">add</i></a>
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">Products</div>
+		<div class="collapsible-body collection">
+			<a ng-click='pickProduct(product)' ng-href='#productEdit' modal ng-repeat="product in products" class="collection-item waves-effect waves-light">{{product.Name}}</a>
+			<a ng-click='addProduct()' ng-href='#productEdit' modal class="collection-item waves-effect waves-light btn"><i class="material-icons left">add</i></a>
+		</div>
+	</li>
+</ul>
+
+<!-- Category Edit -->
+<div id="categoryEdit" class="modal">
+	<div class="modal-content">
+		<form name="categoryForm">
+			<h4>{{currentCategory.Name}}</h4>
+			<span>ID: {{currentCategory.Id}}</span>
+			<br/>
+			<br/>
+			<div input-field>
+			    <input class="validate" ng-required="true" type="text" ng-model="currentCategory.Name" ng-change="updateCategory(currentCategory)" length="150">
+			    <label>Name*</label>
+			</div>
+			<div input-field>
+			    <input type="text" ng-required="true" ng-model="currentCategory.Key" ng-change="updateCategory(currentCategory)" length="150">
+			    <label>Key*</label>
+			</div>
+			<div class="input-field">
+				<select  ng-change="updateCategory(currentCategory)" ng-model="currentCategory.ParentId" material-select watch ng-options="category.Id as category.Name for category in categories"></select>
+			</div>
+			<br/>
+			<div class="right-align">
+				<a class="waves-effect waves-light btn modal-action modal-close" ng-click="deleteCategory(currentCategory)"><i class="material-icons left">delete</i>Delete</a>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- Product Edit -->
+<div id="productEdit" class="modal">
+	<div class="modal-content">
+	<form name="productForm">
+		<h4>{{currentProduct.Name}}</h4>
+		<span>ID: {{currentProduct.Id}}</span>
+		<br/>
+		<br/>
+		<div input-field>
+		    <input type="text" ng-required="true"  ng-model="currentProduct.Name" ng-change="updateProduct(currentProduct)" length="150">
+		    <label>Name*</label>
+		</div>
+		<div input-field>
+		    <input type="text" ng-required="true"  ng-model="currentProduct.Type" ng-change="updateProduct(currentProduct)" length="150">
+		    <label>Type*</label>
+		</div>
+		<div input-field>
+		    <input type="text" ng-required="true"  ng-model="currentProduct.Key" ng-change="updateProduct(currentProduct)" length="150">
+		    <label>Key*</label>
+		</div>
+		<br/>
+		<div class="right-align">
+			<a class="waves-effect waves-light btn modal-action modal-close" ng-click="deleteProduct(currentProduct)"><i class="material-icons left">delete</i>Delete</a>
+		</div>
+	</form>
+	</div>
+</div>

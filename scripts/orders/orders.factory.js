@@ -8,6 +8,7 @@
     };
 
     function getById(id) {
+        console.log(ordersCollectionUrl + '(' + id + ')?$expand=Lines($expand=Item)')
         return $http.get(ordersCollectionUrl + '(' + id + ')?$expand=Lines($expand=Item)');
     };
 
