@@ -3,13 +3,13 @@
     var orderLinesCollectionUrl = backendProperties.orderLinesCollectionUrl;
     var ordersCollectionUrl = backendProperties.ordersCollectionUrl;
 
-    function get(query) {
-        return $http.get(ordersCollectionUrl + query.getQuery());
+    function get() {
+        return $http.get(ordersCollectionUrl);
     };
 
-    function confirm(order) {
-        order.StatusCode = "NEW";
-        return save(order);
+    function getById(id) {
+        console.log(ordersCollectionUrl + '(' + id + ')?$expand=Lines($expand=Item)')
+        return $http.get(ordersCollectionUrl + '(' + id + ')?$expand=Lines($expand=Item)');
     };
 
     function save(order) {
@@ -36,9 +36,9 @@
 
     return {
         get: get,
+        getById: getById,
         save: save,
         saveOrderLine: saveOrderLine,
-        deleteOrderLine: deleteOrderLine,
-        confirm: confirm
+        deleteOrderLine: deleteOrderLine
     };
 });

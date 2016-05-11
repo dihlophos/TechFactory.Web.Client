@@ -5,11 +5,16 @@
     updateScope();
 
     function updateScope() {
-        ordersFactory.get((new odataQuery()).filter("StatusCode ne 'DRAFT'"))
+        ordersFactory.get()
             .then(function (answer) {
                 $scope.orders = answer.data.value;
             }, onError);
     };
+
+    function formatDate(date) {
+        return new Date(date).toString('f');
+    }
+
 
     function onError(answer) {
         alert("Error. Status: " + answer.status + "; StatusText: " + answer.statusText);
