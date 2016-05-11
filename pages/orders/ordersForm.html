@@ -1,11 +1,11 @@
 ﻿<div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
     <div class="list-group">
         <span ng-repeat="orderLine in order.Lines" class="list-group-item ng-binding ng-scope">
-            {{orderLine.Item.Name}} <span class="pull-right">Count: {{orderLine.Qty}}</span>
+            <p>{{orderLine.Item.Name}}</p> Amount: {{orderLine.Amount | currency:orderLine.Amount.CurrencyCode}} <span class="pull-right">Count: {{orderLine.Qty}}</span>
         </span>
     </div>
-    <p>Amount: {{order.Amount}}</p>
-    <a class="btn btn-block btn-lg btn-primary scrollable-footer" href="#products">
+    <p>Total amount: {{order.Amount}}</p>
+    <a class="btn btn-block btn-lg btn-primary scrollable-footer" ng-click="confirm()" ng-show="order.StatusCode==='DRAFT'">
         <i class="fa fa-shopping-cart"></i>
         Confirm
     </a>
