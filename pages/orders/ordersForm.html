@@ -1,10 +1,33 @@
 ﻿<div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
     <div class="list-group">
         <span ng-repeat="orderLine in order.Lines" class="list-group-item ng-binding ng-scope">
-            <p>{{orderLine.Item.Name}}</p> Amount: {{orderLine.Amount | currency:orderLine.Amount.CurrencyCode}} <span class="pull-right">Count: {{orderLine.Qty}}</span>
+            <p>
+                <span class="pull-left">
+                    <strong>{{orderLine.Item.Name}}</strong>
+                </span>
+                <span class="label label-default pull-right">{{orderLine.Qty}} х {{orderLine.Amount | currency:orderLine.Amount.CurrencyCode}}</span>
+            </p>
+        </span>
+        <span class="list-group-item">
+            <p>
+                <span class="pull-left">Total</span>
+                <span class="label label-primary pull-right">{{order.Amount}}</span>
+            </p>
+        </span>
+        <span class="list-group-item">
+            <p>
+                <span class="pull-left">Date</span>
+                <span class="pull-right">{{order.Date|date:'dd.MM.yyyy HH:mm'}}</span>
+            </p>
+        </span>
+        <span class="list-group-item">
+            <p>
+                <span class="pull-left">Status</span>
+                <span class="pull-right">{{order.StatusCode}}</span>
+            </p>
         </span>
     </div>
-    <p>Total amount: {{order.Amount}}</p>
+
     <a class="btn btn-block btn-lg btn-primary scrollable-footer" ng-click="confirm()" ng-show="order.StatusCode==='DRAFT'">
         <i class="fa fa-shopping-cart"></i>
         Confirm
