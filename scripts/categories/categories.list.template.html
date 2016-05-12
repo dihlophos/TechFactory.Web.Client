@@ -1,7 +1,18 @@
 <div ng-if="categories.length">
+    <a ng-repeat="category in categories" href="#/menu/{{category.Id}}/">
+        <div class="thumbnail">
+            <img src="{{category.Links[0].Uri}}" alt="{{product.Name}}">
+            <div class="caption">
+                <p>
+                    <span class="pull-left">{{category.Name}}</span>
+                </p>
+            </div>
+        </div>
+    </a>
+    <!--
     <a ng-repeat="category in categories" class="list-group-item ng-binding ng-scope" href="#/menu/{{category.Id}}/">
         {{category.Name}}
         <span style="margin: 20px"></span>
         <i class="fa pull-right fa-chevron-right"></i>
-    </a>
+    </a>-->
 </div>

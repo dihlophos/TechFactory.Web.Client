@@ -3,8 +3,11 @@ angular.module('tfApp').directive('categoriesList', function (categoriesFactory)
         updateScope();        
         function updateScope() {
             if ($routeParams.id) {
-                categoriesFactory.get(new odataQuery()
-                    .filter("ParentId eq " + $routeParams.id)).then(function (answer) {
+                categoriesFactory
+                    .get(new odataQuery()
+                    .expand("Links")
+                    .filter("ParentId eq " + $routeParams.id))
+                    .then(function (answer) {
                         $scope.categories = answer.data.value;
                     }, onError);
             };
