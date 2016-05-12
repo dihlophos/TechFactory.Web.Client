@@ -10,7 +10,7 @@ angular.module('tfApp').directive('productsList', function (productsFactory, ord
 
             productsFactory.get(new odataQuery()
                 .filter("Categories/any(d:d/Id eq " + $routeParams.id + ")")
-                .expand("Price,Categories,Links")).then(function (answer) {
+                .expand("Price,Categories,Links,Ingredients($expand=Child,ChildUom)")).then(function (answer) {
                     var products = answer.data.value;
 
                     ordersFactory.get(new odataQuery()

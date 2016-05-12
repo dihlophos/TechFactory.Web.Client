@@ -6,7 +6,17 @@
                 <span class="pull-left">{{product.Name}}</span>
                 <span class="label label-default pull-right">{{product.Price.Price | currency:product.Price.CurrencyCode}}</span>
             </p>
+
             <br />
+            
+            <p ng-if="product.Ingredients.length">
+                <span class="label label-info pull-left" ng-repeat="ingredient in product.Ingredients" style="margin-right:3px;margin-bottom:3px;">
+                    {{ingredient.Child.Name}} {{ingredient.BaseQty}} {{ingredient.ChildUom.Key}} 
+                </span>
+            </p>
+            
+            <br ng-if="product.Ingredients.length" />
+            
             <p>
                 <h2 class="text-center">
                     <a ng-class="{'disabled-control':!product.decControlEnabled, 'control':product.decControlEnabled}"
