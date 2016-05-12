@@ -20,10 +20,14 @@ angular.module('tfApp').directive('productsList', function (productsFactory, ord
                             if (answer.data.value[0]) {
                                 $scope.order = answer.data.value[0];
                                 $scope.basket = generateBasket(products, $scope.order);
+
+                                $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
                             } else {
                                 ordersFactory.save(getEmptyOrder()).then(function (answer) {
                                     $scope.order = answer.data;
                                     $scope.basket = generateBasket(products, $scope.order);
+
+                                    $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
                                 }, onError);
                             };
                     }, onError);
@@ -84,6 +88,9 @@ angular.module('tfApp').directive('productsList', function (productsFactory, ord
                     product.orderLine = getEmptyOrderLine(product.Id, $scope.order.Id);
                     product.incControlEnabled = true;
                     product.decControlEnabled = true;
+
+                    $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
+
                 }, onError);
             }
             else {
@@ -94,6 +101,9 @@ angular.module('tfApp').directive('productsList', function (productsFactory, ord
                     };
                     product.incControlEnabled = true;
                     product.decControlEnabled = true;
+
+                    $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
+
                 }, onError);
             }
         };
