@@ -1,6 +1,6 @@
 angular.module('tfApp').directive('categoriesList', function (categoriesFactory) {
     function controller($filter, $scope, $routeParams) {
-        updateScope();
+        updateScope();        
         function updateScope() {
             if ($routeParams.id) {
                 categoriesFactory.get(new odataQuery()
