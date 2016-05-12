@@ -14,7 +14,7 @@
     function confirm() {
         ordersFactory.confirm($scope.order)
             .then(function (answer) {
-                location.href="#/"
+                location.href="#/orders/"
             }, onError);
     }
 
