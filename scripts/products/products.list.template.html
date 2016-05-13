@@ -1,6 +1,6 @@
 ﻿<div ng-if="basket.products.length">
     <div class="thumbnail" ng-repeat="product in basket.products track by $index">
-        <img src="{{product.Links[0].Uri}}" alt="{{product.Name}}">
+        <img ng-src="{{product.Links[0].Uri}}" alt="{{product.Name}}">
         <div class="caption">
             <p class="clearfix">
                 <span class="pull-left">{{product.Name}}</span>

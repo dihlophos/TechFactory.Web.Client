@@ -1,7 +1,7 @@
 <div ng-if="categories.length">
     <a ng-repeat="category in categories" href="#/menu/{{category.Id}}/">
         <div class="thumbnail">
-            <img src="{{category.Links[0].Uri}}" alt="{{product.Name}}">
+            <img ng-src="{{category.Links[0].Uri}}" alt="{{product.Name}}">
             <div class="caption text-center">
                 {{category.Name}}
             </div>
