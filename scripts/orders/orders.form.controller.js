@@ -18,12 +18,10 @@
             }, onError);
     }
 
-    $scope.deleteNotice = function (notice) {
-        alert(notice);
-        var index = $scope.notices.indexOf(notice);
-        if (index > -1) {
-            $scope.notices.splice(index, 1);
-        }
+    $scope.removeOrderLine = function (line) {
+        ordersFactory.deleteOrderLine(line.Id).then(function (answer) {
+            $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
+        }, onError);
     };
 
     function onError(answer) {

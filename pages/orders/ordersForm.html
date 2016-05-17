@@ -14,7 +14,7 @@
             </div>
         </div>-->
 
-        <div ng-repeat="orderLine in order.Lines" drag-to-dismiss="deleteNotice(notice)" class="list-group-item">
+        <div ng-repeat="orderLine in order.Lines" drag-to-dismiss="removeOrderLine(orderLine)" class="list-group-item">
             <p>
                 <span class="pull-left">
                     <strong>{{orderLine.Item.Name}}</strong>
