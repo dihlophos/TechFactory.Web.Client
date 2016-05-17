@@ -14,33 +14,37 @@
             </div>
         </div>-->
 
-        <div ng-repeat="orderLine in order.Lines" drag-to-dismiss="removeOrderLine(orderLine)" class="list-group-item">
-            <p>
-                <span class="pull-left">
-                    <strong>{{orderLine.Item.Name}}</strong>
-                </span>
-                <span class="label label-default pull-right">{{orderLine.Qty}} х {{orderLine.Amount | currency:orderLine.Amount.CurrencyCode}}</span>
-            </p>
-        </div>
-        <div class="list-group-item">
-            <p>
-                <span class="pull-left">Total</span>
-                <span class="label label-primary pull-right">{{order.Amount | currency}}</span>
-            </p>
-        </div>
-        <div class="list-group-item">
-            <p>
-                <span class="pull-left">Date</span>
-                <span class="pull-right">{{order.Date|date:'dd.MM.yyyy HH:mm'}}</span>
-            </p>
-        </div>
-        <div class="list-group-item">
-            <p>
-                <span class="pull-left">Status</span>
-                <span class="pull-right">{{order.StatusCode}}</span>
-            </p>
-        </div>
+    <div ng-repeat="orderLine in order.Lines" drag-to-dismiss="removeOrderLine(orderLine)" class="list-group-item">
+        <p>
+            <span class="pull-left">
+                <strong>{{orderLine.Item.Name}}</strong>
+            </span>
+            <span class="label label-default pull-right">{{orderLine.Qty}} х {{orderLine.Amount | currency:orderLine.Amount.CurrencyCode}}</span>
+        </p>
     </div>
+    <div class="list-group-item">
+        <p>
+            <span class="pull-left">Total</span>
+            <span class="label label-primary pull-right">{{order.Amount | currency}}</span>
+        </p>
+    </div>
+    <div class="list-group-item">
+        <p>
+            <span class="pull-left">Date</span>
+            <span class="pull-right">{{order.Date|date:'dd.MM.yyyy HH:mm'}}</span>
+        </p>
+    </div>
+    <div class="list-group-item">
+        <p>
+            <span class="pull-left">Status</span>
+            <span class="pull-right">{{order.StatusCode}}</span>
+        </p>
+    </div>
+
+    <div class="thumbnail list-group-item">
+        <img ng-src="{{qr}}" alt="{{order.id}}" />
+    </div>
+
     <a class="btn btn-block btn-lg btn-primary scrollable-footer" ng-click="confirm()" ng-show="order.StatusCode==='DRAFT'">
         <i class="fa fa-shopping-cart"></i>
         Confirm

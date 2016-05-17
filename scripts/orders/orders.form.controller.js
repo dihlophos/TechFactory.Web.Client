@@ -2,12 +2,14 @@
 
     updateScope();
     $scope.confirm = confirm;
+    $scope.qr = "https://chart.googleapis.com/chart?cht=qr&chs=255x255&chl=";
 
     function updateScope() {
         ordersFactory.get(new odataQuery($routeParams.id)
             .expand("Lines($expand = Item)"))
             .then(function (answer) {
                 $scope.order = answer.data;
+                $scope.qr += answer.data.id;
             }, onError);
     };
 
