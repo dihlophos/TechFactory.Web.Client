@@ -20,6 +20,7 @@
 
     $scope.removeOrderLine = function (line) {
         ordersFactory.deleteOrderLine(line.Id).then(function (answer) {
+            updateScope();
             $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
         }, onError);
     };
