@@ -36,3 +36,18 @@
         return accounting.formatMoney(number, currency[currencyCode], 2, thousand, decimal, format);
     };
 });
+
+angular.module('tfApp').directive('backButton', function () {
+    return {
+        restrict: 'E',
+
+        link: function (scope, element, attrs) {
+            element.bind('click', goBack);
+
+            function goBack() {
+                history.back();
+                scope.$apply();
+            }
+        }
+    }
+});
