@@ -42,7 +42,7 @@
     </div>
 
     <div class="thumbnail list-group-item">
-        <img ng-src="{{qr}}" alt="{{order.id}}" />
+        <img ng-src="{{ order.Id && 'https://chart.googleapis.com/chart?cht=qr&chs=255x255&chl=' + order.Id || '' }}" alt="{{order.Id}}" />
     </div>
 
     <a class="btn btn-block btn-lg btn-primary scrollable-footer" ng-click="confirm()" ng-show="order.StatusCode==='DRAFT'">
