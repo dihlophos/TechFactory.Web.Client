@@ -1,5 +1,10 @@
 angular.module('tfApp').directive('basketButton', function (ordersFactory) {
+
+    console.debug(Date() + ' step 1');
+
     function controller($filter, $scope, $routeParams) {
+
+        console.debug(Date() + ' step 2');
 
         $scope.$on('DRAFT_ORDER_ID', function (e, data) {
             ordersFactory.get(new odataQuery(data))
