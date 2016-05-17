@@ -2,15 +2,25 @@ angular.module('tfApp').directive('basketButton', function (ordersFactory) {
 
     console.debug(Date() + ' step 1');
 
-    function controller($filter, $scope, $routeParams) {
+    function controller($filter, $scope, $routeParams, $timeout) {
 
         console.debug(Date() + ' step 2');
 
         $scope.$on('DRAFT_ORDER_ID', function (e, data) {
             ordersFactory.get(new odataQuery(data))
                 .then(function (answer) {
-                    $scope.amount = answer.data.Amount;
-                    $scope.orderId = data;
+                    if ($scope.amount != answer.data.Amount || $scope.orderId != data) {
+                        $scope.amount = answer.data.Amount;
+                        $scope.orderId = data;
+
+                        $scope.aclass = "bounceIn";
+
+                        $timeout(function () {
+                            $scope.aclass = false;
+                        }, 500, true);
+
+                    }
+
                 }, onError);
         });
 

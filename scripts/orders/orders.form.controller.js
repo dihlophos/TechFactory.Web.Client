@@ -18,6 +18,14 @@
             }, onError);
     }
 
+    $scope.deleteNotice = function (notice) {
+        alert(notice);
+        var index = $scope.notices.indexOf(notice);
+        if (index > -1) {
+            $scope.notices.splice(index, 1);
+        }
+    };
+
     function onError(answer) {
         alert("Error. Status: " + answer.status + "; StatusText: " + answer.statusText);
     };

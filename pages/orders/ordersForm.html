@@ -1,33 +1,46 @@
 ﻿<div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
+    <!--
     <div class="list-group">
-        <span ng-repeat="orderLine in order.Lines" class="list-group-item ng-binding ng-scope">
+        <div class="container-fluid">
+            <div class="notices-container">
+                <div ng-repeat="orderLine in order.Lines" drag-to-dismiss="deleteNotice(notice)" class="section section-break">
+                    <p>
+                        <span class="pull-left">
+                            <strong>{{orderLine.Item.Name}}</strong>
+                        </span>
+                        <span class="label label-default pull-right">{{orderLine.Qty}} х {{orderLine.Amount | currency:orderLine.Amount.CurrencyCode}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>-->
+
+        <div ng-repeat="orderLine in order.Lines" drag-to-dismiss="deleteNotice(notice)" class="list-group-item">
             <p>
                 <span class="pull-left">
                     <strong>{{orderLine.Item.Name}}</strong>
                 </span>
                 <span class="label label-default pull-right">{{orderLine.Qty}} х {{orderLine.Amount | currency:orderLine.Amount.CurrencyCode}}</span>
             </p>
-        </span>
-        <span class="list-group-item">
+        </div>
+        <div class="list-group-item">
             <p>
                 <span class="pull-left">Total</span>
                 <span class="label label-primary pull-right">{{order.Amount | currency}}</span>
             </p>
-        </span>
-        <span class="list-group-item">
+        </div>
+        <div class="list-group-item">
             <p>
                 <span class="pull-left">Date</span>
                 <span class="pull-right">{{order.Date|date:'dd.MM.yyyy HH:mm'}}</span>
             </p>
-        </span>
-        <span class="list-group-item">
+        </div>
+        <div class="list-group-item">
             <p>
                 <span class="pull-left">Status</span>
                 <span class="pull-right">{{order.StatusCode}}</span>
             </p>
-        </span>
+        </div>
     </div>
-
     <a class="btn btn-block btn-lg btn-primary scrollable-footer" ng-click="confirm()" ng-show="order.StatusCode==='DRAFT'">
         <i class="fa fa-shopping-cart"></i>
         Confirm

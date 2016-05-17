@@ -1,8 +1,8 @@
 ﻿angular.module('tfApp').config(['$routeProvider', function ($routeProvider) {
-  $routeProvider.when('/menu/:id?/', { templateUrl: 'pages/menu.html', controller: 'menuController', reloadOnSearch: false });
-  $routeProvider.when('/orders/', { templateUrl: 'pages/orders/ordersList.html', controller: 'ordersListController', reloadOnSearch: false });		
-  $routeProvider.when('/order/:id/', { templateUrl: 'pages/orders/ordersForm.html', controller: 'ordersFormController', reloadOnSearch: false });
-  $routeProvider.otherwise('/menu/');
+    $routeProvider.when('/menu/:id?/', { templateUrl: 'pages/menu.html', controller: 'menuController', reloadOnSearch: false });
+    $routeProvider.when('/orders/', { templateUrl: 'pages/orders/ordersList.html', controller: 'ordersListController', reloadOnSearch: false });
+    $routeProvider.when('/order/:id/', { templateUrl: 'pages/orders/ordersForm.html', controller: 'ordersFormController', reloadOnSearch: false });
+    $routeProvider.otherwise('/menu/');
 }])
 
 .constant('backendProperties', {
