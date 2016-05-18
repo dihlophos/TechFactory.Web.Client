@@ -7,6 +7,22 @@ angular.module('tfApp').directive('basketButton', function (ordersFactory) {
         console.debug(Date() + ' step 2');
 
         $scope.$on('DRAFT_ORDER_ID', function (e, data) {
+
+            var draft = ordersFactory.getDraft();
+
+            if ($scope.amount != draft.Amount || $scope.orderId != draft.Id) {
+                $scope.amount = draft.Amount;
+                $scope.orderId = draft.Id;
+
+                $scope.aclass = "bounceIn";
+
+                $timeout(function () {
+                    $scope.aclass = false;
+                }, 500, true);
+
+            }
+
+            /*
             ordersFactory.get(new odataQuery(data))
                 .then(function (answer) {
                     if ($scope.amount != answer.data.Amount || $scope.orderId != data) {
@@ -21,7 +37,7 @@ angular.module('tfApp').directive('basketButton', function (ordersFactory) {
 
                     }
 
-                }, onError);
+                }, onError);*/
         });
 
         function onError(answer) {

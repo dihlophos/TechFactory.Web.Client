@@ -21,12 +21,14 @@ angular.module('tfApp').directive('productsList', function (productsFactory, ord
                                 $scope.order = answer.data.value[0];
                                 $scope.basket = generateBasket(products, $scope.order);
 
+                                ordersFactory.setDraft($scope.order);
                                 $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
                             } else {
                                 ordersFactory.save(getEmptyOrder()).then(function (answer) {
                                     $scope.order = answer.data;
                                     $scope.basket = generateBasket(products, $scope.order);
 
+                                    ordersFactory.setDraft($scope.order);
                                     $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
                                 }, onError);
                             };
@@ -89,7 +91,10 @@ angular.module('tfApp').directive('productsList', function (productsFactory, ord
                     product.incControlEnabled = true;
                     product.decControlEnabled = true;
 
-                    $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
+                    ordersFactory.get(new odataQuery($scope.order.Id)).then(function (answer) {
+                        ordersFactory.setDraft(answer.data);
+                        $scope.$emit('DRAFT_ORDER_ID', answer.data.Id);
+                    }, onError);
 
                 }, onError);
             }
@@ -102,7 +107,10 @@ angular.module('tfApp').directive('productsList', function (productsFactory, ord
                     product.incControlEnabled = true;
                     product.decControlEnabled = true;
 
-                    $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
+                    ordersFactory.get(new odataQuery($scope.order.Id)).then(function (answer) {
+                        ordersFactory.setDraft(answer.data);
+                        $scope.$emit('DRAFT_ORDER_ID', answer.data.Id);
+                    }, onError);
 
                 }, onError);
             }

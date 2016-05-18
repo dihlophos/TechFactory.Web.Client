@@ -10,5 +10,8 @@
         return $http.post(productsCollectionUrl, product);
     };
 
-    return { get: get, save: save };
+    return {
+        get: get,
+        save: save
+    };
 });

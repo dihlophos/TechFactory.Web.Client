@@ -3,6 +3,16 @@
     var orderLinesCollectionUrl = backendProperties.orderLinesCollectionUrl;
     var ordersCollectionUrl = backendProperties.ordersCollectionUrl;
 
+    var _draft;
+
+    function setDraft(draft) {
+        _draft = draft;
+    }
+
+    function getDraft() {
+        return _draft;
+    }
+
     function get(query) {
         return $http.get(ordersCollectionUrl + query.getQuery());
     };
@@ -39,6 +49,8 @@
         save: save,
         saveOrderLine: saveOrderLine,
         deleteOrderLine: deleteOrderLine,
-        confirm: confirm
+        confirm: confirm,
+        getDraft: getDraft,
+        setDraft: setDraft
     };
 });
