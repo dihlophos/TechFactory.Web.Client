@@ -13,14 +13,30 @@
                 </div>
             </div>
         </div>-->
-
     <div ng-repeat="orderLine in order.Lines" drag-to-dismiss="removeOrderLine(orderLine)" class="list-group-item">
-        <p>
-            <span class="pull-left">
-                <strong>{{orderLine.Item.Name}}</strong>
-            </span>
-            <span class="label label-default pull-right">{{orderLine.Qty}} х {{orderLine.Amount | currency:orderLine.Amount.CurrencyCode}}</span>
-        </p>
+        <div class="row">
+            <img width="40" height="40" src="https://s3-media3.fl.yelpcdn.com/bphoto/dHOzMpEeCsqPkuibvJwtkg/o.jpg" alt="{{orderLine.Item.Name}}">
+            <strong>{{orderLine.Item.Name}}</strong>
+            <div class="pull-right">
+                <h2>
+                    <a ng-class="{'disabled-control':!product.decControlEnabled, 'control':product.decControlEnabled}"
+                       ng-disabled="!product.decControlEnabled"
+                       ng-click="decPosition(product)"
+                       ng-show="orderLine.Qty">
+                        <i class="fa fa-minus-circle"></i>
+                    </a>
+                    {{orderLine.Qty}}
+                    <a ng-class="{'disabled-control':!product.incControlEnabled, 'control':product.incControlEnabled}"
+                       ng-disabled="!product.incControlEnabled"
+                       ng-click="incPosition(product)">
+                        <i class="fa fa-plus-circle"></i>
+                    </a>
+                </h2>
+                <a class="label label-default">{{orderLine.Qty}} х {{orderLine.Amount | currency:orderLine.Amount.CurrencyCode}}</a>
+            </div>
+
+
+        </div>
     </div>
     <div class="list-group-item">
         <p>
@@ -40,11 +56,9 @@
             <span class="pull-right">{{order.StatusCode}}</span>
         </p>
     </div>
-
     <div class="thumbnail list-group-item">
         <img ng-src="{{ order.Id && 'https://chart.googleapis.com/chart?cht=qr&chs=255x255&chl=' + order.Id || '' }}" alt="{{order.Id}}" />
     </div>
-
     <a class="btn btn-block btn-lg btn-primary scrollable-footer" ng-click="confirm()" ng-show="order.StatusCode==='DRAFT'">
         <i class="fa fa-shopping-cart"></i>
         Confirm
