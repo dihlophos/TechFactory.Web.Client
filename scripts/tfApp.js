@@ -15,14 +15,20 @@ angular.module('tfApp').directive('dragToDismiss', function ($drag, $parse, $tim
                 var dismiss = false;
 
                 $drag.bind(elem, {
-                    transform: $drag.TRANSLATE_RIGHT,
+                    transform: $drag.TRANSLATE_HORIZONTAL,
                     move: function (drag) {
-                        if (drag.distanceX >= drag.rect.width / 4) {
-                            dismiss = true;
-                            elem.addClass('dismiss');
-                        } else {
-                            dismiss = false;
-                            elem.removeClass('dismiss');
+                        if (drag.distanceX > 0) {
+
+                            if (drag.distanceX >= drag.rect.width / 4) {
+                                dismiss = true;
+                                elem.addClass('dismiss');
+                            } else {
+                                dismiss = false;
+                                elem.removeClass('dismiss');
+                            }
+                        }
+                        else {
+                            return;
                         }
                     },
                     cancel: function () {

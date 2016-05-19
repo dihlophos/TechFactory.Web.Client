@@ -15,9 +15,14 @@
         </div>-->
     <div ng-repeat="orderLine in order.Lines" drag-to-dismiss="removeOrderLine(orderLine)" class="list-group-item">
         <div class="row">
-            <img width="40" height="40" src="https://s3-media3.fl.yelpcdn.com/bphoto/dHOzMpEeCsqPkuibvJwtkg/o.jpg" alt="{{orderLine.Item.Name}}">
-            <strong>{{orderLine.Item.Name}}</strong>
-            <div class="pull-right">
+            <div class="col-xs-12">
+                <img width="40" height="40" src="https://s3-media3.fl.yelpcdn.com/bphoto/dHOzMpEeCsqPkuibvJwtkg/o.jpg" alt="{{orderLine.Item.Name}}">
+                <strong>{{orderLine.Item.Name}}</strong>
+                <div class="pull-right">
+                    <a class="label label-default">{{orderLine.Qty}} х {{orderLine.Amount | currency:orderLine.Amount.CurrencyCode}}</a>
+                </div>
+            </div>
+            <div class="col-xs-4">
                 <h2>
                     <a ng-class="{'disabled-control':!product.decControlEnabled, 'control':product.decControlEnabled}"
                        ng-disabled="!product.decControlEnabled"
@@ -32,12 +37,10 @@
                         <i class="fa fa-plus-circle"></i>
                     </a>
                 </h2>
-                <a class="label label-default">{{orderLine.Qty}} х {{orderLine.Amount | currency:orderLine.Amount.CurrencyCode}}</a>
             </div>
-
-
         </div>
     </div>
+
     <div class="list-group-item">
         <p>
             <span class="pull-left">Total</span>
