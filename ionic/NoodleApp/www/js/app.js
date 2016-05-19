@@ -22,6 +22,14 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   });
 })
 
+.constant('backendProperties', {
+    productsCollectionUrl: "http://partner-web-api-v1.azurewebsites.net/odata/Products",
+    orderLinesCollectionUrl: "http://partner-web-api-v1.azurewebsites.net/odata/OrderLines",
+    ordersCollectionUrl: "http://partner-web-api-v1.azurewebsites.net/odata/Orders",
+    categoriesCollectionUrl: "http://partner-web-api-v1.azurewebsites.net/odata/Categories",
+    rootCategory: "MENU"
+})
+
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
@@ -60,14 +68,24 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     })
 
   .state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+      url: '/playlists/:playlistId',
+      views: {
+          'menuContent': {
+              templateUrl: 'templates/playlist.html',
+              controller: 'PlaylistCtrl'
+          }
       }
-    }
+  })
+
+  .state('app.categories', {
+      url: '/categories/:id?/',
+      views: {
+          'menuContent': {
+              templateUrl: 'templates/categorylist.html',
+              controller: 'CategoryCtrl'
+          }
+      }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/categories/');
 });

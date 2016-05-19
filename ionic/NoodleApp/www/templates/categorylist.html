@@ -1,0 +1,55 @@
+<ion-view view-title="Appetizers" class="pane" nav-view="active" style="opacity: 1; box-shadow: rgba(0, 0, 0, 0) 0px 0px 10px; transform: translate3d(0%, 0px, 0px);">
+    
+    <ion-content>
+        <ion-list>
+            <ion-item class="item item-avatar" ng-repeat="category in categories" href="#/app/categories/{{category.Id}}">
+                <img class="full-image" ng-if="category.Links[0].Uri" ng-src="{{category.Links[0].Uri}}" alt="{{category.Name}}">
+                <h2>
+                    {{category.Name}}
+                </h2>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+
+    <ion-nav-buttons side="right" class="hide"></ion-nav-buttons>
+    <ion-content class="scroll-content ionic-scroll  has-header">
+        <div class="scroll" style="transform: translate3d(0px, 0px, 0px) scale(1);">
+            <div class="row colums-two">
+                <ion-item class="row colums-two" ng-repeat="product in basket.products track by $index" href="#/app/product/{{product.Id}}">
+                    <div class="card col">
+                        <div class="item item-image">
+                            <img ng-if="product.Links[0].Uri" ng-src="{{product.Links[0].Uri}}" alt="{{product.Name}}">
+                        </div>
+                        <a class="item">
+                            <h3 class="ng-binding">{{product.Name}}</h3>
+                            <h4 class="ng-binding">{{product.Price.Price | currency:product.Price.CurrencyCode}}</h4>
+                        </a>
+                    </div>
+                </ion-item>
+            </div>
+        </div>
+    </ion-content>
+
+    <!--
+        <p class="clearfix" ng-if="product.Ingredients.length">
+            <span class="label label-info pull-left" ng-repeat="ingredient in product.Ingredients" style="margin-right:3px;margin-bottom:3px;">
+                {{ingredient.Child.Name}} {{ingredient.BaseQty}} {{ingredient.ChildUom.Key}}
+            </span>
+        </p>
+
+        <h2 class="text-center clearfix">
+            <a ng-class="{'disabled-control':!product.decControlEnabled, 'control':product.decControlEnabled}"
+               ng-disabled="!product.decControlEnabled"
+               ng-click="decPosition(product)"
+               ng-show="product.orderLine.Qty">
+                <i class="fa fa-minus-circle"></i>
+            </a>
+            {{product.orderLine.Qty}}
+            <a ng-class="{'disabled-control':!product.incControlEnabled, 'control':product.incControlEnabled}"
+               ng-disabled="!product.incControlEnabled"
+               ng-click="incPosition(product)">
+                <i class="fa fa-plus-circle"></i>
+            </a>
+        </h2>-->
+</ion-view>

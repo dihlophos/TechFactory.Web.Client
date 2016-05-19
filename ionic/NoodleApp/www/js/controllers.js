@@ -1,5 +1,95 @@
 angular.module('starter.controllers', [])
 
+.factory('categoriesFactory', function ($http, backendProperties) {
+
+    var categoriesCollectionUrl = backendProperties.categoriesCollectionUrl;
+   
+    function get(query) {
+        return $http.get(categoriesCollectionUrl + query.getQuery());
+    };
+
+    function save(category) {
+        return $http.post(categoriesCollectionUrl, category);
+    };
+
+    return { get: get, save: save };
+})
+
+.factory('productsFactory', function ($http, backendProperties) {
+
+    var productsCollectionUrl = backendProperties.productsCollectionUrl;
+
+    function get(query) {
+        return $http.get(productsCollectionUrl + query.getQuery());
+    };
+
+    function save(product) {
+        return $http.post(productsCollectionUrl, product);
+    };
+
+    return {
+        get: get,
+        save: save
+    };
+})
+
+.factory('ordersFactory', function ($http, backendProperties) {
+
+    var orderLinesCollectionUrl = backendProperties.orderLinesCollectionUrl;
+    var ordersCollectionUrl = backendProperties.ordersCollectionUrl;
+
+    var _draft;
+
+    function setDraft(draft) {
+        _draft = draft;
+    }
+
+    function getDraft() {
+        return _draft;
+    }
+
+    function get(query) {
+        return $http.get(ordersCollectionUrl + query.getQuery());
+    };
+
+    function confirm(order) {
+        order.StatusCode = "NEXTSTATUS";
+        return save(order);
+    };
+
+    function save(order) {
+        if (order.Id) {
+            return $http.put(ordersCollectionUrl + '(' + order.Id + ')', order);
+        }
+        else {
+            return $http.post(ordersCollectionUrl, order);
+        }
+    };
+
+    function saveOrderLine(orderLine) {
+        if (orderLine.Id) {
+            return $http.put(orderLinesCollectionUrl + '(' + orderLine.Id + ')', orderLine);
+        }
+        else {
+            return $http.post(orderLinesCollectionUrl, orderLine);
+        }
+    };
+
+    function deleteOrderLine(id) {
+        return $http.delete(orderLinesCollectionUrl + '(' + id + ')');
+    };
+
+    return {
+        get: get,
+        save: save,
+        saveOrderLine: saveOrderLine,
+        deleteOrderLine: deleteOrderLine,
+        confirm: confirm,
+        getDraft: getDraft,
+        setDraft: setDraft
+    };
+})
+
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
   // With the new view caching in Ionic, Controllers are only called
@@ -52,5 +142,188 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('PlaylistCtrl', function ($scope, $stateParams) {
+})
+
+.controller('CategoryCtrl', function ($scope, $state, $stateParams, categoriesFactory, productsFactory, ordersFactory, backendProperties) {
+
+    $scope.updateOrderLine = updateOrderLine;
+    $scope.incPosition = incPosition;
+    $scope.decPosition = decPosition;
+
+    updateScope();
+    updateProductScope();
+
+    function updateScope() {
+
+        if (!$stateParams.id) {
+            categoriesFactory
+                .get(new odataQuery()
+                .filter("Key eq '" + backendProperties.rootCategory + "'")).then(function (answer) {
+                    $state.go('app.categories', { 'id': answer.data.value[0].Id });
+                });
+        };
+
+        if ($stateParams.id) {
+            categoriesFactory
+                .get(new odataQuery()
+                .expand("Links")
+                .filter("ParentId eq " + $stateParams.id))
+                .then(function (answer) {
+                    $scope.categories = answer.data.value;
+                }, onError);
+        }
+    };
+
+
+
+    function updateProductScope() {
+
+        if (!$stateParams.id) {
+            return;
+        }
+
+        productsFactory.get(new odataQuery()
+            .filter("Categories/any(d:d/Id eq " + $stateParams.id + ")")
+            .expand("Price,Categories,Links,Ingredients($expand=Child,ChildUom)")).then(function (answer) {
+                var products = answer.data.value;
+
+                ordersFactory.get(new odataQuery()
+                    .filter("StatusCode eq 'DRAFT'")
+                    .top(1)
+                    .expand("Lines($expand=Item)")).then(function (answer) {
+                        if (answer.data.value[0]) {
+                            $scope.order = answer.data.value[0];
+                            $scope.basket = generateBasket(products, $scope.order);
+
+                            ordersFactory.setDraft($scope.order);
+                            $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
+                        } else {
+                            ordersFactory.save(getEmptyOrder()).then(function (answer) {
+                                $scope.order = answer.data;
+                                $scope.basket = generateBasket(products, $scope.order);
+
+                                ordersFactory.setDraft($scope.order);
+                                $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
+                            }, onError);
+                        };
+                    }, onError);
+            }, onError);
+    };
+
+    function onError(answer) {
+        alert("Error. Status: " + answer.status + "; StatusText: " + answer.statusText);
+    };
+
+    function mapOrderToProducts(products, order) {
+        return products.map(function (product) {
+            var orderLine = findOrderLineByItemId(order.Lines, product.Id);
+
+            product["orderLine"] = orderLine ?
+                orderLine : getEmptyOrderLine(product.Id, order.Id);
+
+            product["incControlEnabled"] = true;
+            product["decControlEnabled"] = true;
+            return product;
+        });
+    };
+
+    function generateBasket(products, order) {
+        var basket = {};
+        basket["products"] = mapOrderToProducts(products, order);
+        basket["pickedCount"] = 0;
+
+        for (var line in order.Lines) {
+            basket["pickedCount"] += order.Lines[line].Qty;
+        }
+
+        return basket;
+    };
+
+    function getEmptyOrderLine(productId, orderId) {
+        return {
+            Qty: 0,
+            ItemId: productId,
+            OrderId: orderId,
+        };
+    };
+
+    function incPosition(product) {
+        $scope.basket.pickedCount++;
+        product.orderLine.Qty++;
+        product.incControlEnabled = false;
+        updateOrderLine(product);
+    };
+
+    function decPosition(product) {
+        $scope.basket.pickedCount--;
+        product.orderLine.Qty--;
+        product.decControlEnabled = false;
+        updateOrderLine(product);
+    };
+
+    function updateOrderLine(product) {
+        product.controlEnabled = false;
+        if (product.orderLine.Qty == 0) {
+            ordersFactory.deleteOrderLine(product.orderLine.Id).then(function (answer) {
+                product.orderLine = getEmptyOrderLine(product.Id, $scope.order.Id);
+                product.incControlEnabled = true;
+                product.decControlEnabled = true;
+
+                ordersFactory.get(new odataQuery($scope.order.Id)).then(function (answer) {
+                    ordersFactory.setDraft(answer.data);
+                    $scope.$emit('DRAFT_ORDER_ID', answer.data.Id);
+                }, onError);
+
+            }, onError);
+        }
+        else {
+            ordersFactory.saveOrderLine(product.orderLine).then(function (answer) {
+                if (answer.data)//PUT returns status 204((
+                {
+                    product.orderLine = answer.data;
+                };
+                product.incControlEnabled = true;
+                product.decControlEnabled = true;
+
+                ordersFactory.get(new odataQuery($scope.order.Id)).then(function (answer) {
+                    ordersFactory.setDraft(answer.data);
+                    $scope.$emit('DRAFT_ORDER_ID', answer.data.Id);
+                }, onError);
+
+            }, onError);
+        }
+    };
+
+    function onError(answer) {
+        alert("Error. Status: " + answer.status + "; StatusText: " + answer.statusText);
+        product.incControlEnabled = true;
+        product.decControlEnabled = true;
+    };
+
+    function getEmptyOrder() {
+        return {
+            Date: new Date().toISOString(),
+            DueDate: new Date().toISOString(),
+            Number: "SO001",
+            Type: "SO"
+        };
+    };
+
+    function findOrderLineByItemId(lines, itemId) {
+        for (var line in lines) {
+            if (lines[line].ItemId === itemId) {
+                return lines[line];
+            }
+        }
+        return null;
+    }
+})
+
+.controller('ProductCtrl', function (productsFactory, ordersFactory) {
+
+    function controller($filter, $scope, $routeParams) {
+
+    };
+
 });
