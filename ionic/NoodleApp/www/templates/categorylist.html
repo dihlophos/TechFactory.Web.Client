@@ -1,7 +1,8 @@
-<ion-view view-title="Appetizers" class="pane" nav-view="active" style="opacity: 1; box-shadow: rgba(0, 0, 0, 0) 0px 0px 10px; transform: translate3d(0%, 0px, 0px);">
-    
-    <ion-content>
-        <ion-list>
+<ion-view view-title="Categories" class="pane" nav-view="active" style="opacity: 1; box-shadow: rgba(0, 0, 0, 0) 0px 0px 10px; transform: translate3d(0%, 0px, 0px);">
+
+    <ion-content class="scroll-content ionic-scroll has-header">
+
+        <ion-list ng-if="categories.length">
             <ion-item class="item item-avatar" ng-repeat="category in categories" href="#/app/categories/{{category.Id}}">
                 <img class="full-image" ng-if="category.Links[0].Uri" ng-src="{{category.Links[0].Uri}}" alt="{{category.Name}}">
                 <h2>
@@ -9,11 +10,7 @@
                 </h2>
             </ion-item>
         </ion-list>
-    </ion-content>
 
-
-    <ion-nav-buttons side="right" class="hide"></ion-nav-buttons>
-    <ion-content class="scroll-content ionic-scroll  has-header">
         <div class="scroll" style="transform: translate3d(0px, 0px, 0px) scale(1);">
             <div class="row colums-two">
                 <ion-item class="row colums-two" ng-repeat="product in basket.products track by $index" href="#/app/product/{{product.Id}}">
