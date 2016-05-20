@@ -23,6 +23,18 @@
                             <h3 class="ng-binding">{{product.Name}}</h3>
                             <h4 class="ng-binding">{{product.Price.Price | currency:product.Price.CurrencyCode}}</h4>
                         </a>
+
+                        <h2 class="text-center clearfix">
+                            <a ng-click="decPosition(product)"
+                               ng-show="product.orderLine.Qty">
+                                <i class="icon ion-minus-circled"></i>
+                            </a>
+                            {{product.orderLine.Qty}}
+                            <a ng-click="incPosition(product)">
+                                <i class="icon ion-plus-circled"></i>
+                            </a>
+                        </h2>
+                    
                     </div>
                 </div>
             </div>
