@@ -1,5 +1,7 @@
-<ion-view view-title="Categories" class="pane" nav-view="active" style="opacity: 1; box-shadow: rgba(0, 0, 0, 0) 0px 0px 10px; transform: translate3d(0%, 0px, 0px);">
+<ion-view view-title="Categories" class="pane" nav-view="active" 
+          style="opacity: 1; box-shadow: rgba(0, 0, 0, 0) 0px 0px 10px; transform: translate3d(0%, 0px, 0px);">
 
+    <ion-nav-buttons side="right" class="hide"></ion-nav-buttons>
     <ion-content class="scroll-content ionic-scroll has-header">
 
         <ion-list ng-if="categories.length">
@@ -11,9 +13,8 @@
             </ion-item>
         </ion-list>
 
-        <div class="scroll" style="transform: translate3d(0px, 0px, 0px) scale(1);">
-            <div class="row colums-two">
-                <ion-item class="row colums-two" ng-repeat="product in basket.products track by $index" href="#/app/product/{{product.Id}}">
+            <div class="scroll" style="transform: translate3d(0px, -20px, 0px) scale(1);">
+                <div class="row colums-two" ng-repeat="product in basket.products track by $index" href="#/app/product/{{product.Id}}">
                     <div class="card col">
                         <div class="item item-image">
                             <img ng-if="product.Links[0].Uri" ng-src="{{product.Links[0].Uri}}" alt="{{product.Name}}">
@@ -23,9 +24,8 @@
                             <h4 class="ng-binding">{{product.Price.Price | currency:product.Price.CurrencyCode}}</h4>
                         </a>
                     </div>
-                </ion-item>
+                </div>
             </div>
-        </div>
     </ion-content>
 
     <!--
