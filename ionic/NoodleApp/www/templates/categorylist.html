@@ -1,7 +1,12 @@
 <ion-view view-title="Categories" class="pane" nav-view="active" 
           style="opacity: 1; box-shadow: rgba(0, 0, 0, 0) 0px 0px 10px; transform: translate3d(0%, 0px, 0px);">
+    
+    <ion-nav-buttons side="right">
+        <button class="button" ng-click="doSomething()">
+            <h2><i class="ion-ios-cart"></i></h2>
+        </button>
+    </ion-nav-buttons>
 
-    <ion-nav-buttons side="right" class="hide"></ion-nav-buttons>
     <ion-content class="scroll-content ionic-scroll has-header">
 
         <ion-list ng-if="categories.length">
@@ -34,7 +39,6 @@
                                 <i class="icon ion-plus-circled"></i>
                             </a>
                         </h2>
-                    
                     </div>
                 </div>
             </div>
