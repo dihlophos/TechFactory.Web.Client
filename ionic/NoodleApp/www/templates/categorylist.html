@@ -1,4 +1,4 @@
-<ion-view view-title="Categories" class="pane" nav-view="active" 
+<!--<ion-view view-title="Categories" class="pane" nav-view="active" 
           style="opacity: 1; box-shadow: rgba(0, 0, 0, 0) 0px 0px 10px; transform: translate3d(0%, 0px, 0px);">
     
     <ion-nav-buttons side="right">
@@ -43,26 +43,59 @@
                 </div>
             </div>
     </ion-content>
+</ion-view>-->
 
-    <!--
-        <p class="clearfix" ng-if="product.Ingredients.length">
-            <span class="label label-info pull-left" ng-repeat="ingredient in product.Ingredients" style="margin-right:3px;margin-bottom:3px;">
-                {{ingredient.Child.Name}} {{ingredient.BaseQty}} {{ingredient.ChildUom.Key}}
-            </span>
-        </p>
+<ion-view view-title="Categories" class="pane" nav-view="active"
+          style="opacity: 1; box-shadow: rgba(0, 0, 0, 0) 0px 0px 10px; transform: translate3d(0%, 0px, 0px);">
 
-        <h2 class="text-center clearfix">
-            <a ng-class="{'disabled-control':!product.decControlEnabled, 'control':product.decControlEnabled}"
-               ng-disabled="!product.decControlEnabled"
-               ng-click="decPosition(product)"
-               ng-show="product.orderLine.Qty">
-                <i class="fa fa-minus-circle"></i>
-            </a>
-            {{product.orderLine.Qty}}
-            <a ng-class="{'disabled-control':!product.incControlEnabled, 'control':product.incControlEnabled}"
-               ng-disabled="!product.incControlEnabled"
-               ng-click="incPosition(product)">
-                <i class="fa fa-plus-circle"></i>
-            </a>
-        </h2>-->
+    <ion-nav-buttons side="right">
+        <button class="button" ng-click="doSomething()">
+            <h2><i class="ion-ios-cart"></i></h2>
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content class="scroll-content ionic-scroll has-header">
+
+        <ion-list ng-if="categories.length">
+            <ion-item class="item item-avatar" ng-repeat="category in categories" href="#/app/categories/{{category.Id}}">
+                <img class="full-image" ng-if="category.Links[0].Uri" ng-src="{{category.Links[0].Uri}}" alt="{{category.Name}}">
+                <h2>
+                    {{category.Name}}
+                </h2>
+            </ion-item>
+        </ion-list>
+
+
+
+
+
+
+        <!--<ion-content padding="true" class="has-header">-->
+        <ion-list id="home-list1" class=" ">
+            <ion-thumbnail ng-repeat="product in basket.products track by $index" href="#/app/product/{{product.Id}}">
+                <ion-item class="item-thumbnail-left  " id="home-list-item5">
+                    <img src="{{product.Links[0].Uri}}">
+                    <h2>{{product.Name}}</h2>
+                    <p style="white-space:normal;">{{product.Price.Price | currency:product.Price.CurrencyCode}}</p>
+
+                    <h2 class="clearfix">
+                        <a ng-click="decPosition(product)"
+                           ng-show="product.orderLine.Qty">
+                            <i class="icon ion-minus-circled"></i>
+                        </a>
+                        {{product.orderLine.Qty}}
+                        <a ng-click="incPosition(product)">
+                            <i class="icon ion-plus-circled"></i>
+                        </a>
+                    </h2>
+
+                </ion-item>
+        </ion-list>
+    </ion-content>
+
+
+
+
+
 </ion-view>
+
