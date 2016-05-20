@@ -77,6 +77,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
   })
 
+  .state('app.order', {
+      url: '/orders/:id',
+      views: {
+          'menuContent': {
+              templateUrl: 'templates/orderform.html',
+              controller: 'OrderCtrl'
+          }
+      }
+  })
+
   .state('app.categories', {
       url: '/categories/:id?/',
       views: {

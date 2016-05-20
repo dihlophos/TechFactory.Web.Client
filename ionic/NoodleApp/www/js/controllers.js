@@ -150,6 +150,7 @@ angular.module('starter.controllers', [])
     $scope.updateOrderLine = updateOrderLine;
     $scope.incPosition = incPosition;
     $scope.decPosition = decPosition;
+    $scope.draft = getDraft();
 
     updateScope();
     updateProductScope();
@@ -317,6 +318,10 @@ angular.module('starter.controllers', [])
             }
         }
         return null;
+    };
+
+    function getDraft() {
+        return ordersFactory.getDraft();
     }
 })
 
@@ -326,4 +331,73 @@ angular.module('starter.controllers', [])
 
     };
 
+})
+
+.controller('OrderCtrl', function ($scope, $stateParams, ordersFactory) {
+
+    updateScope();
+    $scope.confirm = confirm;
+
+    function updateScope() {
+        ordersFactory.get(new odataQuery($stateParams.id)
+            .expand("Lines($expand = Item)"))
+            .then(function (answer) {
+                $scope.order = answer.data;
+            }, onError);
+    };
+
+    function confirm() {
+        ordersFactory.confirm($scope.order)
+            .then(function (answer) {
+                location.href = "#/orders/"
+            }, onError);
+    }
+
+    $scope.removeOrderLine = function (line) {
+        ordersFactory.deleteOrderLine(line.Id).then(function (answer) {
+            updateScope();
+            $scope.$emit('DRAFT_ORDER_ID', $scope.order.Id);
+        }, onError);
+    };
+
+    function onError(answer) {
+        alert("Error. Status: " + answer.status + "; StatusText: " + answer.statusText);
+    };
+})
+
+.directive('basketButton', function (ordersFactory) {
+
+    console.debug(Date() + ' step 1');
+
+    function controller($filter, $scope, $stateParams, $timeout) {
+
+        console.debug(Date() + ' step 2');
+
+        $scope.$parent.$on('DRAFT_ORDER_ID', function (e, data) {
+
+            var draft = ordersFactory.getDraft();
+
+            if ($scope.amount != draft.Amount || $scope.orderId != draft.Id) {
+                $scope.amount = draft.Amount;
+                $scope.orderId = draft.Id;
+
+                $scope.aclass = "bounceIn";
+
+                $timeout(function () {
+                    $scope.aclass = false;
+                }, 500, true);
+
+            }
+        });
+
+        function onError(answer) {
+            alert("Error. Status: " + answer.status + "; StatusText: " + answer.statusText);
+        };
+    }
+
+    return {
+        restrict: "E",
+        templateUrl: "templates/basket.button.template.html",
+        controller: controller
+    };
 });
