@@ -1,24 +1,25 @@
-<ion-view title="Order" id="page2" >
+<ion-view title="Order" id="page2"  ui-scroll-bottom='bottomReached()'>
     <ion-content padding="true" class="has-header">
         <ion-list id="cart-list4">
-            <ion-item class="item-icon-left  " id="cart-list-item11">
-                <img src="{{product.Links[0].Uri}}">
-                <h2>WOK Regular</h2>
-                <p style="white-space:normal;">1x$6.0</p>
-              
-                <!--<span class="item-note">1x$6.00</span>-->
+            <ion-item class="item item-thumbnail-left" id="cart-list-item11">
+                <img width="40" height="40" src="https://s3-media3.fl.yelpcdn.com/bphoto/dHOzMpEeCsqPkuibvJwtkg/o.jpg" alt="{{orderLine.Item.Name}}">
+                <h2>WOK half{{product.orderLine.Item.Name}}</h2>
+                <p style="white-space:normal;">1x$4.00 
+                <!--{{orderLine.Qty}} õ {{orderLine.Amount | currency:orderLine.Amount.CurrencyCode}}-->
+                </p>
+ 
             </ion-item>
             <ion-item id="cart-list-item12">
                 Total
-                <span class="item-note">$6,00</span>
+                <span class="item-note">$6,00 {{order.Date|date:'dd.MM.yyyy HH:mm'}}</span>
             </ion-item>
             <ion-item id="cart-list-item13" >
                 Date
-                <span class="item-note">18.05.2016 08:06</span>
+                <span class="item-note">18.05.2016 08:06 {{order.Date|date:'dd.MM.yyyy HH:mm'}}</span>
             </ion-item>
             <ion-item id="cart-list-item14" >
                 Status
-                <span class="item-note">DRAFT</span>
+                <span class="item-note">DRAFT {{order.StatusCode}}</span>
             </ion-item>
         </ion-list>
         <div class="">
