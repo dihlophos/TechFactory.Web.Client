@@ -43,57 +43,71 @@
     </ion-content>
 </ion-view>-->
 
-<ion-view view-title="Categories" class="pane" nav-view="active"
-          style="opacity: 1; box-shadow: rgba(0, 0, 0, 0) 0px 0px 10px; transform: translate3d(0%, 0px, 0px);">
 
-    <ion-nav-buttons side="right">
-        <button class="button" ng-click="doSomething()">
-            <h2><i class="ion-ios-cart"></i></h2>
-        </button>
-    </ion-nav-buttons>
+    <ion-view title="Categories" id="page2" class=" ">
+ 
+        <ion-nav-buttons side="right">
+            <basket-button  />
+        </ion-nav-buttons>  
 
-    <ion-content class="scroll-content ionic-scroll has-header">
+        <ion-content class="scroll-content ionic-scroll has-header">
 
-        <ion-list ng-if="categories.length">
-            <ion-item class="item item-avatar" ng-repeat="category in categories" href="#/app/categories/{{category.Id}}">
-                <img class="full-image" ng-if="category.Links[0].Uri" ng-src="{{category.Links[0].Uri}}" alt="{{category.Name}}">
-                <h2>
-                    {{category.Name}}
-                </h2>
+            <ion-list ng-if="categories.length">
+                <ion-item class="item item-avatar" ng-repeat="category in categories" href="#/app/categories/{{category.Id}}">
+                    <img class="full-image" ng-if="category.Links[0].Uri" ng-src="{{category.Links[0].Uri}}" alt="{{category.Name}}">
+                    <h2>
+                        {{category.Name}}
+                    </h2>
+                </ion-item>
+            </ion-list>
+
+            <ion-list id="home-list1">
+                <ion-thumbnail ng-repeat="product in basket.products track by $index" href="#/app/product/{{product.Id}}">
+                    <ion-item class="item-thumbnail-left">
+
+                        <img src="{{product.Links[0].Uri}}">
+                        <h2>{{product.Name}}</h2>
+                        <p style="white-space:normal;">{{product.Price.Price | currency:product.Price.CurrencyCode}}</p>
+
+                        <h2 class="clearfix" align="right">
+                            <a ng-click="decPosition(product)"
+                               ng-show="product.orderLine.Qty">
+                                <i class="icon ion-minus-circled "></i>
+                            </a>
+                            {{product.orderLine.Qty}}
+                            <a ng-click="incPosition(product)">
+                                <i class="icon ion-plus-circled"></i>
+                            </a>
+                        </h2>
+                    </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-view>
+
+<!-- подробности товара (набросок)  -->
+<!--<ion-view title="Order" id="page2">
+    <ion-content padding="true" class="has-header">
+        <div style="margin: 0px; line-height: 250px; text-align: center; background-color: rgb(232, 235, 239);">
+            <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+        </div>
+        <ion-list id="home-list2">
+            <ion-item id="home-list-item9">
+                WOK Regular
+                <span class="item-note">$6.00</span>
             </ion-item>
         </ion-list>
+        <div class="item item-body " id="home-list-item-container1">
+            <p id="home-markdown1" style="margin-top:0px;color:#000000;">
+                Egg Noodle 180 G Chicken 40 G Mixed Peppers 20 G
 
-
-
-
-
-
-        <!--<ion-content padding="true" class="has-header">-->
-        <ion-list id="home-list1" class=" ">
-            <ion-thumbnail ng-repeat="product in basket.products track by $index" href="#/app/product/{{product.Id}}">
-                <ion-item class="item-thumbnail-left  " id="home-list-item5">
-                    <img src="{{product.Links[0].Uri}}">
-                    <h2>{{product.Name}}</h2>
-                    <p style="white-space:normal;">{{product.Price.Price | currency:product.Price.CurrencyCode}}</p>
-
-                    <h2 class="clearfix">
-                        <a ng-click="decPosition(product)"
-                           ng-show="product.orderLine.Qty">
-                            <i class="icon ion-minus-circled"></i>
-                        </a>
-                        {{product.orderLine.Qty}}
-                        <a ng-click="incPosition(product)">
-                            <i class="icon ion-plus-circled"></i>
-                        </a>
-                    </h2>
-
-                </ion-item>
+            </p>
+        </div>
+        <ion-list id="home-list3">
+            <ion-item class="item-icon-left item-icon-right  " id="home-list-item10">
+                <i class="icon ion-android-add-circle"></i>
+                Count
+                <i class="icon ion-ios-minus"></i>
+            </ion-item>
         </ion-list>
     </ion-content>
-
-
-
-
-
-</ion-view>
-
+</ion-view>-->

@@ -1,9 +1,29 @@
-<ion-view view-title="Playlists">
-  <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
-        {{playlist.title}}
-      </ion-item>
-    </ion-list>
-  </ion-content>
+<ion-view title="Order" id="page2" >
+    <ion-content padding="true" class="has-header">
+        <ion-list id="cart-list4">
+            <ion-item class="item-icon-left  " id="cart-list-item11">
+                <img src="{{product.Links[0].Uri}}">
+                <h2>WOK Regular</h2>
+                <p style="white-space:normal;">1x$6.0</p>
+              
+                <!--<span class="item-note">1x$6.00</span>-->
+            </ion-item>
+            <ion-item id="cart-list-item12">
+                Total
+                <span class="item-note">$6,00</span>
+            </ion-item>
+            <ion-item id="cart-list-item13" >
+                Date
+                <span class="item-note">18.05.2016 08:06</span>
+            </ion-item>
+            <ion-item id="cart-list-item14" >
+                Status
+                <span class="item-note">DRAFT</span>
+            </ion-item>
+        </ion-list>
+        <div class="">
+            <img src="https://chart.googleapis.com/chart?cht=qr&chs=255x255&chl=3e4211d5-1f70-4bd2-a522-46df924c4467" width="300" height="300" style="display: block; margin-left: auto; margin-right: auto;">
+            <!--<img ng-src="{{ order.Id && 'https://chart.googleapis.com/chart?cht=qr&chs=255x255&chl=' + order.Id || '' }}" alt="{{order.Id}}" />-->
+        </div>
+    </ion-content>
 </ion-view>

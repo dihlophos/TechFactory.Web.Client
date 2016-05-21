@@ -49,14 +49,23 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
-  .state('app.browse', {
-      url: '/browse',
+  .state('app.orders', {
+      url: '/orders',
       views: {
         'menuContent': {
-          templateUrl: 'templates/browse.html'
+            templateUrl: 'templates/ordersList.html'
         }
       }
-    })
+  })
+  .state('app.order', {
+      url: '/order',
+      views: {
+          'menuContent': {
+              templateUrl: 'templates/orderForm.html'
+          }
+      }
+  })
+
     .state('app.playlists', {
       url: '/playlists',
       views: {
@@ -77,15 +86,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
   })
 
-  .state('app.order', {
-      url: '/orders/:id',
-      views: {
-          'menuContent': {
-              templateUrl: 'templates/orderform.html',
-              controller: 'OrderCtrl'
-          }
-      }
-  })
+  //.state('app.order', {
+  //    url: '/orders/:id',
+  //    views: {
+  //        'menuContent': {
+  //            templateUrl: 'templates/orderform.html',
+  //            controller: 'OrderCtrl'
+  //        }
+  //    }
+  //})
 
   .state('app.categories', {
       url: '/categories/:id?/',
