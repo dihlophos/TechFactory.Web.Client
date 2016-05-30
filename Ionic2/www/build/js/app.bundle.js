@@ -41,7 +41,7 @@ var MyApp = (_dec = (0, _ionicAngular.App)({
     this.initializeApp();
 
     // set our app's pages
-    this.pages = [{ title: 'Hello Ionic', component: _helloIonic.HelloIonicPage }, { title: 'My First List', component: _list.ListPage }, { title: 'Category List', component: _categoryList.CategoryListPage }];
+    this.pages = [{ title: 'Login', component: _helloIonic.HelloIonicPage }, { title: 'Menu', component: _helloIonic.HelloIonicPage }, { title: 'Orders', component: _list.ListPage }, { title: 'Payments', component: _categoryList.CategoryListPage }, { title: 'Locations', component: _categoryList.CategoryListPage }, { title: 'Help', component: _categoryList.CategoryListPage }, { title: 'Sing in', component: _categoryList.CategoryListPage }];
 
     // make HelloIonicPage the root (or first) page
     this.rootPage = _helloIonic.HelloIonicPage;
@@ -133,9 +133,11 @@ var ListPage = exports.ListPage = (_dec = (0, _ionicAngular.Page)({
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.HelloIonicPage = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dec, _class;
 
@@ -144,10 +146,23 @@ var _ionicAngular = require('ionic-angular');
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var HelloIonicPage = exports.HelloIonicPage = (_dec = (0, _ionicAngular.Page)({
-  templateUrl: 'build/pages/hello-ionic/hello-ionic.html'
-}), _dec(_class = function HelloIonicPage() {
-  _classCallCheck(this, HelloIonicPage);
-}) || _class);
+    templateUrl: 'build/pages/hello-ionic/hello-ionic.html'
+}), _dec(_class = function () {
+    function HelloIonicPage() {
+        _classCallCheck(this, HelloIonicPage);
+    }
+
+    _createClass(HelloIonicPage, [{
+        key: 'itemslist',
+        value: function itemslist() {
+            this.nav.push(ListPage, {
+                item: ""
+            });
+        }
+    }]);
+
+    return HelloIonicPage;
+}()) || _class);
 
 },{"ionic-angular":387}],4:[function(require,module,exports){
 'use strict';

@@ -5,7 +5,15 @@ import {Page} from 'ionic-angular';
   templateUrl: 'build/pages/hello-ionic/hello-ionic.html'
 })
 export class HelloIonicPage {
-  constructor() {
+    constructor() {
 
+    }
+
+  itemslist() {
+      this.nav.push(ListPage, {
+          item: ""
+      });
   }
 }
+
+

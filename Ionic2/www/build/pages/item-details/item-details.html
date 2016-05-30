@@ -1,11 +1,11 @@
-<ion-navbar *navbar>
+<ion-navbar *navbar danger>
   <button menuToggle *ngIf="!selectedItem">
     <ion-icon name="menu"></ion-icon>
   </button>
   <ion-title>Item Details</ion-title>
 </ion-navbar>
 
-<ion-content>
+<!--<ion-content>
  <div *ngIf="selectedItem" class="selection">
     <b>{{selectedItem.title}}</b>
     <ion-icon name="{{selectedItem.icon}}"></ion-icon>
@@ -13,4 +13,20 @@
       You navigated here from <b>{{selectedItem.title}}</b>
     </div>
   </div>
+</ion-content>-->
+<ion-content padding class="buttons-components-page">
+    <ion-card>
+        <img src="https://s3-media3.fl.yelpcdn.com/bphoto/dHOzMpEeCsqPkuibvJwtkg/o.jpg" />
+    </ion-card>
+    <ion-list id="home-list2">
+        <ion-item id="home-list-item9">
+            WOK half 
+            <span class="item-note">{{selectedItem.title}}</span>
+        </ion-item>
+
+        <ion-item>
+            xxxxx xxxxxx xxxxx xxxx
+        </ion-item>
+
+    </ion-list>
 </ion-content>
