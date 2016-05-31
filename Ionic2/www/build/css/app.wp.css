@@ -8837,3 +8837,7 @@ div.selection {
   display: block;
   text-align: center;
   padding-top: 5%; }
+
+.small_button {
+  line-height: 5px !important;
+  min-height: 24px !important; }
