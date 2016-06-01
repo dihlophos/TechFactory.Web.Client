@@ -19,7 +19,16 @@ export class ListPage {
     this.selectedItem = navParams.get('item');
     console.log(this.selectedItem);
     
+    this.items = [];
+    this.categories = [];
+
     api.getCategoriesByParentId(this.selectedItem.Id)
+      .then((data) => { 
+        console.log(data);
+        this.categories = data;
+    });
+    
+    api.getProductsByCategoryId(this.selectedItem.Id)
       .then((data) => { 
         console.log(data);
         this.items = data;
@@ -40,5 +49,11 @@ export class ListPage {
      this.nav.push(ItemDetailsPage, {
        item: item
      });
+  }
+
+  moveToCategoryPage (event, item) {
+      this.nav.push(ListPage, {
+          item: item
+      });
   }
 }

@@ -36,12 +36,12 @@ export class Api {
     getProductById(id){
         return fetch(this.productsCollectionUrl + '(' + id + ')/?$expand=Price,Categories,Links,Ingredients($expand=Child,ChildUom)')
             .then((response) => { return response.json()})
-            .then((json) => { return json});
+            .then((json) => { return json.value});
     }
     
     getProductsByCategoryId(id){
-        return fetch(this.productsCollectionUrl + '/?filter=Categories/any(d:d/Id eq ' + id + '&$expand=Price,Categories,Links,Ingredients($expand=Child,ChildUom)')
+        return fetch(this.productsCollectionUrl + '/?$filter=Categories/any(d:d/Id eq ' + id + ')&$expand=Price,Categories,Links,Ingredients($expand=Child,ChildUom)')
             .then((response) => { return response.json()})
-            .then((json) => { return json});
+            .then((json) => { return json.value});
     }
 }

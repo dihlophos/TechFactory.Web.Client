@@ -16,13 +16,13 @@
 </ion-content>-->
 <ion-content class="buttons-components-page">
     <ion-card>
-        <img src="https://s3-media3.fl.yelpcdn.com/bphoto/dHOzMpEeCsqPkuibvJwtkg/o.jpg" />
+        <img src="{{selectedItem.Links[0].Uri}}" />
 
         <ion-item id="home-list-item9">
 
-            <h1>WOK half</h1>
+            <h1>{{selectedItem.Name}}</h1>
             <p>
-                <i class="icon ion-pricetags"></i>
+                <ion-icon name="pricetag"></ion-icon>
                 <small>
                     <button class="small_button" clear>Egg Noodle 180 G</button>
                     <button class="small_button" clear>Chicken 40 G</button>

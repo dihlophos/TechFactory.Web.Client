@@ -7,10 +7,27 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+    <button ion-item *ngFor="let item of categories" (click)="moveToCategoryPage($event, item)">
+        <!--
         <ion-thumbnail item-left>
-            <img src="https://s3-media3.fl.yelpcdn.com/bphoto/dHOzMpEeCsqPkuibvJwtkg/o.jpg">
+            <img src="{{item.Links[0].Uri}}" />
         </ion-thumbnail>
+        -->
+        <h2>{{item.Name}}</h2>
+        <p>{{item.note}}</p>
+    
+      <div class="item-note" item-right>
+
+      </div>
+    </button>
+    
+    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+        <!--
+        <ion-thumbnail item-left>
+            <img src="{{item.Links[0].Uri}}" />
+        </ion-thumbnail>
+        -->
+        
         <h2>{{item.Name}}</h2>
         <p>{{item.note}}</p>
     

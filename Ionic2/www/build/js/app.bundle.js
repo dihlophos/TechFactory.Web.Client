@@ -64,16 +64,16 @@ var Api = exports.Api = (_dec = (0, _core.Injectable)(), _dec(_class = function 
             return fetch(this.productsCollectionUrl + '(' + id + ')/?$expand=Price,Categories,Links,Ingredients($expand=Child,ChildUom)').then(function (response) {
                 return response.json();
             }).then(function (json) {
-                return json;
+                return json.value;
             });
         }
     }, {
         key: "getProductsByCategoryId",
         value: function getProductsByCategoryId(id) {
-            return fetch(this.productsCollectionUrl + '/?filter=Categories/any(d:d/Id eq ' + id + '&$expand=Price,Categories,Links,Ingredients($expand=Child,ChildUom)').then(function (response) {
+            return fetch(this.productsCollectionUrl + '/?$filter=Categories/any(d:d/Id eq ' + id + ')&$expand=Price,Categories,Links,Ingredients($expand=Child,ChildUom)').then(function (response) {
                 return response.json();
             }).then(function (json) {
-                return json;
+                return json.value;
             });
         }
     }]);
@@ -299,7 +299,15 @@ var ListPage = exports.ListPage = (_dec = (0, _ionicAngular.Page)({
     this.selectedItem = navParams.get('item');
     console.log(this.selectedItem);
 
+    this.items = [];
+    this.categories = [];
+
     api.getCategoriesByParentId(this.selectedItem.Id).then(function (data) {
+      console.log(data);
+      _this.categories = data;
+    });
+
+    api.getProductsByCategoryId(this.selectedItem.Id).then(function (data) {
       console.log(data);
       _this.items = data;
     });
@@ -319,6 +327,13 @@ var ListPage = exports.ListPage = (_dec = (0, _ionicAngular.Page)({
     key: 'itemTapped',
     value: function itemTapped(event, item) {
       this.nav.push(_itemDetails.ItemDetailsPage, {
+        item: item
+      });
+    }
+  }, {
+    key: 'moveToCategoryPage',
+    value: function moveToCategoryPage(event, item) {
+      this.nav.push(ListPage, {
         item: item
       });
     }
