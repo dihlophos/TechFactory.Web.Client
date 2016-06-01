@@ -15,18 +15,17 @@ export class ListPage {
   constructor(nav, navParams, api) {
     this.nav = nav;
       
-    api.getCategoriesByParentKey('MENU')
-      .then((data) => { 
-        console.log(data);
-        alert(data);
-    });
-
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
+    console.log(this.selectedItem);
+    
+    api.getCategoriesByParentId(this.selectedItem.Id)
+      .then((data) => { 
+        console.log(data);
+        this.items = data;
+    });
 
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
+    /*
     this.items = [];
     for(let i = 1; i < 11; i++) {
       this.items.push({
@@ -34,7 +33,7 @@ export class ListPage {
         note: 'This is item #' + i,
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
-    }
+    }*/
   }
 
   itemTapped(event, item) {

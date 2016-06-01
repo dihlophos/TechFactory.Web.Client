@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -10,7 +10,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _class;
 
-var _core = require('@angular/core');
+var _core = require("@angular/core");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -19,10 +19,11 @@ var Api = exports.Api = (_dec = (0, _core.Injectable)(), _dec(_class = function 
         _classCallCheck(this, Api);
 
         this.categoriesCollectionUrl = "http://partner-web-api-v1.azurewebsites.net/odata/Categories";
+        this.productsCollectionUrl = "http://partner-web-api-v1.azurewebsites.net/odata/Products";
     }
 
     _createClass(Api, [{
-        key: 'getCategoryById',
+        key: "getCategoryById",
         value: function getCategoryById(id) {
             return fetch(this.categoriesCollectionUrl + '(' + id + ')/&$expand=Links').then(function (response) {
                 return response.json();
@@ -31,7 +32,7 @@ var Api = exports.Api = (_dec = (0, _core.Injectable)(), _dec(_class = function 
             });
         }
     }, {
-        key: 'getCategoryByKey',
+        key: "getCategoryByKey",
         value: function getCategoryByKey(key) {
             return fetch(this.categoriesCollectionUrl + '/?$filter=Key eq \'' + key + '\'&$expand=Links').then(function (response) {
                 return response.json();
@@ -40,7 +41,7 @@ var Api = exports.Api = (_dec = (0, _core.Injectable)(), _dec(_class = function 
             });
         }
     }, {
-        key: 'getCategoriesByParentId',
+        key: "getCategoriesByParentId",
         value: function getCategoriesByParentId(id) {
             return fetch(this.categoriesCollectionUrl + '/?$filter=ParentId eq ' + id + '&$expand=Links').then(function (response) {
                 return response.json();
@@ -49,12 +50,30 @@ var Api = exports.Api = (_dec = (0, _core.Injectable)(), _dec(_class = function 
             });
         }
     }, {
-        key: 'getCategoriesByParentKey',
+        key: "getCategoriesByParentKey",
         value: function getCategoriesByParentKey(key) {
             var _this = this;
 
             return this.getCategoryByKey(key).then(function (data) {
                 return _this.getCategoriesByParentId(data.Id);
+            });
+        }
+    }, {
+        key: "getProductById",
+        value: function getProductById(id) {
+            return fetch(this.productsCollectionUrl + '(' + id + ')/?$expand=Price,Categories,Links,Ingredients($expand=Child,ChildUom)').then(function (response) {
+                return response.json();
+            }).then(function (json) {
+                return json;
+            });
+        }
+    }, {
+        key: "getProductsByCategoryId",
+        value: function getProductsByCategoryId(id) {
+            return fetch(this.productsCollectionUrl + '/?filter=Categories/any(d:d/Id eq ' + id + '&$expand=Price,Categories,Links,Ingredients($expand=Child,ChildUom)').then(function (response) {
+                return response.json();
+            }).then(function (json) {
+                return json;
             });
         }
     }]);
@@ -75,7 +94,7 @@ var _ionicAngular = require('ionic-angular');
 
 var _ionicNative = require('ionic-native');
 
-var _helloIonic = require('./pages/hello-ionic/hello-ionic');
+var _mainMenu = require('./pages/main-menu/main-menu');
 
 var _list = require('./pages/list/list');
 
@@ -105,10 +124,10 @@ var MyApp = (_dec = (0, _ionicAngular.App)({
     this.initializeApp();
 
     // set our app's pages
-    this.pages = [{ title: 'Login', component: _helloIonic.HelloIonicPage }, { title: 'Menu', component: _helloIonic.HelloIonicPage }, { title: 'Orders', component: _list.ListPage }, { title: 'Payments', component: _categoryList.CategoryListPage }, { title: 'Locations', component: _categoryList.CategoryListPage }, { title: 'Help', component: _categoryList.CategoryListPage }, { title: 'Sing in', component: _categoryList.CategoryListPage }];
+    this.pages = [{ title: 'Login', component: _mainMenu.MainMenuPage }, { title: 'Menu', component: _mainMenu.MainMenuPage }, { title: 'Orders', component: _list.ListPage }, { title: 'Payments', component: _categoryList.CategoryListPage }, { title: 'Locations', component: _categoryList.CategoryListPage }, { title: 'Help', component: _categoryList.CategoryListPage }, { title: 'Sing in', component: _categoryList.CategoryListPage }];
 
-    // make HelloIonicPage the root (or first) page
-    this.rootPage = _helloIonic.HelloIonicPage;
+    // make MainMenuPage the root (or first) page
+    this.rootPage = _mainMenu.MainMenuPage;
   }
 
   _createClass(MyApp, [{
@@ -133,7 +152,7 @@ var MyApp = (_dec = (0, _ionicAngular.App)({
   return MyApp;
 }()) || _class);
 
-},{"./pages/category-list/category-list":3,"./pages/hello-ionic/hello-ionic":4,"./pages/list/list":6,"@angular/core":139,"ionic-angular":388,"ionic-native":411}],3:[function(require,module,exports){
+},{"./pages/category-list/category-list":3,"./pages/list/list":5,"./pages/main-menu/main-menu":6,"@angular/core":139,"ionic-angular":388,"ionic-native":411}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -201,42 +220,7 @@ var ListPage = exports.ListPage = (_dec = (0, _ionicAngular.Page)({
   return ListPage;
 }()) || _class);
 
-},{"../../api":1,"../item-details/item-details":5,"ionic-angular":388}],4:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.HelloIonicPage = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _dec, _class;
-
-var _ionicAngular = require('ionic-angular');
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var HelloIonicPage = exports.HelloIonicPage = (_dec = (0, _ionicAngular.Page)({
-    templateUrl: 'build/pages/hello-ionic/hello-ionic.html'
-}), _dec(_class = function () {
-    function HelloIonicPage() {
-        _classCallCheck(this, HelloIonicPage);
-    }
-
-    _createClass(HelloIonicPage, [{
-        key: 'itemslist',
-        value: function itemslist() {
-            this.nav.push(ListPage, {
-                item: ""
-            });
-        }
-    }]);
-
-    return HelloIonicPage;
-}()) || _class);
-
-},{"ionic-angular":388}],5:[function(require,module,exports){
+},{"../../api":1,"../item-details/item-details":4,"ionic-angular":388}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -273,7 +257,7 @@ var ItemDetailsPage = exports.ItemDetailsPage = (_dec = (0, _ionicAngular.Page)(
   return ItemDetailsPage;
 }()) || _class);
 
-},{"ionic-angular":388}],6:[function(require,module,exports){
+},{"ionic-angular":388}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -305,28 +289,30 @@ var ListPage = exports.ListPage = (_dec = (0, _ionicAngular.Page)({
   }]);
 
   function ListPage(nav, navParams, api) {
+    var _this = this;
+
     _classCallCheck(this, ListPage);
 
     this.nav = nav;
 
-    api.getCategoriesByParentKey('MENU').then(function (data) {
-      console.log(data);
-      alert(data);
-    });
-
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
+    console.log(this.selectedItem);
 
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane', 'american-football', 'boat', 'bluetooth', 'build'];
+    api.getCategoriesByParentId(this.selectedItem.Id).then(function (data) {
+      console.log(data);
+      _this.items = data;
+    });
 
+    /*
     this.items = [];
-    for (var i = 1; i < 11; i++) {
+    for(let i = 1; i < 11; i++) {
       this.items.push({
         title: 'Item ' + i,
         note: 'This is item #' + i,
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
-    }
+    }*/
   }
 
   _createClass(ListPage, [{
@@ -341,7 +327,63 @@ var ListPage = exports.ListPage = (_dec = (0, _ionicAngular.Page)({
   return ListPage;
 }()) || _class);
 
-},{"../../api":1,"../item-details/item-details":5,"ionic-angular":388}],7:[function(require,module,exports){
+},{"../../api":1,"../item-details/item-details":4,"ionic-angular":388}],6:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MainMenuPage = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _class;
+
+var _ionicAngular = require('ionic-angular');
+
+var _list = require('../list/list');
+
+var _api = require('../../api');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var MainMenuPage = exports.MainMenuPage = (_dec = (0, _ionicAngular.Page)({
+    templateUrl: 'build/pages/main-menu/main-menu.html',
+    providers: [_api.Api]
+}), _dec(_class = function () {
+    _createClass(MainMenuPage, null, [{
+        key: 'parameters',
+        get: function get() {
+            return [[_ionicAngular.NavController], [_api.Api]];
+        }
+    }]);
+
+    function MainMenuPage(nav, api) {
+        var _this = this;
+
+        _classCallCheck(this, MainMenuPage);
+
+        this.nav = nav;
+
+        api.getCategoriesByParentKey('MENU').then(function (data) {
+            console.log(data);
+            _this.items = data;
+        });
+    }
+
+    _createClass(MainMenuPage, [{
+        key: 'moveToCategoryPage',
+        value: function moveToCategoryPage(event, item) {
+            this.nav.push(_list.ListPage, {
+                item: item
+            });
+        }
+    }]);
+
+    return MainMenuPage;
+}()) || _class);
+
+},{"../../api":1,"../list/list":5,"ionic-angular":388}],7:[function(require,module,exports){
 "use strict";
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];

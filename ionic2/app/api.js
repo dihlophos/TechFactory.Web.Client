@@ -5,6 +5,7 @@ export class Api {
 
     constructor() {
         this.categoriesCollectionUrl = "http://partner-web-api-v1.azurewebsites.net/odata/Categories";
+        this.productsCollectionUrl = "http://partner-web-api-v1.azurewebsites.net/odata/Products";
     }
     
     getCategoryById(id) {
@@ -30,5 +31,17 @@ export class Api {
             .then((data) => { 
                 return this.getCategoriesByParentId(data.Id);
             });
+    }
+    
+    getProductById(id){
+        return fetch(this.productsCollectionUrl + '(' + id + ')/?$expand=Price,Categories,Links,Ingredients($expand=Child,ChildUom)')
+            .then((response) => { return response.json()})
+            .then((json) => { return json});
+    }
+    
+    getProductsByCategoryId(id){
+        return fetch(this.productsCollectionUrl + '/?filter=Categories/any(d:d/Id eq ' + id + '&$expand=Price,Categories,Links,Ingredients($expand=Child,ChildUom)')
+            .then((response) => { return response.json()})
+            .then((json) => { return json});
     }
 }

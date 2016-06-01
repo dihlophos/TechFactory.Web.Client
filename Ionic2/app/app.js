@@ -1,7 +1,7 @@
 import {ViewChild} from '@angular/core';
 import {App, Platform, MenuController} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
-import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
+import {MainMenuPage} from './pages/main-menu/main-menu';
 import {ListPage} from './pages/list/list';
 import {CategoryListPage} from './pages/category-list/category-list';
 
@@ -25,8 +25,8 @@ class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Login', component: HelloIonicPage },
-      { title: 'Menu', component: HelloIonicPage },
+      { title: 'Login', component: MainMenuPage },
+      { title: 'Menu', component: MainMenuPage },
       { title: 'Orders', component: ListPage },
       { title: 'Payments', component: CategoryListPage },
       { title: 'Locations', component: CategoryListPage },
@@ -34,8 +34,8 @@ class MyApp {
       { title: 'Sing in', component: CategoryListPage }
     ];
 
-    // make HelloIonicPage the root (or first) page
-    this.rootPage = HelloIonicPage;
+    // make MainMenuPage the root (or first) page
+    this.rootPage = MainMenuPage;
   }
 
   initializeApp() {
