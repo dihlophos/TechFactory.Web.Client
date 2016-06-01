@@ -1,17 +1,25 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
 import {ItemDetailsPage} from '../item-details/item-details';
 
+import {Api} from '../../api';
 
 @Page({
-  templateUrl: 'build/pages/list/list.html'
+  templateUrl: 'build/pages/list/list.html',
+  providers: [Api]
 })
 export class ListPage {
   static get parameters() {
-    return [[NavController], [NavParams]];
+      return [[NavController], [NavParams], [Api]];
   }
 
-  constructor(nav, navParams) {
+  constructor(nav, navParams, api) {
     this.nav = nav;
+      
+    api.getCategoriesByParentKey('MENU')
+      .then((data) => { 
+        console.log(data);
+        alert(data);
+    });
 
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');

@@ -1,3 +1,4 @@
+console.time('Loading plugins');
 var gulp = require('gulp'),
     gulpWatch = require('gulp-watch'),
     del = require('del'),

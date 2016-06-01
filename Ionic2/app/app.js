@@ -18,7 +18,7 @@ class MyApp {
     return [[Platform], [MenuController]];
   }
 
-  constructor(platform, menu) {
+  constructor(platform, menu, api) {
     this.platform = platform;
     this.menu = menu;
     this.initializeApp();
