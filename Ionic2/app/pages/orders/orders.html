@@ -1,0 +1,25 @@
+<ion-navbar *navbar danger>
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>{{selectedItem.Name}}</ion-title>
+    <ion-buttons end>
+        <button royal>
+            <ion-icon name="cart"></ion-icon>
+        </button>
+    </ion-buttons>
+</ion-navbar>
+
+<ion-content >
+  <ion-list>
+   
+        <ion-thumbnail item-left>
+             <img src="{{item.Links[0].Uri}}" />
+        </ion-thumbnail>
+        <h2>{{item.Name}}</h2>
+        <p>0{{item.note}}</p>
+
+  
+  </ion-list>
+
+</ion-content>

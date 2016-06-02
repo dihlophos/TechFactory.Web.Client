@@ -8971,7 +8971,8 @@ body {
   font-size: 2.0em;
   width: 100%;
   font-weight: bold;
-  color: #fff; }
+  color: #fff;
+  text-align: center; }
 
 .card-background-page .card-subtitle {
   font-size: 1.0em;
