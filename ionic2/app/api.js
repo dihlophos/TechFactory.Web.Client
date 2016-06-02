@@ -1,5 +1,8 @@
 ﻿import {Injectable} from '@angular/core';  
 
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+
 @Injectable()
 export class Api {
 
