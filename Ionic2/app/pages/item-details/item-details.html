@@ -3,39 +3,35 @@
     <ion-icon name="menu"></ion-icon>
   </button>
   <ion-title>Item Details</ion-title>
+    <ion-buttons end>
+        <button royal>
+            <ion-icon name="cart"></ion-icon>
+        </button>
+    </ion-buttons>
 </ion-navbar>
 
-<!--<ion-content>
- <div *ngIf="selectedItem" class="selection">
-    <b>{{selectedItem.title}}</b>
-    <ion-icon name="{{selectedItem.icon}}"></ion-icon>
-    <div>
-      You navigated here from <b>{{selectedItem.title}}</b>
-    </div>
-  </div>
-</ion-content>-->
 <ion-content class="buttons-components-page">
-    <ion-card>
+ 
         <img src="{{selectedItem.Links[0].Uri}}" />
 
         <ion-item id="home-list-item9">
-
+       
             <h1>{{selectedItem.Name}}</h1>
-            <p>
-                <ion-icon name="pricetag"></ion-icon>
-                <small>
-                    <button class="small_button" clear>Egg Noodle 180 G</button>
-                    <button class="small_button" clear>Chicken 40 G</button>
-                    <button class="small_button" clear>Mixed Peppers 20 G</button>
-                </small>
-            </p>
-
+            <ion-note item-right>
+              $0
+            </ion-note>
+          
+        </ion-item>
+        <ion-item>
+           <!-- <ion-icon name="pricetag" item-left large></ion-icon>-->
+            <button class="small_button" clear>Egg Noodle 180 G</button>
+            <button class="small_button" clear>Chicken 40 G</button>
+            <button class="small_button" clear>Mixed Peppers 20 G</button>
             <p>
                 <span class="item-note">{{selectedItem.title}}</span>
             </p>
-        </ion-item>
-        <ion-item>
-            xxxxx xxxxxx xxxxx xxxx
-        </ion-item>
-    </ion-card>
+      </ion-item>
+    <button fab secondary  fab-center>
+        <ion-icon name="add" is-active="false"></ion-icon>
+    </button>
 </ion-content>
