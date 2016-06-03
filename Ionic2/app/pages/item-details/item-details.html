@@ -1,4 +1,4 @@
-<ion-navbar *navbar danger>
+﻿<ion-navbar *navbar danger>
   <button menuToggle *ngIf="!selectedItem">
     <ion-icon name="menu"></ion-icon>
   </button>
@@ -10,28 +10,32 @@
     </ion-buttons>
 </ion-navbar>
 
-<ion-content class="buttons-components-page">
- 
-        <img src="{{selectedItem.Links[0].Uri}}" />
+<ion-content class="cards-bg">
 
-        <ion-item id="home-list-item9">
-       
-            <h1>{{selectedItem.Name}}</h1>
+        <div style="position: relative">
+            <img src="{{selectedItem.Links[0].Uri}}" />
+            <button fab fab-right fab-top class="fab-map">
+                <ion-icon name='add'></ion-icon>
+            </button>
+        </div>
+        <ion-item class="item" id="home-list-item9">
+            <h1 class="h1-item">{{selectedItem.Name}}</h1>
             <ion-note item-right>
-              $0
+                $0
             </ion-note>
-          
         </ion-item>
-        <ion-item>
-           <!-- <ion-icon name="pricetag" item-left large></ion-icon>-->
-            <button class="small_button" clear>Egg Noodle 180 G</button>
-            <button class="small_button" clear>Chicken 40 G</button>
-            <button class="small_button" clear>Mixed Peppers 20 G</button>
-            <p>
-                <span class="item-note">{{selectedItem.title}}</span>
-            </p>
-      </ion-item>
-    <button fab secondary  fab-center>
-        <ion-icon name="add" is-active="false"></ion-icon>
-    </button>
+    <!--<ion-card-content>
+        <button class="small_button" clear>Egg Noodle 180 G</button>
+        <button class="small_button" clear>Chicken 40 G</button>
+        <button class="small_button" clear>Mixed Peppers 20 G</button>
+    </ion-card-content>-->
+    <ion-item class="item"> 
+        <button class="small_button" clear>Egg Noodle 180 G</button>
+        <button class="small_button" clear>Chicken 40 G</button>
+        <button class="small_button" clear>Mixed Peppers 20 G</button>
+        <p>
+            <span class="item-note">{{selectedItem.title}}</span>
+        </p>
+    </ion-item>
+
 </ion-content>
