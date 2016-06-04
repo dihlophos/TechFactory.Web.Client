@@ -1,25 +1,76 @@
-<ion-navbar *navbar danger>
-  <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-  <ion-title>{{selectedItem.Name}}</ion-title>
+
+<ion-navbar *navbar hideBackButton danger>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Orders</ion-title>
+
     <ion-buttons end>
         <button royal>
             <ion-icon name="cart"></ion-icon>
         </button>
     </ion-buttons>
+
 </ion-navbar>
 
-<ion-content >
-  <ion-list>
-   
-        <ion-thumbnail item-left>
-             <img src="{{item.Links[0].Uri}}" />
-        </ion-thumbnail>
-        <h2>{{item.Name}}</h2>
-        <p>0{{item.note}}</p>
+<ion-toolbar [attr.primary]="isAndroid ? '' : null">
+    <ion-segment [(ngModel)]="order" [attr.light]="isAndroid ? '' : null">
+        <ion-segment-button value="orders">
+            Orders
+        </ion-segment-button>
+        <ion-segment-button value="history">
+            History
+        </ion-segment-button>
+    </ion-segment>
+</ion-toolbar>
 
-  
-  </ion-list>
+<ion-content>
+
+    <div [ngSwitch]="order">
+        <ion-list *ngSwitchWhen="'orders'">
+            <ion-item>
+                <h2>Sat Jun 08 2016 12:41:32</h2>
+                <!--<p>Hayao Miyazaki • 1988</p>-->
+                <button clear item-right>
+                    <ion-icon name="arrow-forward"></ion-icon>
+                </button>
+            </ion-item>
+            <ion-item>
+                <h2>Sat Jun 08 2016 13:41:32</h2>
+                <button clear item-right>
+                    <ion-icon name="arrow-forward"></ion-icon>
+                </button>
+            </ion-item>
+        </ion-list>
+
+        <ion-list *ngSwitchWhen="'history'">
+            <ion-item>
+                <h2>Sat Jun 04 2016 12:41:32</h2>
+                <!--<p>Hayao Miyazaki • 1988</p>-->
+                <button clear item-right>
+                    <ion-icon name="arrow-forward"></ion-icon>
+                </button>
+            </ion-item>
+            <ion-item>
+                <h2>Sat Jun 05 2016 10:41:32</h2>
+                <button clear item-right>
+                    <ion-icon name="arrow-forward"></ion-icon>
+                </button>
+            </ion-item>
+            <ion-item>
+                <h2>Sat Jun 06 2016 12:41:32</h2>
+                <button clear item-right>
+                    <ion-icon name="arrow-forward"></ion-icon>
+                </button>
+            </ion-item>
+            <ion-item>
+                <h2>Sat Jun 07 2016 15:41:32</h2>
+                <button clear item-right>
+                    <ion-icon name="arrow-forward"></ion-icon>
+                </button>
+            </ion-item>
+        </ion-list>
+    </div>
+
 
 </ion-content>

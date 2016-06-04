@@ -411,8 +411,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.OrdersPage = undefined;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _dec, _class;
 
 var _ionicAngular = require('ionic-angular');
@@ -422,68 +420,18 @@ var _api = require('../../api');
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var OrdersPage = exports.OrdersPage = (_dec = (0, _ionicAngular.Page)({
-  templateUrl: 'build/pages/orders/orders.html',
-  providers: [_api.Api]
-}), _dec(_class = function () {
-  function OrdersPage() {
-    _classCallCheck(this, OrdersPage);
-  }
+  templateUrl: './build/pages/orders/orders.html'
+}), _dec(_class = function OrdersPage() {
+  _classCallCheck(this, OrdersPage);
+}) || _class);
+//export class OrdersPage {
+//    pet: string = "orders";
+//    //isAndroid: boolean = false;
 
-  _createClass(OrdersPage, null, [{
-    key: 'parameters',
-    get: function get() {
-      return [[_ionicAngular.NavController], [_ionicAngular.NavParams], [_api.Api]];
-    }
-
-    //constructor(nav, navParams, api) {
-    //  this.nav = nav;
-
-    //  // If we navigated to this page, we will have an item available as a nav param
-    //  this.selectedItem = navParams.get('item');
-    //  console.log(this.selectedItem);
-
-    //  this.items = [];
-    //  this.categories = [];
-
-    //  api.getCategoriesByParentId(this.selectedItem.Id)
-    //    .then((data) => {
-    //      console.log(data);
-    //      this.categories = data;
-    //  });
-
-    //  api.getProductsByCategoryId(this.selectedItem.Id)
-    //    .then((data) => {
-    //      console.log(data);
-    //      this.items = data;
-    //  });
-
-    //  /*
-    //  this.items = [];
-    //  for(let i = 1; i < 11; i++) {
-    //    this.items.push({
-    //      title: 'Item ' + i,
-    //      note: 'This is item #' + i,
-    //      icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-    //    });
-    //  }*/
-    //}
-
-    //itemTapped(event, item) {
-    //   this.nav.push(ItemDetailsPage, {
-    //     item: item
-    //   });
-    //}
-
-    //moveToCategoryPage (event, item) {
-    //    this.nav.push(ListPage, {
-    //        item: item
-    //    });
-    //}
-
-  }]);
-
-  return OrdersPage;
-}()) || _class);
+//    //constructor(platform: Platform) {
+//    //    this.isAndroid = platform.is('android');
+//    //}
+//}
 
 },{"../../api":1,"ionic-angular":390}],8:[function(require,module,exports){
 "use strict";
