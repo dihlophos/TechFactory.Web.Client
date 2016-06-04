@@ -17,7 +17,7 @@
 <ion-content class="card-background-page">
 
     <ion-card ion-item *ngFor="let item of items" (click)="moveToCategoryPage($event, item)">
-        <img [src]="{{item.Links[0].Uri}}" />
+        <img src="{{item.Links[0].Uri}}" />
         <div class="card-title">{{item.Name}}</div>
     </ion-card>
 
