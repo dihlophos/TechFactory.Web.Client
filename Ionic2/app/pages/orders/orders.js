@@ -6,5 +6,10 @@ import {Api} from '../../api';
     templateUrl: './build/pages/orders/orders.html'
 })
 export class OrdersPage {  
+
+    itemTapped(event, item) {
+        this.nav.push(OrderPage, {    });
+    }
+
  
 }

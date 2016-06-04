@@ -3,6 +3,7 @@ import {App, Platform, MenuController} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {MainMenuPage} from './pages/main-menu/main-menu';
 import {OrdersPage} from './pages/orders/orders';
+import {OrderPage} from './pages/order/order';
 import {ListPage} from './pages/list/list';
 import {CategoryListPage} from './pages/category-list/category-list';
 
@@ -29,7 +30,7 @@ class MyApp {
       { title: 'Login', component: MainMenuPage },
       { title: 'Menu', component: MainMenuPage },
       { title: 'Orders', component: OrdersPage },
-      { title: 'Payments', component: CategoryListPage },
+      { title: 'Payments', component: OrderPage },
       { title: 'Locations', component: CategoryListPage },
       { title: 'Help', component: CategoryListPage },
       { title: 'Sing in', component: CategoryListPage }

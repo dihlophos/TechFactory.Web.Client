@@ -27,7 +27,7 @@
 <ion-content>
     <div [ngSwitch]="order">
         <ion-list *ngSwitchWhen="'orders'">
-            <ion-item>
+            <ion-item (click)="moveToCategoryPage($event)">
                 <h2>Sat Jun 08 2016 12:41:00</h2>
                 <p>Amount : $ 200</p>
                 <button clear item-right>
