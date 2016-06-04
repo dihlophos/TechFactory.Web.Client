@@ -424,14 +424,6 @@ var OrdersPage = exports.OrdersPage = (_dec = (0, _ionicAngular.Page)({
 }), _dec(_class = function OrdersPage() {
   _classCallCheck(this, OrdersPage);
 }) || _class);
-//export class OrdersPage {
-//    pet: string = "orders";
-//    //isAndroid: boolean = false;
-
-//    //constructor(platform: Platform) {
-//    //    this.isAndroid = platform.is('android');
-//    //}
-//}
 
 },{"../../api":1,"ionic-angular":390}],8:[function(require,module,exports){
 "use strict";
