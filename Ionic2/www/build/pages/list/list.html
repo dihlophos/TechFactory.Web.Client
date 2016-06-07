@@ -12,7 +12,7 @@
 
 <ion-content >
     <ion-card class="card-background-page" ion-item *ngFor="let item of categories" (click)="moveToCategoryPage($event, item)">
-        <img src="http://naturizzata.ca/blog/wp-content/uploads/2015/06/restaurant-table-food.jpg" />
+        <img src="{{item.Links[0].Uri}}" />
         <div class="card-title">{{item.Name}}</div>
     </ion-card>
 
