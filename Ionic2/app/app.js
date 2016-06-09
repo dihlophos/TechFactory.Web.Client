@@ -1,4 +1,6 @@
 import {ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
 import {App, Platform, MenuController} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {MainMenuPage} from './pages/main-menu/main-menu';
@@ -6,6 +8,7 @@ import {OrdersPage} from './pages/orders/orders';
 import {OrderPage} from './pages/order/order';
 import {ListPage} from './pages/list/list';
 import {CategoryListPage} from './pages/category-list/category-list';
+import {Api} from './api';
 
 
 @App({
@@ -13,11 +16,12 @@ import {CategoryListPage} from './pages/category-list/category-list';
   config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
   queries: {
     nav: new ViewChild('content')
-  }
+  },
+  providers: [Api]
 })
 class MyApp {
   static get parameters() {
-    return [[Platform], [MenuController]];
+    return [[Platform], [MenuController], [Api]];
   }
 
   constructor(platform, menu, api) {
@@ -54,4 +58,14 @@ class MyApp {
     // navigate to the new page if it is not the current page
     this.nav.setRoot(page.component);
   }
+}
+
+@Component({
+    selector: 'main-item-card',
+    template: '<img [src]="{{item.Links[0].Uri}}" /><div class="card-title">{{item.Name}}</div>'
+})
+export class MainItemCard {  
+
+    constructor() {
+    }
 }

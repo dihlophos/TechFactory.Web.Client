@@ -1,10 +1,11 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
 import {ListPage} from '../list/list';
 import {Api} from '../../api';
+import {BasketButton} from '../../basket-button.component';
 
 @Page({
-  templateUrl: 'build/pages/main-menu/main-menu.html',
-  providers: [Api]
+    templateUrl: 'build/pages/main-menu/main-menu.html',
+    directives: [ BasketButton ]
 })
 export class MainMenuPage {
     
@@ -14,6 +15,7 @@ export class MainMenuPage {
   
   constructor(nav, api) {
       this.nav = nav;
+      this.api = api;
       
       api.getCategoriesByParentKey('MENU')
             .then((data) => { 
@@ -26,6 +28,10 @@ export class MainMenuPage {
       this.nav.push(ListPage, {
           item: item
       });
+  }
+
+  getBasket() {
+      this.api.getBasket();
   }
 }
 

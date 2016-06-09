@@ -14,9 +14,11 @@
 
         <div style="position: relative">
             <img src="{{selectedItem.Links[0].Uri}}" />
-            <button fab fab-right fab-top class="fab-map">
+            <add-item-button item={{selectedItem.Id}}></add-item-button>
+            <!--
+            <button fab fab-right fab-top class="fab-map" (click)="addItemToBasket($event, item)">
                 <ion-icon name='add'></ion-icon>
-            </button>
+            </button>-->
         </div>
         <ion-item class="item-dt" id="home-list-item9">
             <h1 class="h1-item">{{selectedItem.Name}}</h1>

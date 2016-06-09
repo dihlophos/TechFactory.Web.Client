@@ -1,8 +1,10 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
+import {AddItemButton} from '../../add-item-button.component';
 
 
 @Page({
-  templateUrl: 'build/pages/item-details/item-details.html'
+    templateUrl: 'build/pages/item-details/item-details.html',
+    directives: [ AddItemButton ]
 })
 export class ItemDetailsPage {
   static get parameters() {
