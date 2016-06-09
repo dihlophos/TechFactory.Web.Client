@@ -75,7 +75,9 @@ var Api = exports.Api = (_dec = (0, _core.Injectable)(), _dec(_class = function 
 
         this.categoriesCollectionUrl = "http://partner-web-api-v1.azurewebsites.net/odata/Categories";
         this.productsCollectionUrl = "http://partner-web-api-v1.azurewebsites.net/odata/Products";
-        this.basket = [];
+        this.basket = {
+            items: []
+        };
     }
 
     _createClass(Api, [{
@@ -141,7 +143,15 @@ var Api = exports.Api = (_dec = (0, _core.Injectable)(), _dec(_class = function 
         key: 'addItemToBasket',
         value: function addItemToBasket(item) {
             console.log(item);
-            this.basket.push(item);
+
+            if (!(item in this.basket.items)) {
+                this.basket.items.push(item);
+                this.basket.items[item] = 1;
+            } else {
+                this.basket.items[item]++;
+            }
+
+            console.log(this.basket);
         }
     }]);
 
