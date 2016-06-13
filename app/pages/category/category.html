@@ -1,0 +1,30 @@
+<ion-navbar *navbar danger>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{selectedItem.Name}}</ion-title>
+    <ion-buttons end>
+        <button royal>
+            <ion-icon name="cart"></ion-icon>
+        </button>
+    </ion-buttons>
+</ion-navbar>
+
+<ion-content>
+    <ion-card class="card-background-page" ion-item *ngFor="let item of categories" (click)="moveToCategoryPage($event, item)">
+        <img src="{{item.Links[0].Uri}}" />
+        <div class="card-title">{{item.Name}}</div>
+    </ion-card>
+
+    <ion-list>
+        <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+            <ion-thumbnail item-left>
+                <img src="{{item.Links[0].Uri}}" />
+            </ion-thumbnail>
+            <h2>{{item.Name}}</h2>
+            <p>0{{item.note}}</p>
+
+        </button>
+    </ion-list>
+
+</ion-content>
