@@ -2,12 +2,13 @@ import {Component} from "@angular/core";
 import {NavController} from 'ionic-angular';
 import {NavParams} from 'ionic-angular';
 
-import {ApiService} from '../../services/api';
+import {ProductsService} from '../../providers/products-service/products-service';
+import {CategoriesService} from '../../providers/categories-service/categories-service';
 import {ItemDetailsPage} from '../item-details/item-details';
 
 @Component({
     templateUrl: 'build/pages/category/category.html',
-    providers: [ApiService]
+    providers: [ProductsService, CategoriesService]
 })
 export class CategoryPage {
 
@@ -15,27 +16,24 @@ export class CategoryPage {
     public categories;
     public selectedItem;
 
-    constructor(private _navController: NavController, private _navParams: NavParams, private api: ApiService) {
+    constructor(private _navController: NavController,
+        private _navParams: NavParams,
+        private _productsService: ProductsService,
+        private _categoriesService: CategoriesService) {
 
 
         this.selectedItem = _navParams.get('item');
         console.log(this.selectedItem);
 
-        api.getCategoriesByParentId(this.selectedItem.Id)
-            .subscribe(data => {
-                console.log(data);
+        _categoriesService.getByParentId(this.selectedItem.Id)
+            .then(data => {
                 this.categories = data;
-            },
-            err => this.errorHandler,
-            () => console.log('getCategoriesByParentId completed'));
+            })
 
-        api.getProductsByCategoryId(this.selectedItem.Id)
-            .subscribe(data => {
-                console.log(data);
+        _productsService.getByCategoryId(this.selectedItem.Id)
+            .then(data => {
                 this.items = data;
-            },
-            err => this.errorHandler,
-            () => console.log('getProductsByCategoryId completed'));
+            })
     }
 
     errorHandler(err) {
