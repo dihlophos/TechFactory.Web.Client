@@ -1,5 +1,6 @@
-.home {
-    ion-card {
+.card-background-page {
+
+  ion-card {
     position: relative;
     text-align: center;
   }
@@ -11,8 +12,8 @@
     width: 100%;
     font-weight: bold;
     color: #fff;
-    text-align: center;
     text-shadow: 1px 1px 2px black, 0 0 1em black;
+    text-align: center;
   }
 
   .card-subtitle {
@@ -22,4 +23,5 @@
     width: 100%;
     color: #fff;
   }
+
 }
