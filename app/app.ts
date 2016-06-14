@@ -4,6 +4,7 @@ import {StatusBar} from 'ionic-native';
 
 import {HomePage} from './pages/home/home';
 import {CategoryPage} from './pages/category/category';
+import {OrdersPage} from './pages/orders/orders';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class MyApp {
     public pages: any = [
         { title: 'Login', component: HomePage },
         { title: 'Menu', component: HomePage },
-        { title: 'Orders', component: HomePage },
+        { title: 'Orders', component: OrdersPage },
         { title: 'Payments', component: HomePage },
         { title: 'Locations', component: HomePage },
         { title: 'Help', component: HomePage },
