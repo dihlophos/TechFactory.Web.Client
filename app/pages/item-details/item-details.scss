@@ -36,3 +36,26 @@ ion-content.cards-bg {
 .card-content {
   font-size: 1.3rem;
 }
+/*
+.taglist {
+  display: inline;
+  list-style: none;
+}
+
+.taglist li {
+  display: inline;
+}
+
+#taglist li:after {
+  content: ", ";
+}
+
+.taglist li:last-child:after {
+    content: "";
+}
+*/
+ul.taglist { list-style: none; margin: 0; padding: 0; width:100px; }
+ul.taglist li { display: inline; font-size: 0.7em; padding:0; margin:0; word-wrap: break-word; white-space: nowrap; }
+ul.taglist li:after { content: ","; } 
+ul.taglist li:last-child:after { content: ""; }
+

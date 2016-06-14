@@ -9402,5 +9402,76 @@ body {
   width: 100%;
   color: #fff; }
 
+div.selection {
+  font-size: 22px;
+  display: block;
+  text-align: center;
+  padding-top: 5%; }
+
+.small_button {
+  line-height: 5px !important;
+  min-height: 24px !important; }
+
+ion-card.adv-map p {
+  font-size: 0.7em !important; }
+
+button[fab].fab-map {
+  top: calc(100% - 50px);
+  z-index: 50; }
+
+.item-bold {
+  font-weight: bold; }
+
+ion-content.cards-bg {
+  background-color: #f4f4f7; }
+
+.item-dt {
+  padding-right: 0px;
+  padding-left: 0px; }
+
+.h1-item {
+  padding-left: 10px; }
+
+.card-content {
+  font-size: 1.3rem; }
+
+/*
+.taglist {
+  display: inline;
+  list-style: none;
+}
+
+.taglist li {
+  display: inline;
+}
+
+#taglist li:after {
+  content: ", ";
+}
+
+.taglist li:last-child:after {
+    content: "";
+}
+*/
+ul.taglist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100px; }
+
+ul.taglist li {
+  display: inline;
+  font-size: 0.7em;
+  padding: 0;
+  margin: 0;
+  word-wrap: break-word;
+  white-space: nowrap; }
+
+ul.taglist li:after {
+  content: ","; }
+
+ul.taglist li:last-child:after {
+  content: ""; }
+
 add-countable-button h1 {
   margin-bottom: 2rem; }
