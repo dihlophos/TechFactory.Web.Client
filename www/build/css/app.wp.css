@@ -9145,3 +9145,6 @@ body {
   top: 52%;
   width: 100%;
   color: #fff; }
+
+add-countable-button h1 {
+  margin-bottom: 2rem; }
