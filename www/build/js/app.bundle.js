@@ -13,13 +13,14 @@ var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
 var ionic_native_1 = require('ionic-native');
 var home_1 = require('./pages/home/home');
+var orders_1 = require('./pages/orders/orders');
 var MyApp = (function () {
     function MyApp(platform) {
         this.rootPage = home_1.HomePage;
         this.pages = [
             { title: 'Login', component: home_1.HomePage },
             { title: 'Menu', component: home_1.HomePage },
-            { title: 'Orders', component: home_1.HomePage },
+            { title: 'Orders', component: orders_1.OrdersPage },
             { title: 'Payments', component: home_1.HomePage },
             { title: 'Locations', component: home_1.HomePage },
             { title: 'Help', component: home_1.HomePage },
@@ -41,44 +42,7 @@ var MyApp = (function () {
 }());
 exports.MyApp = MyApp;
 ionic_angular_1.ionicBootstrap(MyApp);
-},{"./pages/home/home":4,"@angular/core":141,"ionic-angular":392,"ionic-native":415}],2:[function(require,module,exports){
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var core_1 = require('@angular/core');
-//import {Api} from './api';
-var AddCountableButton = (function () {
-    //constructor(api) {
-    function AddCountableButton() {
-        this.addIcon = true;
-        this.idx = 0;
-        //this.api = api;
-    }
-    AddCountableButton.prototype.addItemToBasket = function (event, item) {
-        console.debug('addItemToBasket');
-        this.addIcon = false;
-        this.idx++;
-        //    this.api.addItemToBasket(item);
-    };
-    AddCountableButton = __decorate([
-        core_1.Component({
-            selector: 'add-countable-button',
-            inputs: ['item'],
-            template: "\n        <button fab fab-right fab-top class=\"fab-map\" (click)=\"addItemToBasket($event, item)\">\n            <ion-icon *ngIf=\"addIcon\" name=\"add\"></ion-icon>\n            <h1 *ngIf=\"!addIcon\">{{idx}}</h1>\n        </button>"
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AddCountableButton);
-    return AddCountableButton;
-}());
-exports.AddCountableButton = AddCountableButton;
-},{"@angular/core":141}],3:[function(require,module,exports){
+},{"./pages/home/home":3,"./pages/orders/orders":5,"@angular/core":141,"ionic-angular":392,"ionic-native":415}],2:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -136,7 +100,7 @@ var CategoryPage = (function () {
     return CategoryPage;
 }());
 exports.CategoryPage = CategoryPage;
-},{"../../providers/categories-service/categories-service":6,"../../providers/products-service/products-service":7,"../item-details/item-details":5,"@angular/core":141,"ionic-angular":392}],4:[function(require,module,exports){
+},{"../../providers/categories-service/categories-service":6,"../../providers/products-service/products-service":7,"../item-details/item-details":4,"@angular/core":141,"ionic-angular":392}],3:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -183,7 +147,7 @@ var HomePage = (function () {
     return HomePage;
 }());
 exports.HomePage = HomePage;
-},{"../../providers/categories-service/categories-service":6,"../category/category":3,"@angular/core":141,"ionic-angular":392}],5:[function(require,module,exports){
+},{"../../providers/categories-service/categories-service":6,"../category/category":2,"@angular/core":141,"ionic-angular":392}],4:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -198,7 +162,6 @@ var core_1 = require("@angular/core");
 var ionic_angular_1 = require('ionic-angular');
 var ionic_angular_2 = require('ionic-angular');
 var api_1 = require('../../services/api');
-var add_countable_button_1 = require('../../components/add-countable-button/add-countable-button');
 var ItemDetailsPage = (function () {
     function ItemDetailsPage(_navController, _navParams, api) {
         this._navController = _navController;
@@ -209,15 +172,38 @@ var ItemDetailsPage = (function () {
     ItemDetailsPage = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/item-details/item-details.html',
-            providers: [api_1.ApiService],
-            directives: [add_countable_button_1.AddCountableButton]
+            providers: [api_1.ApiService]
         }), 
         __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_2.NavParams, api_1.ApiService])
     ], ItemDetailsPage);
     return ItemDetailsPage;
 }());
 exports.ItemDetailsPage = ItemDetailsPage;
-},{"../../components/add-countable-button/add-countable-button":2,"../../services/api":8,"@angular/core":141,"ionic-angular":392}],6:[function(require,module,exports){
+},{"../../services/api":8,"@angular/core":141,"ionic-angular":392}],5:[function(require,module,exports){
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var ionic_angular_1 = require('ionic-angular');
+var OrdersPage = (function () {
+    function OrdersPage() {
+    }
+    OrdersPage = __decorate([
+        ionic_angular_1.Page({
+            templateUrl: './build/pages/orders/orders.html'
+        }), 
+        __metadata('design:paramtypes', [])
+    ], OrdersPage);
+    return OrdersPage;
+}());
+exports.OrdersPage = OrdersPage;
+},{"ionic-angular":392}],6:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
