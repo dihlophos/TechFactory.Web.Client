@@ -23,17 +23,16 @@
         </ion-note>
     </ion-item>
 
-    <ion-item>
-        <ul class="taglist">
-            <li>Egg Noodle 180 G</li>
-            <li>Chicken 40 G</li>
-            <li>Mixed Peppers 20 G</li>
-            <li>Mixed Peppers 20 G</li>
-            <li>Mixed Peppers 20 G</li>
-            <li>Mixed Peppers 20 G</li>
-            <li>Mixed Peppers 20 G</li>
-        </ul>
-    </ion-item>
+    <p style="padding:5px; margin:0;">
+        <span *ngFor="let ingredient of selectedItem.Ingredients">
+            <button style="margin:0; padding:0; font-size:1.1rem" clear small>
+                {{ingredient.Child.Name}}&nbsp;<strong><i>{{ingredient.BaseQty}}{{ingredient.ChildUom.Key}}</i></strong>
+            </button>
+            <button style="margin:0; padding:0; font-size:1.1rem" clear>
+                <ion-icon name="trash"></ion-icon>
+            </button>
+        </span>
+    </p>
 
     <!--
         <p>
