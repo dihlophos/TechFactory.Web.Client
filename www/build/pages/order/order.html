@@ -1,0 +1,53 @@
+<ion-navbar *navbar danger>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Order</ion-title>
+    <ion-buttons end>
+        <button royal>
+            <ion-icon name="cart"></ion-icon>
+        </button>
+    </ion-buttons>
+</ion-navbar>
+
+
+<ion-content padding class="order">
+    <ion-list>
+        <ion-item block (click)="openMenu()">
+            <ion-thumbnail item-left>
+                <img src="https://3.downloader.disk.yandex.ru/preview/75507349ec14d0d48de848a413ebfc76a305eb808f77e2c105d2fac3ab2e1d2e/inf/WomoKOPR5NAsF4FR89ij8YIWHoUwJQ08txyB13PbXo8dzPIwMplUDJ2VujB0YHvAoE8j6HsyxqVln-M8218bvQ%3D%3D?uid=0&filename=wok.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&tknv=v2&size=1163x727">
+            </ion-thumbnail>
+            <h2>WOK Regular</h2>
+            <p>2x $2.00</p>
+        </ion-item>
+        <ion-item block (click)="openMenu()">
+            <ion-thumbnail item-left>
+                <img src="https://3.downloader.disk.yandex.ru/preview/75507349ec14d0d48de848a413ebfc76a305eb808f77e2c105d2fac3ab2e1d2e/inf/WomoKOPR5NAsF4FR89ij8YIWHoUwJQ08txyB13PbXo8dzPIwMplUDJ2VujB0YHvAoE8j6HsyxqVln-M8218bvQ%3D%3D?uid=0&filename=wok.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&tknv=v2&size=1163x727">
+            </ion-thumbnail>
+            <h2>WOK half</h2>
+            <p>2x $3.00</p>
+        </ion-item>
+
+        <ion-item>
+            Total
+            <ion-note item-right>
+                $5.00
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            Date
+            <ion-note item-right>
+                18.05.2016 08:06
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            Statys
+            <ion-note item-right>
+                DRAFT
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <div class="">
+        <img src="https://chart.googleapis.com/chart?cht=qr&chs=255x255&chl=3e4211d5-1f70-4bd2-a522-46df924c4467" width="300" height="300" style="display: block; margin-left: auto; margin-right: auto;">
+    </div>
+</ion-content>

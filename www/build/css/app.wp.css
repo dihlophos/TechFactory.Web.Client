@@ -9217,5 +9217,18 @@ ul.taglist li:after {
 ul.taglist li:last-child:after {
   content: ""; }
 
+.order .ion-md-share {
+  color: #ED4248; }
+
+.order .ion-md-arrow-dropright-circle {
+  color: #508AE4; }
+
+.order .ion-md-heart-outline {
+  color: #31D55F; }
+
+.order .action-sheet-cancel ion-icon,
+.order .action-sheet-destructive ion-icon {
+  color: #757575; }
+
 add-countable-button h1 {
   margin-bottom: 2rem; }
