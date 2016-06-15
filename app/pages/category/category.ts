@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {NavController} from 'ionic-angular';
 import {NavParams} from 'ionic-angular';
-
+import {AppSettings} from '../../appsettings';
 import {ProductsService} from '../../providers/products-service/products-service';
 import {CategoriesService} from '../../providers/categories-service/categories-service';
 import {ItemDetailsPage} from '../item-details/item-details';
@@ -15,6 +15,7 @@ export class CategoryPage {
     public items;
     public categories;
     public selectedItem;
+    private defaultImageUri = AppSettings.DEFAULT_IMAGE_URI;
 
     constructor(private _navController: NavController,
         private _navParams: NavParams,
@@ -23,7 +24,6 @@ export class CategoryPage {
 
 
         this.selectedItem = _navParams.get('item');
-        console.log(this.selectedItem);
 
         _categoriesService.getByParentId(this.selectedItem.Id)
             .then(data => {

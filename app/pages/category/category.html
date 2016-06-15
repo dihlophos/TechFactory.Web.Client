@@ -12,14 +12,14 @@
 
 <ion-content>
     <ion-card class="card-background-page" ion-item *ngFor="let item of categories" (click)="moveToCategoryPage($event, item)">
-        <img src="{{item.Links[0].Uri}}" />
+        <img src="{{item.Links.length!=0?item.Links[0].Uri:defaultImageUri}}" />
         <div class="card-title">{{item.Name}}</div>
     </ion-card>
 
     <ion-list>
         <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
             <ion-thumbnail item-left>
-                <img src="{{item.Links[0].Uri}}" />
+                <img src="{{item.Links.length!=0?item.Links[0].Uri:defaultImageUri}}" />
             </ion-thumbnail>
             <h2>{{item.Name}}</h2>
             <p>0{{item.note}}</p>

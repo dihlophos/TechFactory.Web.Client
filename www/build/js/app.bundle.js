@@ -51,7 +51,25 @@ var MyApp = (function () {
 }());
 exports.MyApp = MyApp;
 ionic_angular_1.ionicBootstrap(MyApp);
-},{"./pages/home/home":4,"./pages/orders/orders":6,"@angular/core":142,"ionic-angular":393,"ionic-native":416}],2:[function(require,module,exports){
+},{"./pages/home/home":5,"./pages/orders/orders":7,"@angular/core":142,"ionic-angular":393,"ionic-native":416}],2:[function(require,module,exports){
+"use strict";
+var AppSettings = (function () {
+    function AppSettings() {
+    }
+    Object.defineProperty(AppSettings, "API_ENDPOINT", {
+        get: function () { return 'http://partner-web-api-v1.azurewebsites.net/odata'; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AppSettings, "DEFAULT_IMAGE_URI", {
+        get: function () { return 'https://1.downloader.disk.yandex.ru/preview/3cd9b308bbde6ced3f8ca321456faf6ab04055ef9c76daebe217f039f746c028/inf/hgc6g6g2TQWPUFsvhryMfFFmwiia5pW1cYyhEcDkp0upuao-j2YtRrJDgSv2Ty6J_k_zTixziy0g6bY-UxPLbg%3D%3D?uid=0&filename=no_image.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fpng&tknv=v2&size=1163x727'; },
+        enumerable: true,
+        configurable: true
+    });
+    return AppSettings;
+}());
+exports.AppSettings = AppSettings;
+},{}],3:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -88,7 +106,7 @@ var AddCountableButton = (function () {
     return AddCountableButton;
 }());
 exports.AddCountableButton = AddCountableButton;
-},{"@angular/core":142}],3:[function(require,module,exports){
+},{"@angular/core":142}],4:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -102,6 +120,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var ionic_angular_1 = require('ionic-angular');
 var ionic_angular_2 = require('ionic-angular');
+var appsettings_1 = require('../../appsettings');
 var products_service_1 = require('../../providers/products-service/products-service');
 var categories_service_1 = require('../../providers/categories-service/categories-service');
 var item_details_1 = require('../item-details/item-details');
@@ -112,8 +131,8 @@ var CategoryPage = (function () {
         this._navParams = _navParams;
         this._productsService = _productsService;
         this._categoriesService = _categoriesService;
+        this.defaultImageUri = appsettings_1.AppSettings.DEFAULT_IMAGE_URI;
         this.selectedItem = _navParams.get('item');
-        console.log(this.selectedItem);
         _categoriesService.getByParentId(this.selectedItem.Id)
             .then(function (data) {
             _this.categories = data;
@@ -146,7 +165,7 @@ var CategoryPage = (function () {
     return CategoryPage;
 }());
 exports.CategoryPage = CategoryPage;
-},{"../../providers/categories-service/categories-service":7,"../../providers/products-service/products-service":8,"../item-details/item-details":5,"@angular/core":142,"ionic-angular":393}],4:[function(require,module,exports){
+},{"../../appsettings":2,"../../providers/categories-service/categories-service":8,"../../providers/products-service/products-service":9,"../item-details/item-details":6,"@angular/core":142,"ionic-angular":393}],5:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -159,6 +178,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var ionic_angular_1 = require('ionic-angular');
+var appsettings_1 = require('../../appsettings');
 var category_1 = require('../category/category');
 var categories_service_1 = require('../../providers/categories-service/categories-service');
 var HomePage = (function () {
@@ -166,9 +186,9 @@ var HomePage = (function () {
         var _this = this;
         this._navController = _navController;
         this._categoriesService = _categoriesService;
+        this.defaultImageUri = appsettings_1.AppSettings.DEFAULT_IMAGE_URI;
         _categoriesService.getByKey('MENU')
             .then(function (data) {
-            console.log(data);
             _this._categoriesService.getByParentId(data.Id)
                 .then(function (data) {
                 _this.items = data;
@@ -193,7 +213,7 @@ var HomePage = (function () {
     return HomePage;
 }());
 exports.HomePage = HomePage;
-},{"../../providers/categories-service/categories-service":7,"../category/category":3,"@angular/core":142,"ionic-angular":393}],5:[function(require,module,exports){
+},{"../../appsettings":2,"../../providers/categories-service/categories-service":8,"../category/category":4,"@angular/core":142,"ionic-angular":393}],6:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -207,27 +227,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var ionic_angular_1 = require('ionic-angular');
 var ionic_angular_2 = require('ionic-angular');
-var api_1 = require('../../services/api');
+var appsettings_1 = require('../../appsettings');
 var add_countable_button_1 = require('../../components/add-countable-button/add-countable-button');
 var ItemDetailsPage = (function () {
-    function ItemDetailsPage(_navController, _navParams, api) {
+    function ItemDetailsPage(_navController, _navParams) {
         this._navController = _navController;
         this._navParams = _navParams;
-        this.api = api;
+        this.defaultImageUri = appsettings_1.AppSettings.DEFAULT_IMAGE_URI;
         this.selectedItem = _navParams.get('item');
     }
     ItemDetailsPage = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/item-details/item-details.html',
-            providers: [api_1.ApiService],
             directives: [add_countable_button_1.AddCountableButton]
         }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_2.NavParams, api_1.ApiService])
+        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_2.NavParams])
     ], ItemDetailsPage);
     return ItemDetailsPage;
 }());
 exports.ItemDetailsPage = ItemDetailsPage;
-},{"../../components/add-countable-button/add-countable-button":2,"../../services/api":9,"@angular/core":142,"ionic-angular":393}],6:[function(require,module,exports){
+},{"../../appsettings":2,"../../components/add-countable-button/add-countable-button":3,"@angular/core":142,"ionic-angular":393}],7:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -251,7 +270,7 @@ var OrdersPage = (function () {
     return OrdersPage;
 }());
 exports.OrdersPage = OrdersPage;
-},{"@angular/core":142}],7:[function(require,module,exports){
+},{"@angular/core":142}],8:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -264,6 +283,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+var appsettings_1 = require('../../appsettings');
 require('rxjs/add/operator/map');
 /*
   Generated class for the CategoriesService provider.
@@ -274,7 +294,7 @@ require('rxjs/add/operator/map');
 var CategoriesService = (function () {
     function CategoriesService(http) {
         this.http = http;
-        this._categoriesCollectionUrl = 'http://partner-web-api-v1.azurewebsites.net/odata/Categories';
+        this._categoriesCollectionUrl = appsettings_1.AppSettings.API_ENDPOINT + "/Categories";
     }
     CategoriesService.prototype.getByKey = function (key) {
         var _this = this;
@@ -303,7 +323,7 @@ var CategoriesService = (function () {
     return CategoriesService;
 }());
 exports.CategoriesService = CategoriesService;
-},{"@angular/core":142,"@angular/http":218,"rxjs/add/operator/map":541}],8:[function(require,module,exports){
+},{"../../appsettings":2,"@angular/core":142,"@angular/http":218,"rxjs/add/operator/map":541}],9:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -316,6 +336,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+var appsettings_1 = require('../../appsettings');
 require('rxjs/add/operator/map');
 /*
   Generated class for the ProductsService provider.
@@ -326,7 +347,7 @@ require('rxjs/add/operator/map');
 var ProductsService = (function () {
     function ProductsService(http) {
         this.http = http;
-        this._productsCollectionUrl = 'http://partner-web-api-v1.azurewebsites.net/odata/Products';
+        this._productsCollectionUrl = appsettings_1.AppSettings.API_ENDPOINT + "/Products";
     }
     ProductsService.prototype.getById = function (id) {
         var _this = this;
@@ -355,64 +376,7 @@ var ProductsService = (function () {
     return ProductsService;
 }());
 exports.ProductsService = ProductsService;
-},{"@angular/core":142,"@angular/http":218,"rxjs/add/operator/map":541}],9:[function(require,module,exports){
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-var ApiService = (function () {
-    function ApiService(http) {
-        this.http = http;
-        this.categoriesCollectionUrl = 'http://partner-web-api-v1.azurewebsites.net/odata/Categories';
-        this.productsCollectionUrl = 'http://partner-web-api-v1.azurewebsites.net/odata/Products';
-        //this.basket = {
-        //    items: []
-        //}
-    }
-    ApiService.prototype.getRepos = function (username) {
-        var repos = this.http.get("https://api.github.com/users/" + username + "/repos");
-        return repos;
-    };
-    ApiService.prototype.getCategoryByKey = function (key) {
-        return this.http.get(this.categoriesCollectionUrl + '/?$filter=Key eq \'' + key + '\'&$expand=Links')
-            .map(function (response) { return response.json(); })
-            .map(function (json) { return json.value[0]; });
-    };
-    ApiService.prototype.getCategoriesByParentId = function (id) {
-        return this.http.get(this.categoriesCollectionUrl + '/?$filter=ParentId eq ' + id + '&$expand=Links')
-            .map(function (response) { return response.json(); })
-            .map(function (json) { return json.value; });
-    };
-    //getCategoriesByParentKey(key) {
-    //    return this.getCategoriesByKey(key)
-    //        .map(response => this.getCategoriesByParentId(response.Id));
-    //}
-    ApiService.prototype.getProductById = function (id) {
-        return this.http.get(this.productsCollectionUrl + '(' + id + ')/?$expand=Price,Categories,Links,Ingredients($expand=Child,ChildUom)')
-            .map(function (response) { return response.json(); })
-            .map(function (json) { return json.value; });
-    };
-    ApiService.prototype.getProductsByCategoryId = function (id) {
-        return this.http.get(this.productsCollectionUrl + '/?$filter=Categories/any(d:d/Id eq ' + id + ')&$expand=Price,Categories,Links,Ingredients($expand=Child,ChildUom)')
-            .map(function (response) { return response.json(); })
-            .map(function (json) { return json.value; });
-    };
-    ApiService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
-    ], ApiService);
-    return ApiService;
-}());
-exports.ApiService = ApiService;
-},{"@angular/core":142,"@angular/http":218}],10:[function(require,module,exports){
+},{"../../appsettings":2,"@angular/core":142,"@angular/http":218,"rxjs/add/operator/map":541}],10:[function(require,module,exports){
 "use strict";
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
