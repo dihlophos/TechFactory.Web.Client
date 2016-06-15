@@ -239,19 +239,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var ionic_angular_1 = require('ionic-angular');
 var OrdersPage = (function () {
-    function OrdersPage() {
+    function OrdersPage(platform) {
+        this.order = "orders";
+        this.isAndroid = false;
+        this.isAndroid = platform.is('android');
     }
     OrdersPage = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/orders/orders.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [ionic_angular_1.Platform])
     ], OrdersPage);
     return OrdersPage;
 }());
 exports.OrdersPage = OrdersPage;
-},{"@angular/core":142}],7:[function(require,module,exports){
+},{"@angular/core":142,"ionic-angular":393}],7:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
