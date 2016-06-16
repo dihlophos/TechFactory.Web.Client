@@ -13,21 +13,32 @@
 
 <ion-content class="order">
     <ion-list>
-        <ion-item block (click)="openMenu()">
-            <ion-thumbnail item-left>
-                <img src="https://3.downloader.disk.yandex.ru/preview/75507349ec14d0d48de848a413ebfc76a305eb808f77e2c105d2fac3ab2e1d2e/inf/WomoKOPR5NAsF4FR89ij8YIWHoUwJQ08txyB13PbXo8dzPIwMplUDJ2VujB0YHvAoE8j6HsyxqVln-M8218bvQ%3D%3D?uid=0&filename=wok.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&tknv=v2&size=1163x727">
-            </ion-thumbnail>
-            <h2>WOK Regular</h2>
-            <p>2x $2.00</p>
-        </ion-item>
-        <ion-item block (click)="openMenu()">
-            <ion-thumbnail item-left>
-                <img src="https://3.downloader.disk.yandex.ru/preview/75507349ec14d0d48de848a413ebfc76a305eb808f77e2c105d2fac3ab2e1d2e/inf/WomoKOPR5NAsF4FR89ij8YIWHoUwJQ08txyB13PbXo8dzPIwMplUDJ2VujB0YHvAoE8j6HsyxqVln-M8218bvQ%3D%3D?uid=0&filename=wok.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&tknv=v2&size=1163x727">
-            </ion-thumbnail>
-            <h2>WOK half</h2>
-            <p>2x $3.00</p>
-        </ion-item>
-
+        <ion-item-sliding >
+            <ion-item>
+                <ion-thumbnail item-left>
+                    <img src="https://3.downloader.disk.yandex.ru/preview/75507349ec14d0d48de848a413ebfc76a305eb808f77e2c105d2fac3ab2e1d2e/inf/WomoKOPR5NAsF4FR89ij8YIWHoUwJQ08txyB13PbXo8dzPIwMplUDJ2VujB0YHvAoE8j6HsyxqVln-M8218bvQ%3D%3D?uid=0&filename=wok.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&tknv=v2&size=1163x727">
+                </ion-thumbnail>
+                <h2>WOK Regular</h2>
+                <p>2x $2.00</p>
+            </ion-item>
+           <ion-item-options side="left">
+                <button><ion-icon name="archive"></ion-icon>Edit</button>
+                <button danger (click)="removeItem()"><ion-icon name="trash"></ion-icon> Delete</button>
+            </ion-item-options>
+        </ion-item-sliding>
+        <ion-item-sliding>
+            <ion-item>
+                <ion-thumbnail item-left>
+                    <img src="https://3.downloader.disk.yandex.ru/preview/75507349ec14d0d48de848a413ebfc76a305eb808f77e2c105d2fac3ab2e1d2e/inf/WomoKOPR5NAsF4FR89ij8YIWHoUwJQ08txyB13PbXo8dzPIwMplUDJ2VujB0YHvAoE8j6HsyxqVln-M8218bvQ%3D%3D?uid=0&filename=wok.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&tknv=v2&size=1163x727">
+                </ion-thumbnail>
+                <h2>WOK half</h2>
+                <p>2x $2.00</p>
+            </ion-item>
+            <ion-item-options side="left">
+                <button><ion-icon name="archive"></ion-icon>Edit</button>
+                <button danger (click)="removeItem()"><ion-icon name="trash"></ion-icon> Delete</button>
+            </ion-item-options>
+        </ion-item-sliding>
         <ion-item>
             Total
             <ion-note item-right>
