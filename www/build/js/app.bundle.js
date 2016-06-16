@@ -264,13 +264,6 @@ var OrderPage = (function () {
         this.platform = platform;
         this.nav = nav;
     }
-    OrderPage.prototype.removeItem = function (item) {
-        //for (i = 0; i < this.items.length; i++) {
-        //    if (this.items[i] == item) {
-        //        this.items.splice(i, 1);
-        //    }
-        //}
-    };
     OrderPage.prototype.openMenu = function () {
         var actionSheet = ionic_angular_1.ActionSheet.create({
             title: 'Options',
