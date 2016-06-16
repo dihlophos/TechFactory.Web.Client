@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {NavController} from 'ionic-angular';
-
+import {AppSettings} from '../../appsettings';
 import {CategoryPage} from '../category/category';
 import {CategoriesService} from '../../providers/categories-service/categories-service';
 
@@ -11,13 +11,13 @@ import {CategoriesService} from '../../providers/categories-service/categories-s
 export class HomePage {
 
     public items;
+    private defaultImageUri = AppSettings.DEFAULT_IMAGE_URI;
 
     constructor(private _navController: NavController, private _categoriesService: CategoriesService) {
 
         _categoriesService.getByKey('MENU')
 			.then(
 			data => {
-				console.log(data);
 				this._categoriesService.getByParentId(data.Id)
 					.then(
 					data => {

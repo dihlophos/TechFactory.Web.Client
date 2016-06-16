@@ -13,7 +13,7 @@
 
 <ion-content class="home">
     <ion-card ion-item *ngFor="let item of items" (click)="moveToCategoryPage($event, item)">
-        <img src="{{item.Links[0].Uri}}" />
+        <img src="{{item.Links.length!=0?item.Links[0].Uri:defaultImageUri}}" />
         <div class="card-title">{{item.Name}}</div>
     </ion-card>
 </ion-content>

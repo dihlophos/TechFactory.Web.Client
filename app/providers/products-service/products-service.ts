@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
+import {AppSettings} from '../../appsettings';
 import 'rxjs/add/operator/map';
 
 /*
@@ -10,7 +11,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class ProductsService {
-  private _productsCollectionUrl: string = 'http://partner-web-api-v1.azurewebsites.net/odata/Products';
+  private _productsCollectionUrl: string = `${AppSettings.API_ENDPOINT}/Products`;
 
   constructor(public http: Http) {}
 
