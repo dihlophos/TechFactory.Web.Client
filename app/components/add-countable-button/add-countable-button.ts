@@ -1,11 +1,9 @@
-﻿import {Component, Input} from '@angular/core';
-//import {Api} from './api';
+﻿import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
     selector: 'add-countable-button',
-    inputs: ['item'],
     template: `
-        <button fab fab-right fab-top class="fab-map" (click)="addItemToBasket($event, item)">
+        <button fab fab-right fab-top class="fab-map" (click)="addItemToBasket($event)">
             <ion-icon *ngIf="addIcon" name="add"></ion-icon>
             <h1 *ngIf="!addIcon">{{idx}}</h1>
         </button>`
@@ -13,19 +11,24 @@
 export class AddCountableButton {  
 
     private addIcon: boolean;
-    private idx: number;
+    
+    @Input()
+    value: number;
+
+    @Output()
+    counterChange = new EventEmitter();
 
     //constructor(api) {
     constructor() {
-        this.addIcon = true;
-        this.idx = 0;
-        //this.api = api;
+        this.addIcon = this.value != 0;
+        console.log(this.value);
     }
 
-    addItemToBasket(event, item) {
-        console.debug('addItemToBasket');
-        this.addIcon = false;
-        this.idx++;
+    addItemToBasket(event) {
+        this.value++;
+        this.counterChange.emit({
+            value: this.value
+        })
     //    this.api.addItemToBasket(item);
     }
 }

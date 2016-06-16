@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
-import {AppSettings} from '../../appsettings';
+import {AppSettings} from '../../app.settings';
 import 'rxjs/add/operator/map';
 
 /*
