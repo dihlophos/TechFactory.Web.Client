@@ -1,25 +1,23 @@
-<ion-navbar *navbar danger>
-    <button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Orders</ion-title>
-    <ion-buttons end>
-        <button royal>
-            <ion-icon name="cart"></ion-icon>
+<ion-navbar *navbar danger [attr.primary]="isAndroid ? '' : null">
+    <ion-toolbar class="orders_toolbar">
+        <button menuToggle>
+            <ion-icon name="menu"></ion-icon>
         </button>
-    </ion-buttons>
+        <ion-segment [(ngModel)]="order" [attr.light]="isAndroid ? '' : null">
+            <ion-segment-button value="orders">
+                Orders
+            </ion-segment-button>
+            <ion-segment-button value="history">
+                History
+            </ion-segment-button>
+        </ion-segment>
+            <ion-buttons end>
+                <button royal>
+                    <ion-icon name="cart"></ion-icon>
+                </button>
+            </ion-buttons>
+    </ion-toolbar>
 </ion-navbar>
-
-<ion-toolbar [attr.primary]="isAndroid ? '' : null">
-    <ion-segment [(ngModel)]="order" [attr.light]="isAndroid ? '' : null">
-        <ion-segment-button value="orders">
-            Orders
-        </ion-segment-button>
-        <ion-segment-button value="history">
-            History
-        </ion-segment-button>
-    </ion-segment>
-</ion-toolbar>
 
 <ion-content class="orders">
     <div [ngSwitch]="order">
@@ -47,3 +45,18 @@
 
 
 </ion-content>
+<!--<ion-toolbar *navbar danger>
+    <ion-segment>
+        <ion-segment-button value="new">
+            New
+        </ion-segment-button>
+        <ion-segment-button value="hot">
+            Hot
+        </ion-segment-button>
+    </ion-segment>
+    <ion-buttons end>
+        <button>
+            <ion-icon name="more"></ion-icon>
+        </button>
+    </ion-buttons>
+</ion-toolbar>-->

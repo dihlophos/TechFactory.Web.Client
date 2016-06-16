@@ -9486,8 +9486,12 @@ ul.taglist li:last-child:after {
 .order .action-sheet-destructive ion-icon {
   color: #757575; }
 
-.order .ion-list {
-  margin: 0px; }
+.orders_toolbar .segment-button {
+  border-color: #ffffff;
+  color: #ffffff; }
+
+.orders_toolbar .segment-activated {
+  background-color: #ffffff; }
 
 add-countable-button h1 {
   margin-bottom: 2rem; }
