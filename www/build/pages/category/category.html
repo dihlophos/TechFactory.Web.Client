@@ -17,14 +17,19 @@
     </ion-card>
 
     <ion-list>
-        <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-            <ion-thumbnail item-left>
-                <img src="{{item.Links.length!=0?item.Links[0].Uri:defaultImageUri}}" />
-            </ion-thumbnail>
-            <h2>{{item.Name}}</h2>
-            <p>0{{item.note}}</p>
-
-        </button>
+        <ion-item-sliding ion-item-sliding *ngFor="let item of items">
+            <ion-item (click)="itemTapped($event, item)">
+                <ion-thumbnail item-left>
+                    <img src="{{item.Links.length!=0?item.Links[0].Uri:defaultImageUri}}" />
+                </ion-thumbnail>
+                <h2>{{item.Name}}</h2>
+                <p>0{{item.note}}</p>
+            </ion-item>
+            <ion-item-options side="left">
+                <button style="width:70px"><ion-icon name="add-circle"></ion-icon></button>
+                <button style="width:70px" light>0</button>
+                <button style="width:70px" secondary><ion-icon name="remove-circle"></ion-icon></button>
+            </ion-item-options>
+        </ion-item-sliding>
     </ion-list>
-
 </ion-content>

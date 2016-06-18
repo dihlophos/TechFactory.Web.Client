@@ -2,7 +2,7 @@
     <button menuToggle>
         <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Order</ion-title>
+    <ion-title>Order 0001 </ion-title>
     <ion-buttons end>
         <button royal>
             <ion-icon name="cart"></ion-icon>
@@ -13,6 +13,18 @@
 
 <ion-content class="order">
     <ion-list>
+        <ion-item>
+            Date
+            <ion-note item-right>
+                18.05.2016 08:06
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            Status
+            <ion-note item-right>
+                DRAFT
+            </ion-note>
+        </ion-item>
         <ion-item-sliding >
             <ion-item>
                 <ion-thumbnail item-left>
@@ -21,9 +33,9 @@
                 <h2>WOK Regular</h2>
                 <p>2x $2.00</p>
             </ion-item>
-           <ion-item-options side="left">
-                <button><ion-icon name="add-circle"></ion-icon></button>
-               <button light><ion-icon name="remove-circle"></ion-icon></button>
+           <ion-item-options  side="left">
+                <button style="width:70px"><ion-icon name="add-circle"></ion-icon></button>
+               <button style="width:70px" secondary><ion-icon name="remove-circle"></ion-icon></button>
             </ion-item-options>
         </ion-item-sliding>
         <ion-item-sliding>
@@ -35,8 +47,8 @@
                 <p>2x $2.00</p>
             </ion-item>
             <ion-item-options side="left">
-                <button><ion-icon name="add-circle"></ion-icon></button>
-                <button light><ion-icon name="remove-circle"></ion-icon></button>
+                <button style="width:70px"><ion-icon name="add-circle"></ion-icon></button>
+                <button style="width:70px" secondary><ion-icon name="remove-circle"></ion-icon></button>
             </ion-item-options>
         </ion-item-sliding>
         <ion-item>
@@ -45,19 +57,7 @@
                 $5.00
             </ion-note>
         </ion-item>
-        <ion-item>
-            Date
-            <ion-note item-right>
-                18.05.2016 08:06
-            </ion-note>
-        </ion-item>
-        <ion-item>
-            Statys
-            <ion-note item-right>
-                DRAFT
-            </ion-note>
-        </ion-item>
-    </ion-list>
+       </ion-list>
     <div class="">
         <img src="https://chart.googleapis.com/chart?cht=qr&chs=255x255&chl=3e4211d5-1f70-4bd2-a522-46df924c4467" width="300" height="300" style="display: block; margin-left: auto; margin-right: auto;">
     </div>

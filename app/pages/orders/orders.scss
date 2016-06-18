@@ -7,4 +7,13 @@
     .segment-activated {
         background-color: #ffffff;
     }
+    .toolbar[danger] .segment-button.segment-activated {
+    color: #ff0000;
+    }
+    .ion-segment[light] .segment-button.activated, ion-segment[light] .segment-button.segment-activated   {
+    color: #ff0000;
+    }
+   .orders_toolbar .segment-activated {
+    background-color: #ff7f7f;
+    }
 }
