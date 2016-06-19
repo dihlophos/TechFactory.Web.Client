@@ -14,7 +14,7 @@
 
     <div style="position: relative">
         <img src="{{selectedItem.Links.length!=0?selectedItem.Links[0].Uri:defaultImageUri}}" />
-        <add-countable-button (counterChange)="qtyChanged($event)" [value]="orderLine?.Qty"></add-countable-button>
+        <add-countable-button (counterChange)="qtyChanged($event)" *ngIf="enableAddCountableButton" [value]="orderLine?.Qty"></add-countable-button>
     </div>
     <ion-item class="item-dt" id="home-list-item9">
         <h1 class="h1-item">{{selectedItem.Name}}</h1>

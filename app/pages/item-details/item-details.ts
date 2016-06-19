@@ -13,7 +13,8 @@ import {AddCountableButton} from '../../components/add-countable-button/add-coun
 })
 export class ItemDetailsPage implements OnInit {
 
-    public defaultImageUri = AppSettings.DEFAULT_IMAGE_URI;
+    public defaultImageUri:string = AppSettings.DEFAULT_IMAGE_URI;
+    public enableAddCountableButton: boolean = false;
     public selectedItem;
     public orderLine;
 
@@ -28,17 +29,19 @@ export class ItemDetailsPage implements OnInit {
     }
 
     qtyChanged(event) {
+		this.enableAddCountableButton = false;
 		this.orderLine.Qty = event.value;
 		this._ordersService.saveOrderLine(this.orderLine).then(
 			line => {
 				this.orderLine = line;
+				this.enableAddCountableButton = true;
 			}
 		);
     }
 
     getOrderLine() {
 		this._ordersService.getOrderLine(this.selectedItem).then(
-			line => { this.orderLine = line; }
+			line => { this.orderLine = line; this.enableAddCountableButton = true; console.log(this.enableAddCountableButton) }
 		);	
     }
 }

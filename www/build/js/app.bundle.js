@@ -265,6 +265,7 @@ var ItemDetailsPage = (function () {
         this._navParams = _navParams;
         this._ordersService = _ordersService;
         this.defaultImageUri = app_settings_1.AppSettings.DEFAULT_IMAGE_URI;
+        this.enableAddCountableButton = false;
         this.selectedItem = _navParams.get('item');
     }
     ItemDetailsPage.prototype.ngOnInit = function () {
@@ -272,14 +273,16 @@ var ItemDetailsPage = (function () {
     };
     ItemDetailsPage.prototype.qtyChanged = function (event) {
         var _this = this;
+        this.enableAddCountableButton = false;
         this.orderLine.Qty = event.value;
         this._ordersService.saveOrderLine(this.orderLine).then(function (line) {
             _this.orderLine = line;
+            _this.enableAddCountableButton = true;
         });
     };
     ItemDetailsPage.prototype.getOrderLine = function () {
         var _this = this;
-        this._ordersService.getOrderLine(this.selectedItem).then(function (line) { _this.orderLine = line; });
+        this._ordersService.getOrderLine(this.selectedItem).then(function (line) { _this.orderLine = line; _this.enableAddCountableButton = true; console.log(_this.enableAddCountableButton); });
     };
     ItemDetailsPage = __decorate([
         core_1.Component({
