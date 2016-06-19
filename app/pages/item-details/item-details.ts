@@ -10,54 +10,35 @@ import {AddCountableButton} from '../../components/add-countable-button/add-coun
 @Component({
     templateUrl: 'build/pages/item-details/item-details.html',
     directives: [AddCountableButton],
-    providers: [OrdersService]
 })
 export class ItemDetailsPage implements OnInit {
 
+    public defaultImageUri = AppSettings.DEFAULT_IMAGE_URI;
     public selectedItem;
-    private defaultImageUri = AppSettings.DEFAULT_IMAGE_URI;
-    private order;
-    private orderLine;
+    public orderLine;
 
     constructor(private _navController: NavController,
     	private _navParams: NavParams,
 		private _ordersService: OrdersService) {
         this.selectedItem = _navParams.get('item');
-        this.order = this._navParams.get('order');
     }
 
     ngOnInit() {
 		this.getOrderLine();
     }
 
-    incQty(event) {
+    qtyChanged(event) {
 		this.orderLine.Qty = event.value;
 		this._ordersService.saveOrderLine(this.orderLine).then(
-			data => {
-				this.orderLine = data;
+			line => {
+				this.orderLine = line;
 			}
 		);
     }
 
     getOrderLine() {
-		let lineFound: boolean = false;
-		for (let line of this.order.Lines) {
-			if (line.Item.Id === this.selectedItem.Id) {
-				this.orderLine = line;
-				lineFound = true;
-			}
-
-			if (!lineFound) {
-				this._ordersService.saveOrderLine({
-					Qty: 0,
-					ItemId: this.selectedItem.Id,
-					OrderId: this.order.Id
-				}).then(
-					data => {
-						this.orderLine = data;
-					}
-				)
-			}
-		}
+		this._ordersService.getOrderLine(this.selectedItem).then(
+			line => { this.orderLine = line; console.log(line); }
+		);	
     }
 }

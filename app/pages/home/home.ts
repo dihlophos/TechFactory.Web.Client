@@ -9,11 +9,11 @@ import {OrdersService} from '../../providers/orders-service/orders-service';
 
 @Component({
     templateUrl: 'build/pages/home/home.html',
-    providers: [CategoriesService, OrdersService]
+    providers: [CategoriesService]
 })
 export class HomePage implements OnInit {
 
-    public items;
+    public categories;
     private order;
     private defaultImageUri = AppSettings.DEFAULT_IMAGE_URI;
 
@@ -21,40 +21,27 @@ export class HomePage implements OnInit {
         private _navParams: NavParams,
         private _categoriesService: CategoriesService,
         private _ordersService: OrdersService) {
-        this.order = this._navParams.get('order');
     }
 
     ngOnInit() {
         this.getOrder();
-        this.getCategories();        
+        this.getCategories();      
     }
 
     getOrder() {
-        if (!this.order) {
-            this._ordersService.getDraft().then(
-                data => {
-                    if (data) {
-                        this.order = data;
-                    }
-                    else {
-                        this._ordersService.save({
-                            Date: new Date().toISOString(),
-                            DueDate: new Date().toISOString(),
-                            Number: "SO001",
-                            Type: "SO"
-                        }).then(data => { this.order = data; });
-                    }
-                }
-            )
-        }
+        this._ordersService.getDraft().then(
+            draft => {
+                console.log(draft);
+            }
+        );
     }
 
     getCategories() {
         this._categoriesService.getByKey('MENU').then(
-            data => {
-                this._categoriesService.getByParentId(data.Id).then(
-                    data => {
-                        this.items = data;
+            rootCategory => {
+                this._categoriesService.getByParentId(rootCategory.Id).then(
+                    categories => {
+                        this.categories = categories;
                     }
                 )
             });
@@ -66,8 +53,7 @@ export class HomePage implements OnInit {
 
     moveToCategoryPage(event, item) {
         this._navController.push(CategoryPage, {
-            item: item,
-            order: this.order
+            item: item
         });
     }
 }

@@ -32,9 +32,10 @@ var ionic_angular_1 = require('ionic-angular');
 var ionic_native_1 = require('ionic-native');
 var home_1 = require('./pages/home/home');
 var orders_1 = require('./pages/orders/orders');
+var orders_service_1 = require('./providers/orders-service/orders-service');
 var MyApp = (function () {
-    function MyApp(platform, menu) {
-        this.menu = menu;
+    function MyApp(platform, _menu) {
+        this._menu = _menu;
         this.rootPage = home_1.HomePage;
         this.pages = [
             { title: 'Login', component: home_1.HomePage },
@@ -52,7 +53,7 @@ var MyApp = (function () {
         });
     }
     MyApp.prototype.openPage = function (page) {
-        this.menu.close();
+        this._menu.close();
         this.nav.setRoot(page.component);
     };
     __decorate([
@@ -68,8 +69,8 @@ var MyApp = (function () {
     return MyApp;
 }());
 exports.MyApp = MyApp;
-ionic_angular_1.ionicBootstrap(MyApp);
-},{"./pages/home/home":5,"./pages/orders/orders":8,"@angular/core":144,"ionic-angular":395,"ionic-native":418}],3:[function(require,module,exports){
+ionic_angular_1.ionicBootstrap(MyApp, [orders_service_1.OrdersService]);
+},{"./pages/home/home":5,"./pages/orders/orders":8,"./providers/orders-service/orders-service":10,"@angular/core":144,"ionic-angular":395,"ionic-native":418}],3:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -82,18 +83,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var AddCountableButton = (function () {
-    //constructor(api) {
     function AddCountableButton() {
         this.counterChange = new core_1.EventEmitter();
-        this.addIcon = this.value != 0;
-        console.log(this.value);
     }
     AddCountableButton.prototype.addItemToBasket = function (event) {
         this.value++;
         this.counterChange.emit({
             value: this.value
         });
-        //    this.api.addItemToBasket(item);
     };
     __decorate([
         core_1.Input(), 
@@ -106,7 +103,7 @@ var AddCountableButton = (function () {
     AddCountableButton = __decorate([
         core_1.Component({
             selector: 'add-countable-button',
-            template: "\n        <button fab fab-right fab-top class=\"fab-map\" (click)=\"addItemToBasket($event)\">\n            <ion-icon *ngIf=\"addIcon\" name=\"add\"></ion-icon>\n            <h1 *ngIf=\"!addIcon\">{{idx}}</h1>\n        </button>"
+            template: "\n        <button fab fab-right fab-top class=\"fab-map\" (click)=\"addItemToBasket($event)\">\n            <ion-icon *ngIf=\"!value\" name=\"add\"></ion-icon>\n            <h1 *ngIf=\"value\">{{value}}</h1>\n        </button>"
         }), 
         __metadata('design:paramtypes', [])
     ], AddCountableButton);
@@ -138,7 +135,7 @@ var CategoryPage = (function () {
         this._productsService = _productsService;
         this._categoriesService = _categoriesService;
         this.defaultImageUri = app_settings_1.AppSettings.DEFAULT_IMAGE_URI;
-        this.order = this._navParams.get('order');
+        this._order = this._navParams.get('order');
     }
     CategoryPage.prototype.ngOnInit = function () {
         this.selectedItem = this._navParams.get('item');
@@ -165,13 +162,13 @@ var CategoryPage = (function () {
     CategoryPage.prototype.itemTapped = function (event, item) {
         this._navController.push(item_details_1.ItemDetailsPage, {
             item: item,
-            order: this.order
+            order: this._order
         });
     };
     CategoryPage.prototype.moveToCategoryPage = function (event, item) {
         this._navController.push(CategoryPage, {
             item: item,
-            order: this.order
+            order: this._order
         });
     };
     CategoryPage = __decorate([
@@ -209,35 +206,21 @@ var HomePage = (function () {
         this._categoriesService = _categoriesService;
         this._ordersService = _ordersService;
         this.defaultImageUri = app_settings_1.AppSettings.DEFAULT_IMAGE_URI;
-        this.order = this._navParams.get('order');
     }
     HomePage.prototype.ngOnInit = function () {
         this.getOrder();
         this.getCategories();
     };
     HomePage.prototype.getOrder = function () {
-        var _this = this;
-        if (!this.order) {
-            this._ordersService.getDraft().then(function (data) {
-                if (data) {
-                    _this.order = data;
-                }
-                else {
-                    _this._ordersService.save({
-                        Date: new Date().toISOString(),
-                        DueDate: new Date().toISOString(),
-                        Number: "SO001",
-                        Type: "SO"
-                    }).then(function (data) { _this.order = data; });
-                }
-            });
-        }
+        this._ordersService.getDraft().then(function (draft) {
+            console.log(draft);
+        });
     };
     HomePage.prototype.getCategories = function () {
         var _this = this;
-        this._categoriesService.getByKey('MENU').then(function (data) {
-            _this._categoriesService.getByParentId(data.Id).then(function (data) {
-                _this.items = data;
+        this._categoriesService.getByKey('MENU').then(function (rootCategory) {
+            _this._categoriesService.getByParentId(rootCategory.Id).then(function (categories) {
+                _this.categories = categories;
             });
         });
     };
@@ -246,14 +229,13 @@ var HomePage = (function () {
     };
     HomePage.prototype.moveToCategoryPage = function (event, item) {
         this._navController.push(category_1.CategoryPage, {
-            item: item,
-            order: this.order
+            item: item
         });
     };
     HomePage = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/home/home.html',
-            providers: [categories_service_1.CategoriesService, orders_service_1.OrdersService]
+            providers: [categories_service_1.CategoriesService]
         }), 
         __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_2.NavParams, categories_service_1.CategoriesService, orders_service_1.OrdersService])
     ], HomePage);
@@ -284,43 +266,25 @@ var ItemDetailsPage = (function () {
         this._ordersService = _ordersService;
         this.defaultImageUri = app_settings_1.AppSettings.DEFAULT_IMAGE_URI;
         this.selectedItem = _navParams.get('item');
-        this.order = this._navParams.get('order');
     }
     ItemDetailsPage.prototype.ngOnInit = function () {
         this.getOrderLine();
     };
-    ItemDetailsPage.prototype.incQty = function (event) {
+    ItemDetailsPage.prototype.qtyChanged = function (event) {
         var _this = this;
         this.orderLine.Qty = event.value;
-        this._ordersService.saveOrderLine(this.orderLine).then(function (data) {
-            _this.orderLine = data;
+        this._ordersService.saveOrderLine(this.orderLine).then(function (line) {
+            _this.orderLine = line;
         });
     };
     ItemDetailsPage.prototype.getOrderLine = function () {
         var _this = this;
-        var lineFound = false;
-        for (var _i = 0, _a = this.order.Lines; _i < _a.length; _i++) {
-            var line = _a[_i];
-            if (line.Item.Id === this.selectedItem.Id) {
-                this.orderLine = line;
-                lineFound = true;
-            }
-            if (!lineFound) {
-                this._ordersService.saveOrderLine({
-                    Qty: 0,
-                    ItemId: this.selectedItem.Id,
-                    OrderId: this.order.Id
-                }).then(function (data) {
-                    _this.orderLine = data;
-                });
-            }
-        }
+        this._ordersService.getOrderLine(this.selectedItem).then(function (line) { _this.orderLine = line; console.log(line); });
     };
     ItemDetailsPage = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/item-details/item-details.html',
             directives: [add_countable_button_1.AddCountableButton],
-            providers: [orders_service_1.OrdersService]
         }), 
         __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_2.NavParams, orders_service_1.OrdersService])
     ], ItemDetailsPage);
@@ -496,44 +460,114 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var app_settings_1 = require('../../app.settings');
 require('rxjs/add/operator/map');
-/*
-  Generated class for the ProductsService provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-    */
 var OrdersService = (function () {
     function OrdersService(http) {
         this.http = http;
         this._ordersCollectionUrl = app_settings_1.AppSettings.API_ENDPOINT + "/Orders";
         this._orderLinesCollectionUrl = app_settings_1.AppSettings.API_ENDPOINT + "/OrderLines";
+        this.headers = new http_1.Headers();
+        this.headers.append('Content-Type', 'application/json');
     }
-    OrdersService.prototype.save = function (order) {
+    OrdersService.prototype.getDraft = function () {
         var _this = this;
         return new Promise(function (resolve) {
-            if (order.Id) {
-                return _this.http.put(_this._ordersCollectionUrl + '(' + order.Id + ')', order);
-            }
-            else {
-                return _this.http.post(_this._ordersCollectionUrl, order);
-            }
+            _this.queryDraft().then(function (order) {
+                if (order) {
+                    _this._draft = order;
+                    resolve(order);
+                }
+                else {
+                    _this.save({
+                        Date: new Date().toISOString(),
+                        DueDate: new Date().toISOString(),
+                        Number: "SO001",
+                        Type: "SO"
+                    }).then(function (order) {
+                        _this._draft = order;
+                        resolve(order);
+                    });
+                }
+            });
         });
     };
-    ;
     OrdersService.prototype.saveOrderLine = function (orderLine) {
         var _this = this;
         return new Promise(function (resolve) {
-            if (orderLine.Id) {
-                return _this.http.put(_this._orderLinesCollectionUrl + '(' + orderLine.Id + ')', orderLine);
-            }
-            else {
-                return _this.http.post(_this._orderLinesCollectionUrl, orderLine);
-            }
+            _this.sendOrderLine(orderLine).then(function (line) {
+                for (var lineIdx = 0; lineIdx < _this._draft.Lines.length; lineIdx++) {
+                    if (_this._draft.Lines[lineIdx].Id == line.Id) {
+                        _this._draft.Lines[lineIdx] = line;
+                        break;
+                    }
+                }
+                resolve(line);
+            });
         });
     };
-    ;
-    OrdersService.prototype.getDraft = function () {
+    OrdersService.prototype.getOrderLine = function (item) {
         var _this = this;
+        for (var _i = 0, _a = this._draft.Lines; _i < _a.length; _i++) {
+            var line = _a[_i];
+            if (line.Item.Id === item.Id) {
+                return Promise.resolve(line);
+            }
+        }
+        return new Promise(function (resolve) {
+            _this.sendOrderLine({
+                Qty: 0,
+                ItemId: item.Id,
+                OrderId: _this._draft.Id
+            }).then(function (line) {
+                _this._draft.Lines.push(line);
+                resolve(line);
+            });
+        });
+    };
+    OrdersService.prototype.save = function (order) {
+        var _this = this;
+        if (order.Id) {
+            return new Promise(function (resolve) {
+                _this.http.put(_this._ordersCollectionUrl + '(' + order.Id + ')', JSON.stringify(order), { headers: _this.headers })
+                    .subscribe(function () {
+                    resolve(null);
+                });
+            });
+        }
+        else {
+            return new Promise(function (resolve) {
+                _this.http.post(_this._ordersCollectionUrl, JSON.stringify(order), { headers: _this.headers })
+                    .map(function (res) { return res.json(); })
+                    .subscribe(function (data) {
+                    resolve(data.value);
+                });
+            });
+        }
+    };
+    OrdersService.prototype.sendOrderLine = function (orderLine) {
+        var _this = this;
+        if (orderLine.Id) {
+            return new Promise(function (resolve) {
+                _this.http.put(_this._orderLinesCollectionUrl + '(' + orderLine.Id + ')', JSON.stringify(orderLine), { headers: _this.headers })
+                    .subscribe(function () {
+                    resolve(null);
+                });
+            });
+        }
+        else {
+            return new Promise(function (resolve) {
+                _this.http.post(_this._orderLinesCollectionUrl, JSON.stringify(orderLine), { headers: _this.headers })
+                    .map(function (res) { return res.json(); })
+                    .subscribe(function (data) {
+                    resolve(data.value);
+                });
+            });
+        }
+    };
+    OrdersService.prototype.queryDraft = function () {
+        var _this = this;
+        if (this._draft) {
+            return Promise.resolve(this._draft);
+        }
         return new Promise(function (resolve) {
             _this.http.get(_this._ordersCollectionUrl + "/?$filter=StatusCode eq 'DRAFT'&$top=1&$expand=Lines($expand=Item)")
                 .map(function (res) { return res.json(); })
@@ -564,12 +598,6 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var app_settings_1 = require('../../app.settings');
 require('rxjs/add/operator/map');
-/*
-  Generated class for the ProductsService provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 var ProductsService = (function () {
     function ProductsService(http) {
         this.http = http;

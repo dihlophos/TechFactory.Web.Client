@@ -16,14 +16,14 @@ export class CategoryPage implements OnInit {
     public items;
     public categories;
     public selectedItem;
-    private order;
-    private defaultImageUri = AppSettings.DEFAULT_IMAGE_URI;
-
+    public defaultImageUri = AppSettings.DEFAULT_IMAGE_URI;
+    private _order;
+    
     constructor(private _navController: NavController,
         private _navParams: NavParams,
         private _productsService: ProductsService,
         private _categoriesService: CategoriesService) { 
-            this.order = this._navParams.get('order');
+            this._order = this._navParams.get('order');
     }
 
     ngOnInit() {
@@ -55,14 +55,14 @@ export class CategoryPage implements OnInit {
     itemTapped(event, item) {
         this._navController.push(ItemDetailsPage, {
             item: item,
-            order: this.order
+            order: this._order
         });
     }
 
     moveToCategoryPage(event, item) {
         this._navController.push(CategoryPage, {
             item: item,
-            order: this.order
+            order: this._order
         });
     }
 }

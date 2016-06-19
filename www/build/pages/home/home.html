@@ -12,8 +12,8 @@
 </ion-navbar>
 
 <ion-content class="home">
-    <ion-card ion-item *ngFor="let item of items" (click)="moveToCategoryPage($event, item)">
-        <img src="{{item.Links.length!=0?item.Links[0].Uri:defaultImageUri}}" />
-        <div class="card-title">{{item.Name}}</div>
+    <ion-card ion-item *ngFor="let category of categories" (click)="moveToCategoryPage($event, category)">
+        <img src="{{category.Links.length!=0?category.Links[0].Uri:defaultImageUri}}" />
+        <div class="card-title">{{category.Name}}</div>
     </ion-card>
 </ion-content>

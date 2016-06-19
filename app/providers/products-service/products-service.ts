@@ -3,12 +3,6 @@ import {Http} from '@angular/http';
 import {AppSettings} from '../../app.settings';
 import 'rxjs/add/operator/map';
 
-/*
-  Generated class for the ProductsService provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class ProductsService {
   private _productsCollectionUrl: string = `${AppSettings.API_ENDPOINT}/Products`;
