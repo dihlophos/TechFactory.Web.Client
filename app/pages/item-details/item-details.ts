@@ -38,7 +38,7 @@ export class ItemDetailsPage implements OnInit {
 
     getOrderLine() {
 		this._ordersService.getOrderLine(this.selectedItem).then(
-			line => { this.orderLine = line; console.log(line); }
+			line => { this.orderLine = line; }
 		);	
     }
 }

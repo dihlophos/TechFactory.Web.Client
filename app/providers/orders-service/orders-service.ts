@@ -62,6 +62,7 @@ export class OrdersService {
         return Promise.resolve(line);
       }
     }
+    console.log("create");
 
     return new Promise(resolve => {
       this.sendOrderLine({

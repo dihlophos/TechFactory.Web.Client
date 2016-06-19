@@ -279,7 +279,7 @@ var ItemDetailsPage = (function () {
     };
     ItemDetailsPage.prototype.getOrderLine = function () {
         var _this = this;
-        this._ordersService.getOrderLine(this.selectedItem).then(function (line) { _this.orderLine = line; console.log(line); });
+        this._ordersService.getOrderLine(this.selectedItem).then(function (line) { _this.orderLine = line; });
     };
     ItemDetailsPage = __decorate([
         core_1.Component({
@@ -512,6 +512,7 @@ var OrdersService = (function () {
                 return Promise.resolve(line);
             }
         }
+        console.log("create");
         return new Promise(function (resolve) {
             _this.sendOrderLine({
                 Qty: 0,
