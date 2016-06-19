@@ -494,11 +494,16 @@ var OrdersService = (function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this.sendOrderLine(orderLine).then(function (line) {
-                for (var lineIdx = 0; lineIdx < _this._draft.Lines.length; lineIdx++) {
-                    if (_this._draft.Lines[lineIdx].Id == line.Id) {
-                        _this._draft.Lines[lineIdx] = line;
-                        break;
+                if (orderLine.Id) {
+                    for (var lineIdx = 0; lineIdx < _this._draft.Lines.length; lineIdx++) {
+                        if (_this._draft.Lines[lineIdx].Id == line.Id) {
+                            _this._draft.Lines[lineIdx] = line;
+                            break;
+                        }
                     }
+                }
+                else {
+                    _this._draft.Lines.push(line);
                 }
                 resolve(line);
             });
@@ -512,7 +517,6 @@ var OrdersService = (function () {
                 return Promise.resolve(line);
             }
         }
-        console.log("create");
         return new Promise(function (resolve) {
             _this.sendOrderLine({
                 Qty: 0,
@@ -550,7 +554,7 @@ var OrdersService = (function () {
             return new Promise(function (resolve) {
                 _this.http.put(_this._orderLinesCollectionUrl + '(' + orderLine.Id + ')', JSON.stringify(orderLine), { headers: _this.headers })
                     .subscribe(function () {
-                    resolve(null);
+                    resolve(orderLine);
                 });
             });
         }

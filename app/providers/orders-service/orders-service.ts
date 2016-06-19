@@ -43,11 +43,16 @@ export class OrdersService {
     return new Promise(resolve => {
       this.sendOrderLine(orderLine).then(
         line => {
-          for (let lineIdx: number = 0; lineIdx < this._draft.Lines.length; lineIdx++) {
-            if (this._draft.Lines[lineIdx].Id == line.Id) {
-              this._draft.Lines[lineIdx] = line;
-              break;
+          if (orderLine.Id) {
+            for (let lineIdx: number = 0; lineIdx < this._draft.Lines.length; lineIdx++) {
+              if (this._draft.Lines[lineIdx].Id == line.Id) {
+                this._draft.Lines[lineIdx] = line;
+                break;
+              }
             }
+          }
+          else {
+           this._draft.Lines.push(line);
           }
           resolve(line);
         }
@@ -62,7 +67,6 @@ export class OrdersService {
         return Promise.resolve(line);
       }
     }
-    console.log("create");
 
     return new Promise(resolve => {
       this.sendOrderLine({
@@ -104,7 +108,7 @@ export class OrdersService {
       return new Promise(resolve => {
         this.http.put(this._orderLinesCollectionUrl + '(' + orderLine.Id + ')', JSON.stringify(orderLine), { headers: this.headers })
         .subscribe(() => {
-          resolve(null);
+          resolve(orderLine);
         })
       });
     }
