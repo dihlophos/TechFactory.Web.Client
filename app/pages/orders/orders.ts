@@ -2,7 +2,6 @@ import {Component} from "@angular/core";
 import {NavController} from 'ionic-angular';
 import {Platform} from 'ionic-angular';
 import {OrderPage} from '../order/order';
-import {ApiService} from '../../services/api';
 
 @Component({
     templateUrl: 'build/pages/orders/orders.html'

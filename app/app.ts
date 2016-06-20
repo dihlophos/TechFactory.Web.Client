@@ -1,10 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
 import {Platform, ionicBootstrap, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
-
 import {HomePage} from './pages/home/home';
 import {CategoryPage} from './pages/category/category';
 import {OrdersPage} from './pages/orders/orders';
+import {OrdersService} from './providers/orders-service/orders-service';
 
 @Component({
     templateUrl: 'build/app.html'
@@ -25,7 +25,7 @@ export class MyApp {
         { title: 'Sing in', component: HomePage }
     ];
 
-    constructor(platform: Platform, private menu: MenuController) {
+    constructor(platform: Platform, private _menu: MenuController) {
         
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -35,9 +35,9 @@ export class MyApp {
     }
 
     openPage(page) {
-        this.menu.close();
+        this._menu.close();
         this.nav.setRoot(page.component);
     }
 }
 
-ionicBootstrap(MyApp);
+ionicBootstrap(MyApp, [OrdersService]);
