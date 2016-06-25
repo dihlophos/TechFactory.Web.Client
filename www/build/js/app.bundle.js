@@ -288,7 +288,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var ionic_angular_1 = require('ionic-angular');
-var ionic_angular_2 = require('ionic-angular');
 var app_settings_1 = require('../../app.settings');
 var orders_service_1 = require('../../providers/orders-service/orders-service');
 var add_countable_button_1 = require('../../components/add-countable-button/add-countable-button');
@@ -325,7 +324,7 @@ var ItemDetailsPage = (function () {
             templateUrl: 'build/pages/item-details/item-details.html',
             directives: [add_countable_button_1.AddCountableButton],
         }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_2.NavParams, orders_service_1.OrdersService])
+        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.NavParams, orders_service_1.OrdersService])
     ], ItemDetailsPage);
     return ItemDetailsPage;
 }());
@@ -343,21 +342,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var ionic_angular_1 = require('ionic-angular');
+var app_settings_1 = require('../../app.settings');
 var OrderPage = (function () {
-    function OrderPage(platform, nav) {
+    function OrderPage(platform, nav, navParams) {
         this.platform = platform;
         this.nav = nav;
+        this.navParams = navParams;
+        this.defaultImageUri = app_settings_1.AppSettings.DEFAULT_IMAGE_URI;
+        this.order = navParams.get('order');
     }
     OrderPage = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/order/order.html'
         }), 
-        __metadata('design:paramtypes', [ionic_angular_1.Platform, ionic_angular_1.NavController])
+        __metadata('design:paramtypes', [ionic_angular_1.Platform, ionic_angular_1.NavController, ionic_angular_1.NavParams])
     ], OrderPage);
     return OrderPage;
 }());
 exports.OrderPage = OrderPage;
-},{"@angular/core":144,"ionic-angular":395}],8:[function(require,module,exports){
+},{"../../app.settings":1,"@angular/core":144,"ionic-angular":395}],8:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -372,27 +375,47 @@ var core_1 = require("@angular/core");
 var ionic_angular_1 = require('ionic-angular');
 var ionic_angular_2 = require('ionic-angular');
 var order_1 = require('../order/order');
+var orders_service_1 = require('../../providers/orders-service/orders-service');
 var OrdersPage = (function () {
-    function OrdersPage(navController, platform) {
+    function OrdersPage(navController, platform, ordersService) {
         this.navController = navController;
         this.platform = platform;
-        this.order = "orders";
+        this.ordersService = ordersService;
+        this.menuStage = "orders";
         this.isAndroid = false;
         this.isAndroid = platform.is('android');
     }
-    OrdersPage.prototype.openOrderPage = function () {
-        this.navController.push(order_1.OrderPage, {});
+    OrdersPage.prototype.ngOnInit = function () {
+        this.getOpenOrders();
+        this.getCompletedOrders();
+    };
+    OrdersPage.prototype.getOpenOrders = function () {
+        var _this = this;
+        this.ordersService.getOpenOrders().then(function (openOrders) {
+            _this.openOrders = openOrders;
+        });
+    };
+    OrdersPage.prototype.getCompletedOrders = function () {
+        var _this = this;
+        this.ordersService.getCompletedOrders().then(function (completedOrders) {
+            _this.completedOrders = completedOrders;
+        });
+    };
+    OrdersPage.prototype.openOrderPage = function (order) {
+        this.navController.push(order_1.OrderPage, {
+            order: order
+        });
     };
     OrdersPage = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/orders/orders.html'
         }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_2.Platform])
+        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_2.Platform, orders_service_1.OrdersService])
     ], OrdersPage);
     return OrdersPage;
 }());
 exports.OrdersPage = OrdersPage;
-},{"../order/order":7,"@angular/core":144,"ionic-angular":395}],9:[function(require,module,exports){
+},{"../../providers/orders-service/orders-service":10,"../order/order":7,"@angular/core":144,"ionic-angular":395}],9:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -530,6 +553,34 @@ var OrdersService = (function () {
             });
         });
     };
+    OrdersService.prototype.getCompletedOrders = function () {
+        var _this = this;
+        if (this.completedOrders) {
+            return Promise.resolve(this.completedOrders);
+        }
+        return new Promise(function (resolve) {
+            _this.http.get(_this.ordersCollectionUrl + "/?$filter=StatusCode eq 'CLOSED' or StatusCode eq 'CANCELED'&$expand=Lines($expand=Item($expand=Links))")
+                .map(function (res) { return res.json(); })
+                .subscribe(function (data) {
+                _this.completedOrders = data.value;
+                resolve(data.value);
+            });
+        });
+    };
+    OrdersService.prototype.getOpenOrders = function () {
+        var _this = this;
+        if (this.openOrders) {
+            return Promise.resolve(this.openOrders);
+        }
+        return new Promise(function (resolve) {
+            _this.http.get(_this.ordersCollectionUrl + "/?$filter=StatusCode ne 'CLOSED' and StatusCode ne 'CANCELED'&$expand=Lines($expand=Item($expand=Links))")
+                .map(function (res) { return res.json(); })
+                .subscribe(function (data) {
+                _this.openOrders = data.value;
+                resolve(data.value);
+            });
+        });
+    };
     OrdersService.prototype.save = function (order) {
         var _this = this;
         if (order.Id) {
@@ -540,15 +591,13 @@ var OrdersService = (function () {
                 });
             });
         }
-        else {
-            return new Promise(function (resolve) {
-                _this.http.post(_this.ordersCollectionUrl, JSON.stringify(order), { headers: _this.headers })
-                    .map(function (res) { return res.json(); })
-                    .subscribe(function (data) {
-                    resolve(data.value);
-                });
+        return new Promise(function (resolve) {
+            _this.http.post(_this.ordersCollectionUrl, JSON.stringify(order), { headers: _this.headers })
+                .map(function (res) { return res.json(); })
+                .subscribe(function (data) {
+                resolve(data.value);
             });
-        }
+        });
     };
     OrdersService.prototype.sendOrderLine = function (orderLine) {
         var _this = this;
@@ -560,15 +609,13 @@ var OrdersService = (function () {
                 });
             });
         }
-        else {
-            return new Promise(function (resolve) {
-                _this.http.post(_this.orderLinesCollectionUrl, JSON.stringify(orderLine), { headers: _this.headers })
-                    .map(function (res) { return res.json(); })
-                    .subscribe(function (data) {
-                    resolve(data.value);
-                });
+        return new Promise(function (resolve) {
+            _this.http.post(_this.orderLinesCollectionUrl, JSON.stringify(orderLine), { headers: _this.headers })
+                .map(function (res) { return res.json(); })
+                .subscribe(function (data) {
+                resolve(data.value);
             });
-        }
+        });
     };
     OrdersService.prototype.queryDraft = function () {
         var _this = this;
@@ -576,7 +623,7 @@ var OrdersService = (function () {
             return Promise.resolve(this.draft);
         }
         return new Promise(function (resolve) {
-            _this.http.get(_this.ordersCollectionUrl + "/?$filter=StatusCode eq 'DRAFT'&$top=1&$expand=Lines($expand=Item)")
+            _this.http.get(_this.ordersCollectionUrl + "/?$filter=StatusCode eq 'DRAFT'&$top=1&$expand=Lines($expand=Item($expand=Links))") //TODO: $expand=Links doesn't works((
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 resolve(data.value[0]);

@@ -10,6 +10,8 @@ export class OrdersService {
   private orderLinesCollectionUrl: string = `${AppSettings.API_ENDPOINT}/OrderLines`;
   private headers: Headers = new Headers();
   private draft:any;
+  private completedOrders:any[];
+  private openOrders:any[];
 
   constructor(public http: Http) {
     this.headers.append('Content-Type', 'application/json');
@@ -87,6 +89,40 @@ export class OrdersService {
   	});
   }
 
+  getCompletedOrders() {
+  	
+  	if (this.completedOrders) {
+  		return Promise.resolve(this.completedOrders);
+  	}
+
+  	return new Promise(resolve => {
+      this.http.get(`${this.ordersCollectionUrl}/?$filter=StatusCode eq 'CLOSED' or StatusCode eq 'CANCELED'&$expand=Lines($expand=Item($expand=Links))`)
+      .map(res => res.json())
+      .subscribe(data => {
+      	this.completedOrders = data.value;
+        resolve(data.value);
+      });
+    });
+
+  }
+
+  getOpenOrders() {
+  	
+  	if (this.openOrders) {
+  		return Promise.resolve(this.openOrders);
+  	}
+
+  	return new Promise(resolve => {
+      this.http.get(`${this.ordersCollectionUrl}/?$filter=StatusCode ne 'CLOSED' and StatusCode ne 'CANCELED'&$expand=Lines($expand=Item($expand=Links))`)
+      .map(res => res.json())
+      .subscribe(data => {
+      	this.openOrders = data.value;
+        resolve(data.value);
+      });
+    });
+
+  }
+
   private save(order:any) {
     if (order.Id) {
       return new Promise(resolve => {
@@ -95,15 +131,16 @@ export class OrdersService {
           resolve(null);
         })
       });
-    } else {
-      return new Promise(resolve => {
-        this.http.post(this.ordersCollectionUrl, JSON.stringify(order), { headers: this.headers })
-        .map(res => res.json())
-        .subscribe(data => {
-          resolve(data.value);
-        });
-      });
-    }
+    }       
+
+    return new Promise(resolve => {
+		this.http.post(this.ordersCollectionUrl, JSON.stringify(order), { headers: this.headers })
+		.map(res => res.json())
+		.subscribe(data => {
+		  resolve(data.value);
+		});
+	});
+
   }
 
   private sendOrderLine(orderLine: any) {
@@ -115,15 +152,16 @@ export class OrdersService {
           resolve(orderLine);
         })
       });
-    } else {
-      return new Promise(resolve => {
-        this.http.post(this.orderLinesCollectionUrl, JSON.stringify(orderLine), { headers: this.headers })
-        .map(res => res.json())
-        .subscribe(data => {
-          resolve(data.value);
-        });
-      });
     }
+
+	return new Promise(resolve => {
+		this.http.post(this.orderLinesCollectionUrl, JSON.stringify(orderLine), { headers: this.headers })
+		.map(res => res.json())
+		.subscribe(data => {
+		  resolve(data.value);
+		});
+	});
+    
   }
 
   private queryDraft() {
@@ -131,7 +169,7 @@ export class OrdersService {
       return Promise.resolve(this.draft);
     }
     return new Promise(resolve => {
-      this.http.get(`${this.ordersCollectionUrl}/?$filter=StatusCode eq 'DRAFT'&$top=1&$expand=Lines($expand=Item)`)
+      this.http.get(`${this.ordersCollectionUrl}/?$filter=StatusCode eq 'DRAFT'&$top=1&$expand=Lines($expand=Item($expand=Links))`) //TODO: $expand=Links doesn't works((
       .map(res => res.json())
       .subscribe(data => {
         resolve(data.value[0]);

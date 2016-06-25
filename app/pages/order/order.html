@@ -2,7 +2,7 @@
     <button menuToggle>
         <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Order 0001 </ion-title>
+    <ion-title>Order {{order.Id}} </ion-title> <!--TODO: Client-specific numbering? Needs discussion-->
     <ion-buttons end>
         <button royal>
             <ion-icon name="cart"></ion-icon>
@@ -16,45 +16,32 @@
         <ion-item>
             Date
             <ion-note item-right>
-                18.05.2016 08:06
+                {{order.Date}}
             </ion-note>
         </ion-item>
         <ion-item>
             Status
             <ion-note item-right>
-                DRAFT
+                {{order.StatusCode}}
             </ion-note>
         </ion-item>
-        <ion-item-sliding >
+        <ion-item-sliding *ngFor="let line of order.Lines">
             <ion-item>
                 <ion-thumbnail item-left>
-                    <img src="https://3.downloader.disk.yandex.ru/preview/75507349ec14d0d48de848a413ebfc76a305eb808f77e2c105d2fac3ab2e1d2e/inf/WomoKOPR5NAsF4FR89ij8YIWHoUwJQ08txyB13PbXo8dzPIwMplUDJ2VujB0YHvAoE8j6HsyxqVln-M8218bvQ%3D%3D?uid=0&filename=wok.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&tknv=v2&size=1163x727">
+                    <img src="{{line.Item.Links.length!=0?line.Item.Links[0].Uri:defaultImageUri}}">
                 </ion-thumbnail>
-                <h2>WOK Regular</h2>
-                <p>2x $2.00</p>
+                <h2>{{line.Item.Name}}</h2>
+                <p>{{line.Qty}}x ${{line.Price}}</p>
             </ion-item>
            <ion-item-options  side="left">
                 <button style="width:70px"><ion-icon name="add-circle"></ion-icon></button>
                <button style="width:70px" secondary><ion-icon name="remove-circle"></ion-icon></button>
             </ion-item-options>
         </ion-item-sliding>
-        <ion-item-sliding>
-            <ion-item>
-                <ion-thumbnail item-left>
-                    <img src="https://3.downloader.disk.yandex.ru/preview/75507349ec14d0d48de848a413ebfc76a305eb808f77e2c105d2fac3ab2e1d2e/inf/WomoKOPR5NAsF4FR89ij8YIWHoUwJQ08txyB13PbXo8dzPIwMplUDJ2VujB0YHvAoE8j6HsyxqVln-M8218bvQ%3D%3D?uid=0&filename=wok.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&tknv=v2&size=1163x727">
-                </ion-thumbnail>
-                <h2>WOK half</h2>
-                <p>2x $2.00</p>
-            </ion-item>
-            <ion-item-options side="left">
-                <button style="width:70px"><ion-icon name="add-circle"></ion-icon></button>
-                <button style="width:70px" secondary><ion-icon name="remove-circle"></ion-icon></button>
-            </ion-item-options>
-        </ion-item-sliding>
         <ion-item>
             Total
             <ion-note item-right>
-                $5.00
+                {{order.Amount}}
             </ion-note>
         </ion-item>
        </ion-list>

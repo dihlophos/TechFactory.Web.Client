@@ -1,7 +1,5 @@
-import {Component} from "@angular/core";
-import {NavController} from 'ionic-angular';
-import {NavParams} from 'ionic-angular';
-import {OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
+import {NavController, NavParams} from 'ionic-angular';
 import {AppSettings} from '../../app.settings';
 import {CategoryPage} from '../category/category';
 import {OrdersService} from '../../providers/orders-service/orders-service';
@@ -19,8 +17,8 @@ export class ItemDetailsPage implements OnInit {
     private orderLine;
 
     constructor(private navController: NavController,
-    	private navParams: NavParams,
-		private ordersService: OrdersService) {
+	private navParams: NavParams,
+	private ordersService: OrdersService) {
         this.selectedItem = navParams.get('item');
     }
 

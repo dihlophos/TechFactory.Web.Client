@@ -3,7 +3,7 @@
         <button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-segment [(ngModel)]="order" [attr.light]="isAndroid ? '' : null">
+        <ion-segment [(ngModel)]="menuStage" [attr.light]="isAndroid ? '' : null">
             <ion-segment-button value="orders">
                 Orders
             </ion-segment-button>
@@ -20,11 +20,11 @@
 </ion-navbar>
 
 <ion-content class="orders">
-    <div [ngSwitch]="order">
+    <div [ngSwitch]="menuStage">
         <ion-list *ngSwitchWhen="'orders'">
-            <ion-item (click)="openOrderPage()">
-                <h2>Sat Jun 08 2016 12:41:00</h2>
-                <p>Amount : $ 2.00</p>
+            <ion-item (click)="openOrderPage(order)" *ngFor="let order of openOrders">
+                <h2>{{order.Date}}</h2>
+                <p>Amount : $ {{order.Amount}}</p>
                 <button clear item-right>
                     <ion-icon name="arrow-forward"></ion-icon>
                 </button>
@@ -33,9 +33,9 @@
         </ion-list>
 
         <ion-list *ngSwitchWhen="'history'">
-            <ion-item (click)="openOrderPage()">
-                <h2>Sat Jun 04 2016 12:41:32</h2>
-                <p>Amount : $ 3.00</p>
+            <ion-item (click)="openOrderPage(order)" *ngFor="let order of completedOrders">
+                <h2>{{order.Date}}</h2>
+                <p>Amount : $ {{order.Amount}}</p>
                 <button clear item-right>
                     <ion-icon name="arrow-forward"></ion-icon>
                 </button>
@@ -45,18 +45,3 @@
 
 
 </ion-content>
-<!--<ion-toolbar *navbar danger>
-    <ion-segment>
-        <ion-segment-button value="new">
-            New
-        </ion-segment-button>
-        <ion-segment-button value="hot">
-            Hot
-        </ion-segment-button>
-    </ion-segment>
-    <ion-buttons end>
-        <button>
-            <ion-icon name="more"></ion-icon>
-        </button>
-    </ion-buttons>
-</ion-toolbar>-->
