@@ -13,14 +13,14 @@ import {OrdersService} from '../../providers/orders-service/orders-service';
 })
 export class HomePage implements OnInit {
 
-    public categories;
+    private categories;
     private order;
     private defaultImageUri = AppSettings.DEFAULT_IMAGE_URI;
 
-    constructor(private _navController: NavController,
-        private _navParams: NavParams,
-        private _categoriesService: CategoriesService,
-        private _ordersService: OrdersService) {
+    constructor(private navController: NavController,
+        private navParams: NavParams,
+        private categoriesService: CategoriesService,
+        private ordersService: OrdersService) {
     }
 
     ngOnInit() {
@@ -29,17 +29,13 @@ export class HomePage implements OnInit {
     }
 
     getOrder() {
-        this._ordersService.getDraft().then(
-            draft => {
-                console.log(draft);
-            }
-        );
+        this.ordersService.getDraft();
     }
 
     getCategories() {
-        this._categoriesService.getByKey('MENU').then(
+        this.categoriesService.getByKey('MENU').then(
             rootCategory => {
-                this._categoriesService.getByParentId(rootCategory.Id).then(
+                this.categoriesService.getByParentId(rootCategory.Id).then(
                     categories => {
                         this.categories = categories;
                     }
@@ -52,7 +48,7 @@ export class HomePage implements OnInit {
     }
 
     moveToCategoryPage(event, item) {
-        this._navController.push(CategoryPage, {
+        this.navController.push(CategoryPage, {
             item: item
         });
     }

@@ -5,6 +5,7 @@ import {NavParams} from 'ionic-angular';
 import {AppSettings} from '../../app.settings';
 import {ProductsService} from '../../providers/products-service/products-service';
 import {CategoriesService} from '../../providers/categories-service/categories-service';
+import {OrdersService} from '../../providers/orders-service/orders-service';
 import {ItemDetailsPage} from '../item-details/item-details';
 
 @Component({
@@ -13,39 +14,77 @@ import {ItemDetailsPage} from '../item-details/item-details';
 })
 export class CategoryPage implements OnInit {
 
-    public items;
-    public categories;
-    public selectedItem;
-    public defaultImageUri = AppSettings.DEFAULT_IMAGE_URI;
-    private _order;
+    private itemLines = [];
+    private categories;
+    private selectedItem;
+    private defaultImageUri = AppSettings.DEFAULT_IMAGE_URI;
+    private order;
     
-    constructor(private _navController: NavController,
-        private _navParams: NavParams,
-        private _productsService: ProductsService,
-        private _categoriesService: CategoriesService) { 
-            this._order = this._navParams.get('order');
-    }
+    constructor(private navController: NavController,
+        private navParams: NavParams,
+        private productsService: ProductsService,
+        private categoriesService: CategoriesService,
+        private ordersService: OrdersService) { }
 
     ngOnInit() {
-        this.selectedItem = this._navParams.get('item');
+        this.selectedItem = this.navParams.get('item');
 
         this.getCategories();
 
-        this.getProducts();
+        this.getItems();
+
+        this.getOrder();
+    }
+
+    getOrder() {
+        this.ordersService.getDraft();
     }
 
     getCategories() {
-        this._categoriesService.getByParentId(this.selectedItem.Id)
+        this.categoriesService.getByParentId(this.selectedItem.Id)
             .then(data => {
                 this.categories = data;
             });
     }
 
-    getProducts() {
-        this._productsService.getByCategoryId(this.selectedItem.Id)
-            .then(data => {
-                this.items = data;
-            });
+    getItems() {
+        this.productsService.getByCategoryId(this.selectedItem.Id).then(data => {
+            for (let item of data) {
+                   this.ordersService.getOrderLine(item).then(
+                       orderLine => {
+                           this.itemLines.push({item:item,orderLine:orderLine});
+                       }
+                );
+            }
+        });
+    }
+
+    incQty(itemLine) {
+        itemLine.orderLine.Qty++;
+        this.ordersService.saveOrderLine(itemLine.orderLine).then(
+            line => {
+                for (let itemLineIdx in this.itemLines) {
+                    if (this.itemLines[itemLineIdx].orderLine.Id == line.Id) {
+                        this.itemLines[itemLineIdx].orderLine = line;
+                    }
+                }
+            }
+        );
+    }
+
+    decQty(itemLine) {
+        if (itemLine.orderLine.Qty > 0) {
+            itemLine.orderLine.Qty--;
+            this.ordersService.saveOrderLine(itemLine.orderLine).then(
+                line => {
+                    for (let itemLineIdx in this.itemLines) {
+                        if (this.itemLines[itemLineIdx].orderLine.Id == line.Id) {
+                            this.itemLines[itemLineIdx].orderLine = line;
+                        }
+                    }
+                }
+            );
+        }
     }
 
     errorHandler(err) {
@@ -53,16 +92,14 @@ export class CategoryPage implements OnInit {
     }
 
     itemTapped(event, item) {
-        this._navController.push(ItemDetailsPage, {
-            item: item,
-            order: this._order
+        this.navController.push(ItemDetailsPage, {
+            item: item
         });
     }
 
     moveToCategoryPage(event, item) {
-        this._navController.push(CategoryPage, {
-            item: item,
-            order: this._order
+        this.navController.push(CategoryPage, {
+            item: item
         });
     }
 }

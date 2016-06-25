@@ -17,18 +17,18 @@
     </ion-card>
 
     <ion-list>
-        <ion-item-sliding ion-item-sliding *ngFor="let item of items">
-            <ion-item (click)="itemTapped($event, item)">
+        <ion-item-sliding ion-item-sliding *ngFor="let itemLine of itemLines">
+            <ion-item (click)="itemTapped($event, itemLine.item)">
                 <ion-thumbnail item-left>
-                    <img src="{{item.Links.length!=0?item.Links[0].Uri:defaultImageUri}}" />
+                    <img src="{{itemLine.item.Links.length!=0?itemLine.item.Links[0].Uri:defaultImageUri}}" />
                 </ion-thumbnail>
-                <h2>{{item.Name}}</h2>
-                <p>0{{item.note}}</p>
+                <h2>{{itemLine.item.Name}}</h2>
+                <p>{{itemLine.item.note}}</p>
             </ion-item>
             <ion-item-options side="left">
-                <button style="width:70px"><ion-icon name="add-circle"></ion-icon></button>
-                <button style="width:70px" light>0</button>
-                <button style="width:70px" secondary><ion-icon name="remove-circle"></ion-icon></button>
+                <button style="width:70px" (click)="incQty(itemLine)"><ion-icon name="add-circle"></ion-icon></button>
+                <button style="width:70px" light>{{itemLine.orderLine.Qty}}</button>
+                <button style="width:70px" (click)="decQty(itemLine)"secondary><ion-icon name="remove-circle"></ion-icon></button>
             </ion-item-options>
         </ion-item-sliding>
     </ion-list>

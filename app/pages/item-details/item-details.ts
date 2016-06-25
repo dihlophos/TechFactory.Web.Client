@@ -13,15 +13,15 @@ import {AddCountableButton} from '../../components/add-countable-button/add-coun
 })
 export class ItemDetailsPage implements OnInit {
 
-    public defaultImageUri:string = AppSettings.DEFAULT_IMAGE_URI;
-    public enableAddCountableButton: boolean = false;
-    public selectedItem;
-    public orderLine;
+    private defaultImageUri:string = AppSettings.DEFAULT_IMAGE_URI;
+    private enableAddCountableButton: boolean = false;
+    private selectedItem;
+    private orderLine;
 
-    constructor(private _navController: NavController,
-    	private _navParams: NavParams,
-		private _ordersService: OrdersService) {
-        this.selectedItem = _navParams.get('item');
+    constructor(private navController: NavController,
+    	private navParams: NavParams,
+		private ordersService: OrdersService) {
+        this.selectedItem = navParams.get('item');
     }
 
     ngOnInit() {
@@ -31,7 +31,7 @@ export class ItemDetailsPage implements OnInit {
     qtyChanged(event) {
 		this.enableAddCountableButton = false;
 		this.orderLine.Qty = event.value;
-		this._ordersService.saveOrderLine(this.orderLine).then(
+		this.ordersService.saveOrderLine(this.orderLine).then(
 			line => {
 				this.orderLine = line;
 				this.enableAddCountableButton = true;
@@ -40,8 +40,11 @@ export class ItemDetailsPage implements OnInit {
     }
 
     getOrderLine() {
-		this._ordersService.getOrderLine(this.selectedItem).then(
-			line => { this.orderLine = line; this.enableAddCountableButton = true; console.log(this.enableAddCountableButton) }
+		this.ordersService.getOrderLine(this.selectedItem).then(
+			line => { 
+                this.orderLine = line;
+                this.enableAddCountableButton = true;
+            }
 		);	
     }
 }

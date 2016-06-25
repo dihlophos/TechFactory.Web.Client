@@ -127,48 +127,83 @@ var ionic_angular_2 = require('ionic-angular');
 var app_settings_1 = require('../../app.settings');
 var products_service_1 = require('../../providers/products-service/products-service');
 var categories_service_1 = require('../../providers/categories-service/categories-service');
+var orders_service_1 = require('../../providers/orders-service/orders-service');
 var item_details_1 = require('../item-details/item-details');
 var CategoryPage = (function () {
-    function CategoryPage(_navController, _navParams, _productsService, _categoriesService) {
-        this._navController = _navController;
-        this._navParams = _navParams;
-        this._productsService = _productsService;
-        this._categoriesService = _categoriesService;
+    function CategoryPage(navController, navParams, productsService, categoriesService, ordersService) {
+        this.navController = navController;
+        this.navParams = navParams;
+        this.productsService = productsService;
+        this.categoriesService = categoriesService;
+        this.ordersService = ordersService;
+        this.itemLines = [];
         this.defaultImageUri = app_settings_1.AppSettings.DEFAULT_IMAGE_URI;
-        this._order = this._navParams.get('order');
     }
     CategoryPage.prototype.ngOnInit = function () {
-        this.selectedItem = this._navParams.get('item');
+        this.selectedItem = this.navParams.get('item');
         this.getCategories();
-        this.getProducts();
+        this.getItems();
+        this.getOrder();
+    };
+    CategoryPage.prototype.getOrder = function () {
+        this.ordersService.getDraft();
     };
     CategoryPage.prototype.getCategories = function () {
         var _this = this;
-        this._categoriesService.getByParentId(this.selectedItem.Id)
+        this.categoriesService.getByParentId(this.selectedItem.Id)
             .then(function (data) {
             _this.categories = data;
         });
     };
-    CategoryPage.prototype.getProducts = function () {
+    CategoryPage.prototype.getItems = function () {
         var _this = this;
-        this._productsService.getByCategoryId(this.selectedItem.Id)
-            .then(function (data) {
-            _this.items = data;
+        this.productsService.getByCategoryId(this.selectedItem.Id).then(function (data) {
+            var _loop_1 = function(item) {
+                _this.ordersService.getOrderLine(item).then(function (orderLine) {
+                    _this.itemLines.push({ item: item, orderLine: orderLine });
+                });
+            };
+            for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
+                var item = data_1[_i];
+                _loop_1(item);
+            }
         });
+    };
+    CategoryPage.prototype.incQty = function (itemLine) {
+        var _this = this;
+        itemLine.orderLine.Qty++;
+        this.ordersService.saveOrderLine(itemLine.orderLine).then(function (line) {
+            for (var itemLineIdx in _this.itemLines) {
+                if (_this.itemLines[itemLineIdx].orderLine.Id == line.Id) {
+                    _this.itemLines[itemLineIdx].orderLine = line;
+                }
+            }
+        });
+    };
+    CategoryPage.prototype.decQty = function (itemLine) {
+        var _this = this;
+        if (itemLine.orderLine.Qty > 0) {
+            itemLine.orderLine.Qty--;
+            this.ordersService.saveOrderLine(itemLine.orderLine).then(function (line) {
+                for (var itemLineIdx in _this.itemLines) {
+                    if (_this.itemLines[itemLineIdx].orderLine.Id == line.Id) {
+                        _this.itemLines[itemLineIdx].orderLine = line;
+                    }
+                }
+            });
+        }
     };
     CategoryPage.prototype.errorHandler = function (err) {
         console.error(err);
     };
     CategoryPage.prototype.itemTapped = function (event, item) {
-        this._navController.push(item_details_1.ItemDetailsPage, {
-            item: item,
-            order: this._order
+        this.navController.push(item_details_1.ItemDetailsPage, {
+            item: item
         });
     };
     CategoryPage.prototype.moveToCategoryPage = function (event, item) {
-        this._navController.push(CategoryPage, {
-            item: item,
-            order: this._order
+        this.navController.push(CategoryPage, {
+            item: item
         });
     };
     CategoryPage = __decorate([
@@ -176,12 +211,12 @@ var CategoryPage = (function () {
             templateUrl: 'build/pages/category/category.html',
             providers: [products_service_1.ProductsService, categories_service_1.CategoriesService]
         }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_2.NavParams, products_service_1.ProductsService, categories_service_1.CategoriesService])
+        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_2.NavParams, products_service_1.ProductsService, categories_service_1.CategoriesService, orders_service_1.OrdersService])
     ], CategoryPage);
     return CategoryPage;
 }());
 exports.CategoryPage = CategoryPage;
-},{"../../app.settings":1,"../../providers/categories-service/categories-service":9,"../../providers/products-service/products-service":11,"../item-details/item-details":6,"@angular/core":144,"ionic-angular":395}],5:[function(require,module,exports){
+},{"../../app.settings":1,"../../providers/categories-service/categories-service":9,"../../providers/orders-service/orders-service":10,"../../providers/products-service/products-service":11,"../item-details/item-details":6,"@angular/core":144,"ionic-angular":395}],5:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -200,11 +235,11 @@ var ionic_angular_2 = require('ionic-angular');
 var categories_service_1 = require('../../providers/categories-service/categories-service');
 var orders_service_1 = require('../../providers/orders-service/orders-service');
 var HomePage = (function () {
-    function HomePage(_navController, _navParams, _categoriesService, _ordersService) {
-        this._navController = _navController;
-        this._navParams = _navParams;
-        this._categoriesService = _categoriesService;
-        this._ordersService = _ordersService;
+    function HomePage(navController, navParams, categoriesService, ordersService) {
+        this.navController = navController;
+        this.navParams = navParams;
+        this.categoriesService = categoriesService;
+        this.ordersService = ordersService;
         this.defaultImageUri = app_settings_1.AppSettings.DEFAULT_IMAGE_URI;
     }
     HomePage.prototype.ngOnInit = function () {
@@ -212,14 +247,12 @@ var HomePage = (function () {
         this.getCategories();
     };
     HomePage.prototype.getOrder = function () {
-        this._ordersService.getDraft().then(function (draft) {
-            console.log(draft);
-        });
+        this.ordersService.getDraft();
     };
     HomePage.prototype.getCategories = function () {
         var _this = this;
-        this._categoriesService.getByKey('MENU').then(function (rootCategory) {
-            _this._categoriesService.getByParentId(rootCategory.Id).then(function (categories) {
+        this.categoriesService.getByKey('MENU').then(function (rootCategory) {
+            _this.categoriesService.getByParentId(rootCategory.Id).then(function (categories) {
                 _this.categories = categories;
             });
         });
@@ -228,7 +261,7 @@ var HomePage = (function () {
         console.error(err);
     };
     HomePage.prototype.moveToCategoryPage = function (event, item) {
-        this._navController.push(category_1.CategoryPage, {
+        this.navController.push(category_1.CategoryPage, {
             item: item
         });
     };
@@ -260,13 +293,13 @@ var app_settings_1 = require('../../app.settings');
 var orders_service_1 = require('../../providers/orders-service/orders-service');
 var add_countable_button_1 = require('../../components/add-countable-button/add-countable-button');
 var ItemDetailsPage = (function () {
-    function ItemDetailsPage(_navController, _navParams, _ordersService) {
-        this._navController = _navController;
-        this._navParams = _navParams;
-        this._ordersService = _ordersService;
+    function ItemDetailsPage(navController, navParams, ordersService) {
+        this.navController = navController;
+        this.navParams = navParams;
+        this.ordersService = ordersService;
         this.defaultImageUri = app_settings_1.AppSettings.DEFAULT_IMAGE_URI;
         this.enableAddCountableButton = false;
-        this.selectedItem = _navParams.get('item');
+        this.selectedItem = navParams.get('item');
     }
     ItemDetailsPage.prototype.ngOnInit = function () {
         this.getOrderLine();
@@ -275,14 +308,17 @@ var ItemDetailsPage = (function () {
         var _this = this;
         this.enableAddCountableButton = false;
         this.orderLine.Qty = event.value;
-        this._ordersService.saveOrderLine(this.orderLine).then(function (line) {
+        this.ordersService.saveOrderLine(this.orderLine).then(function (line) {
             _this.orderLine = line;
             _this.enableAddCountableButton = true;
         });
     };
     ItemDetailsPage.prototype.getOrderLine = function () {
         var _this = this;
-        this._ordersService.getOrderLine(this.selectedItem).then(function (line) { _this.orderLine = line; _this.enableAddCountableButton = true; console.log(_this.enableAddCountableButton); });
+        this.ordersService.getOrderLine(this.selectedItem).then(function (line) {
+            _this.orderLine = line;
+            _this.enableAddCountableButton = true;
+        });
     };
     ItemDetailsPage = __decorate([
         core_1.Component({
@@ -427,17 +463,20 @@ require('rxjs/add/operator/map');
 var OrdersService = (function () {
     function OrdersService(http) {
         this.http = http;
-        this._ordersCollectionUrl = app_settings_1.AppSettings.API_ENDPOINT + "/Orders";
-        this._orderLinesCollectionUrl = app_settings_1.AppSettings.API_ENDPOINT + "/OrderLines";
+        this.ordersCollectionUrl = app_settings_1.AppSettings.API_ENDPOINT + "/Orders";
+        this.orderLinesCollectionUrl = app_settings_1.AppSettings.API_ENDPOINT + "/OrderLines";
         this.headers = new http_1.Headers();
         this.headers.append('Content-Type', 'application/json');
     }
     OrdersService.prototype.getDraft = function () {
         var _this = this;
+        if (this.draft) {
+            return Promise.resolve(this.draft);
+        }
         return new Promise(function (resolve) {
             _this.queryDraft().then(function (order) {
                 if (order) {
-                    _this._draft = order;
+                    _this.draft = order;
                     resolve(order);
                 }
                 else {
@@ -447,7 +486,7 @@ var OrdersService = (function () {
                         Number: "SO001",
                         Type: "SO"
                     }).then(function (order) {
-                        _this._draft = order;
+                        _this.draft = order;
                         resolve(order);
                     });
                 }
@@ -459,15 +498,15 @@ var OrdersService = (function () {
         return new Promise(function (resolve) {
             _this.sendOrderLine(orderLine).then(function (line) {
                 if (orderLine.Id) {
-                    for (var lineIdx = 0; lineIdx < _this._draft.Lines.length; lineIdx++) {
-                        if (_this._draft.Lines[lineIdx].Id == line.Id) {
-                            _this._draft.Lines[lineIdx] = line;
+                    for (var lineIdx in _this.draft.Lines.length) {
+                        if (_this.draft.Lines[lineIdx].Id == line.Id) {
+                            _this.draft.Lines[lineIdx] = line;
                             break;
                         }
                     }
                 }
                 else {
-                    _this._draft.Lines.push(line);
+                    _this.draft.Lines.push(line);
                 }
                 resolve(line);
             });
@@ -475,20 +514,19 @@ var OrdersService = (function () {
     };
     OrdersService.prototype.getOrderLine = function (item) {
         var _this = this;
-        for (var _i = 0, _a = this._draft.Lines; _i < _a.length; _i++) {
-            var line = _a[_i];
-            if (line.Item.Id === item.Id) {
-                return Promise.resolve(line);
-            }
-        }
         return new Promise(function (resolve) {
-            _this.sendOrderLine({
-                Qty: 0,
-                ItemId: item.Id,
-                OrderId: _this._draft.Id
-            }).then(function (line) {
-                _this._draft.Lines.push(line);
-                resolve(line);
+            _this.getDraft().then(function (draft) {
+                for (var _i = 0, _a = _this.draft.Lines; _i < _a.length; _i++) {
+                    var line = _a[_i];
+                    if (line.Item.Id === item.Id) {
+                        resolve(line);
+                    }
+                }
+                resolve({
+                    Qty: 0,
+                    ItemId: item.Id,
+                    OrderId: _this.draft.Id
+                });
             });
         });
     };
@@ -496,7 +534,7 @@ var OrdersService = (function () {
         var _this = this;
         if (order.Id) {
             return new Promise(function (resolve) {
-                _this.http.put(_this._ordersCollectionUrl + '(' + order.Id + ')', JSON.stringify(order), { headers: _this.headers })
+                _this.http.put(_this.ordersCollectionUrl + '(' + order.Id + ')', JSON.stringify(order), { headers: _this.headers })
                     .subscribe(function () {
                     resolve(null);
                 });
@@ -504,7 +542,7 @@ var OrdersService = (function () {
         }
         else {
             return new Promise(function (resolve) {
-                _this.http.post(_this._ordersCollectionUrl, JSON.stringify(order), { headers: _this.headers })
+                _this.http.post(_this.ordersCollectionUrl, JSON.stringify(order), { headers: _this.headers })
                     .map(function (res) { return res.json(); })
                     .subscribe(function (data) {
                     resolve(data.value);
@@ -516,7 +554,7 @@ var OrdersService = (function () {
         var _this = this;
         if (orderLine.Id) {
             return new Promise(function (resolve) {
-                _this.http.put(_this._orderLinesCollectionUrl + '(' + orderLine.Id + ')', JSON.stringify(orderLine), { headers: _this.headers })
+                _this.http.put(_this.orderLinesCollectionUrl + '(' + orderLine.Id + ')', JSON.stringify(orderLine), { headers: _this.headers })
                     .subscribe(function () {
                     resolve(orderLine);
                 });
@@ -524,7 +562,7 @@ var OrdersService = (function () {
         }
         else {
             return new Promise(function (resolve) {
-                _this.http.post(_this._orderLinesCollectionUrl, JSON.stringify(orderLine), { headers: _this.headers })
+                _this.http.post(_this.orderLinesCollectionUrl, JSON.stringify(orderLine), { headers: _this.headers })
                     .map(function (res) { return res.json(); })
                     .subscribe(function (data) {
                     resolve(data.value);
@@ -534,11 +572,11 @@ var OrdersService = (function () {
     };
     OrdersService.prototype.queryDraft = function () {
         var _this = this;
-        if (this._draft) {
-            return Promise.resolve(this._draft);
+        if (this.draft) {
+            return Promise.resolve(this.draft);
         }
         return new Promise(function (resolve) {
-            _this.http.get(_this._ordersCollectionUrl + "/?$filter=StatusCode eq 'DRAFT'&$top=1&$expand=Lines($expand=Item)")
+            _this.http.get(_this.ordersCollectionUrl + "/?$filter=StatusCode eq 'DRAFT'&$top=1&$expand=Lines($expand=Item)")
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 resolve(data.value[0]);
