@@ -312,45 +312,6 @@ var OrderPage = (function () {
         this.platform = platform;
         this.nav = nav;
     }
-    OrderPage.prototype.openMenu = function () {
-        var actionSheet = ionic_angular_1.ActionSheet.create({
-            title: 'Options',
-            cssClass: 'order',
-            buttons: [
-                {
-                    text: 'Delete',
-                    role: 'destructive',
-                    icon: !this.platform.is('ios') ? 'trash' : null,
-                    handler: function () {
-                        console.log('Delete clicked');
-                    }
-                },
-                {
-                    text: 'Add',
-                    icon: !this.platform.is('ios') ? 'heart-outline' : null,
-                    handler: function () {
-                        console.log('Add clicked');
-                    }
-                },
-                {
-                    text: 'Take',
-                    icon: !this.platform.is('ios') ? 'heart-outline' : null,
-                    handler: function () {
-                        console.log('Take clicked');
-                    }
-                },
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    icon: !this.platform.is('ios') ? 'close' : null,
-                    handler: function () {
-                        console.log('Cancel clicked');
-                    }
-                }
-            ]
-        });
-        this.nav.present(actionSheet);
-    };
     OrderPage = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/order/order.html'
