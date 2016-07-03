@@ -1,9 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 import {Platform, ActionSheet, NavController, NavParams} from 'ionic-angular';
 import {AppSettings} from '../../app.settings';
+import {FormatISOStringPipe} from '../../components/format-isostringpipe/format-isostringpipe';
 
 @Component({
-    templateUrl: 'build/pages/order/order.html'
+    templateUrl: 'build/pages/order/order.html',
+    pipes: [FormatISOStringPipe]
 })
 export class OrderPage {
 

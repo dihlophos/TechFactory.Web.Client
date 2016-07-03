@@ -3,9 +3,11 @@ import {NavController} from 'ionic-angular';
 import {Platform} from 'ionic-angular';
 import {OrderPage} from '../order/order';
 import {OrdersService} from '../../providers/orders-service/orders-service';
+import {FormatISOStringPipe} from '../../components/format-isostringpipe/format-isostringpipe';
 
 @Component({
-    templateUrl: 'build/pages/orders/orders.html'
+    templateUrl: 'build/pages/orders/orders.html',
+    pipes: [FormatISOStringPipe]
 })
 export class OrdersPage implements OnInit {  
     private menuStage: string = "orders";

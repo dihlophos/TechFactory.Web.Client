@@ -16,7 +16,7 @@
         <ion-item>
             Date
             <ion-note item-right>
-                {{order.Date}}
+                {{order.Date  | formatisostring | date:fullDate}}
             </ion-note>
         </ion-item>
         <ion-item>

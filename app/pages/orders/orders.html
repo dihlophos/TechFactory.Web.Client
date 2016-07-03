@@ -23,7 +23,7 @@
     <div [ngSwitch]="menuStage">
         <ion-list *ngSwitchWhen="'orders'">
             <ion-item (click)="openOrderPage(order)" *ngFor="let order of openOrders">
-                <h2>{{order.Date}}</h2>
+                <h2>{{order.Date | formatisostring | date:fullDate}}</h2>
                 <p>Amount : $ {{order.Amount}}</p>
                 <button clear item-right>
                     <ion-icon name="arrow-forward"></ion-icon>
@@ -34,7 +34,7 @@
 
         <ion-list *ngSwitchWhen="'history'">
             <ion-item (click)="openOrderPage(order)" *ngFor="let order of completedOrders">
-                <h2>{{order.Date}}</h2>
+                <h2>{{order.Date | formatisostring | date:fullDate}}</h2>
                 <p>Amount : $ {{order.Amount}}</p>
                 <button clear item-right>
                     <ion-icon name="arrow-forward"></ion-icon>
