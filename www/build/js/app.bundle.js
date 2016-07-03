@@ -559,7 +559,7 @@ var OrdersService = (function () {
             return Promise.resolve(this.completedOrders);
         }
         return new Promise(function (resolve) {
-            _this.http.get(_this.ordersCollectionUrl + "/?$filter=StatusCode eq 'CLOSED' or StatusCode eq 'CANCELED'&$expand=Lines($expand=Item($expand=Links))")
+            _this.http.get(_this.ordersCollectionUrl + "/?$filter=StatusCode eq 'CLOSED' or StatusCode eq 'CANCELED'&$expand=Lines($expand=Item($expand=Links,Price))")
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 _this.completedOrders = data.value;
@@ -573,7 +573,7 @@ var OrdersService = (function () {
             return Promise.resolve(this.openOrders);
         }
         return new Promise(function (resolve) {
-            _this.http.get(_this.ordersCollectionUrl + "/?$filter=StatusCode ne 'CLOSED' and StatusCode ne 'CANCELED'&$expand=Lines($expand=Item($expand=Links))")
+            _this.http.get(_this.ordersCollectionUrl + "/?$filter=StatusCode ne 'CLOSED' and StatusCode ne 'CANCELED'&$expand=Lines($expand=Item($expand=Links,Price))")
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 _this.openOrders = data.value;

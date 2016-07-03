@@ -96,7 +96,7 @@ export class OrdersService {
   	}
 
   	return new Promise(resolve => {
-      this.http.get(`${this.ordersCollectionUrl}/?$filter=StatusCode eq 'CLOSED' or StatusCode eq 'CANCELED'&$expand=Lines($expand=Item($expand=Links))`)
+      this.http.get(`${this.ordersCollectionUrl}/?$filter=StatusCode eq 'CLOSED' or StatusCode eq 'CANCELED'&$expand=Lines($expand=Item($expand=Links,Price))`)
       .map(res => res.json())
       .subscribe(data => {
       	this.completedOrders = data.value;
@@ -113,7 +113,7 @@ export class OrdersService {
   	}
 
   	return new Promise(resolve => {
-      this.http.get(`${this.ordersCollectionUrl}/?$filter=StatusCode ne 'CLOSED' and StatusCode ne 'CANCELED'&$expand=Lines($expand=Item($expand=Links))`)
+      this.http.get(`${this.ordersCollectionUrl}/?$filter=StatusCode ne 'CLOSED' and StatusCode ne 'CANCELED'&$expand=Lines($expand=Item($expand=Links,Price))`)
       .map(res => res.json())
       .subscribe(data => {
       	this.openOrders = data.value;
